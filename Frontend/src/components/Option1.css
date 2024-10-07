@@ -1,0 +1,60 @@
+/* Container for the whole section */
+.funds-container {
+  padding: 20px;
+  text-align: center;
+  background-color: #f5f5f5;
+}
+
+/* Heading */
+.funds-container h1 {
+  font-size: 36px;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+/* Fund list (remove default padding) */
+.funds-list {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Each fund card styling */
+.fund-card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  width: 80%;
+  max-width: 600px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+/* Title of each fund */
+.fund-title {
+  font-size: 24px;
+  color: #0056b3;
+  margin-bottom: 10px;
+}
+
+/* Description text */
+.fund-card p {
+  font-size: 18px;
+  line-height: 1.5;
+  color: #333;
+}
+
+/* Emphasis on strong tags */
+.fund-card p strong {
+  color: #0056b3;
+}
+
+/* Hover effect */
+.fund-card:hover {
+  transform: translateY(-5px);
+  transition: all 0.3s ease;
+}
