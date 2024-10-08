@@ -34,6 +34,14 @@ const Login = () => {
     } catch (error) {
       setError(error.response.data.message);
     }
+
+    // axios.post("http://localhost:5000/login", { email, password }, { withCredentials: true })
+    //   .then((res) => {
+    //     console.log("hello", " ", res);
+
+    //   }).catch((err) => {
+    //     console.log("error");
+    //   })
   };
 
   return (

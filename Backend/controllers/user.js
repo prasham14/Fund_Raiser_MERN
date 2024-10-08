@@ -13,7 +13,7 @@ async function signup(req, res) {
     const payload = { id: response.id };
     console.log(JSON.stringify(payload));
     const token = generateToken(payload);
-    res.status(200).json({ response: response, token: token });
+    return res.status(200).json({ response: response, token: token });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Internal server error" });
@@ -22,7 +22,7 @@ async function signup(req, res) {
 async function login(req, res) {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({ email });
     if (!user || !(await user.comparePassword(password))) {
       return res.status(401).json({ message: "Invalid Username or Password" });
     }

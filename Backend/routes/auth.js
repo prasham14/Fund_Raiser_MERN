@@ -9,6 +9,7 @@ const { donation } = require("../controllers/initiative");
 
 //  documents
 var path = require('path');
+const { jwtAuthMiddleware } = require('../jwt');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     return cb(null, './uploads');
@@ -36,9 +37,9 @@ router.post("/doc", upload.single('documents'), async (req, res) => {
 
 
 // Register new user
-router.route("/signup").post(signup);
+router.route('/signup').post(signup);
 // Login user
-router.route("/login").post(login);
+router.post('/login', login);
 
 // Raising fund
 

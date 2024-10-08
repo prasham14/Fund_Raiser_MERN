@@ -10,9 +10,11 @@ const app = express();
 const multer = require('multer')
 require('dotenv').config();
 
-
-app.use(cors());
+app.use(express.json());
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieparser());
 
 app.use('/', authRoutes);
 // app.use('/api', otpRoutes);
