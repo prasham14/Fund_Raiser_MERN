@@ -6,7 +6,7 @@ import Option1 from './components/Option1';
 import Option2 from './components/Option2';
 import Option3 from './components/Option3';
 import Transaction from './components/Transaction';
-import Document from './components/Document';
+import Document from './components/Doc';
 import Help from './Pages/Help';
 function App() {
   return (

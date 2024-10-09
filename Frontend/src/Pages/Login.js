@@ -30,6 +30,7 @@ const Login = () => {
       // Set the token in local storage or cookies  
       localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem('email', email);
+      localStorage.setItem('userId', response.data._id);
       navigate('/');
     } catch (error) {
       setError(error.response.data.message);

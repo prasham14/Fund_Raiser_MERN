@@ -1,6 +1,7 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/auth');
+const fundRoutes = require('./routes/fundRoutes');
 const bodyParser = require('body-parser');
 const { auth } = require('./middleware/auth')
 const cors = require('cors');
@@ -12,11 +13,13 @@ require('dotenv').config();
 
 app.use(express.json());
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use("/files", express.static("files"));
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieparser());
 
 app.use('/', authRoutes);
+app.use('/', fundRoutes);
 // app.use('/api', otpRoutes);
 
 const storage = multer.diskStorage({

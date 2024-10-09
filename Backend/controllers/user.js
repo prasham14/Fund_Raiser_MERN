@@ -61,19 +61,17 @@ const signOut = async (req, res) => {
 }
 
 async function editProfile(req, res) {
-  const { username } = req.body;
   try {
-    const updatedUser = await User.findOneAndUpdate(
-      { email: req.params.email },
-      { username },
-      { new: true }
-    );
-    if (!updatedUser) {
-      return res.status(404).json({ message: 'User not found' });
+    const email = req.params.email;
+    const updatedData = req.body;
+    const user = await User.findOneAndUpdate({ email: email }, updatedData, { new: true });
+    if (user) {
+      res.json({ message: 'User updated successfully', response: user });
+    } else {
+      res.status(404).json({ message: 'User not found' });
     }
-    res.status(200).json({ message: 'Username updated', response: updatedUser });
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
+    res.status(500).json({ message: 'Error updating user', error });
   }
 }
 
@@ -81,7 +79,7 @@ async function profile(req, res) {
   try {
     const { email } = req.params;
     console.log(email);
-    const response = await User.findOne({ User });
+    const response = await User.findOne({ email });
     console.log(response);
     return res.json({
       success: true,

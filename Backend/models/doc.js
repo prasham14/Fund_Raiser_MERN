@@ -1,9 +1,11 @@
-const mongoose = require('mongoose');
-const DocSchema = mongoose.Schema({
-  path: { type: String, required: true },
-  filename: { type: String, required: true },
+const mongoose = require("mongoose");
 
-});
+const PdfDetailsSchema = new mongoose.Schema(
+  {
+    pdf: String,
+    title: String,
+  },
+  { collection: "PdfDetails" }
+);
 
-const Doc = mongoose.model('Docs', DocSchema);
-module.exports = Doc;
+mongoose.model("PdfDetails", PdfDetailsSchema);
