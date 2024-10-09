@@ -59,7 +59,7 @@ function Profile() {
   const changeEmailHandler = () => {
     let OTP = Math.floor(1000 + Math.random() * 9000);
     localStorage.setItem('otp', OTP);
-    axios.patch(`http://localhost:4001/user/EmailVerify/${newData.email}/${OTP}`, { withCredentials: true })
+    axios.patch(`http://localhost:5000/user/EmailVerify/${newData.email}/${OTP}`, { withCredentials: true })
       .then(() => {
         setIsChangeEmail(false);
         setIsEmailChange(true);
@@ -89,7 +89,7 @@ function Profile() {
   const uploadImageHandler = () => {
     const formData = new FormData();
     formData.append('image', imageFile);
-    axios.post(`http://localhost:4001/user/uploadImage/${email}`, formData, { withCredentials: true })
+    axios.post(`http://localhost:5000/user/uploadImage/${email}`, formData, { withCredentials: true })
       .then(() => {
         console.log("Image uploaded successfully");
       })
@@ -105,7 +105,7 @@ function Profile() {
     if (otpValue === storedOtp) {
       alert("OTP Verified Successfully!");
       setIsEmailChange(false);
-      axios.patch(`ttp://localhost:4001/user/editEmail/${email}`, { email: newData.email }, { withCredentials: true }).then(() => {
+      axios.patch(`http://localhost:5000/user/editEmail/${email}`, { email: newData.email }, { withCredentials: true }).then(() => {
         console.log("Email updated successfully.");
         setEmail(newData.email);
       });

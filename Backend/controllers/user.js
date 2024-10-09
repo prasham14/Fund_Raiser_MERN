@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const js = process.env.JWT_SECRET;
+const nodemailer = require('nodemailer');
 const { jwtAuthMiddleware, generateToken } = require("./../jwt");
 async function signup(req, res) {
   try {
@@ -94,6 +95,62 @@ async function profile(req, res) {
   }
 }
 
+async function emailVerify(req, res) {
+  const { email, otp } = req.params;
+
+  const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: Number(process.env.SMTP_PORT),
+    secure: false, // true for port 465, false for other ports
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASSWORD,
+    },
+  });
+
+  // Compose the email message
+  const mailOptions = {
+    from: process.env.STMP_USER,
+    to: email,
+    subject: 'Confirmation Email',
+    text: 'Testing mail',
+    html: `<p>Thank you for registering! here is your otp:<br/> <b>${otp}</b></p>`
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error('Error sending email:', error);
+      res.status(500).json({
+        success: true,
+        message: "error is there"
+      });
+    } else {
+      console.log('Email sent:', info.response);
+      return res.json({
+        success: true,
+        message: "confirmation mail sent successfully"
+      })
+    }
+  });
+}
+
+async function editEmail(req, res) {
+  try {
+    const email = req.params.email;
+    const updatedData = req.body;
+    const user = await User.findOneAndUpdate({ email: email }, updatedData, { new: true });
+    if (user) {
+      res.json({ message: 'User updated successfully', response: user });
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating user', error });
+  }
+}
+
+
+
 module.exports = {
-  signup, login, profile, editProfile, signOut
+  signup, login, profile, editProfile, signOut, editEmail, emailVerify
 };

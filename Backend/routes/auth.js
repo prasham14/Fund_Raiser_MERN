@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Doc = require('../models/doc');
 const multer = require('multer');
-const { signup, login, profile, editProfile } = require('../controllers/user');
+const { signup, login, profile, editProfile, editEmail, emailVerify } = require('../controllers/user');
 const { transaction, payment, createOrder, verifyPayment } = require('../controllers/transaction');
 const { createInitiative } = require("../controllers/initiative");
 const { donation } = require("../controllers/initiative");
@@ -87,5 +87,6 @@ router.get("/option3", async (req, res) => {
 router.route("/UpdateName/:email").patch(editProfile);
 // get profile
 router.route("/getUser/:email").get(profile);
-
+router.route('/user/EmailVerify/:email/:otp').patch(emailVerify);
+router.route('/user/editEmail/:email').patch(editEmail);
 module.exports = router;
