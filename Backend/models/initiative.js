@@ -7,5 +7,6 @@ const InitiativeSchema = new mongoose.Schema({
   email: { type: String, required: true },
   phone: { type: Number }
 });
-module.exports = mongoose.model('Initiative', InitiativeSchema);
+const Initiative = mongoose.model('Initiative', InitiativeSchema);
 
+module.exports = Initiative;

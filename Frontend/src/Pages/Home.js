@@ -3,11 +3,14 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Main from '../components/Main';
 import FormSubmission from '../components/FundRaise';
-import Donate from '../components/Donate';
 import NGO from '../components/NGO';
+import Option1 from '../components/Option1';
+import Option2 from '../components/Option2';
+import Option3 from '../components/Option3';
 import Profile from '../components/Profile';
 import Initiatives from '../components/Initiatives';
-
+import ViewFundRaiser from '../components/ViewFundRaiser';
+import CreateInitiative from '../components/CreateInitiative';
 const userId = '67011cf9122020cfe0bf42b3';
 const Home = () => {
   const [activeSection, setActivesection] = useState(null);
@@ -81,7 +84,7 @@ const Home = () => {
       case 'viewFundRaiser':
         return (
           <div>
-            <Donate />
+            <ViewFundRaiser activeSection={activeSection} setActivesection={setActivesection} />
           </div>
         )
       case 'form':
@@ -110,7 +113,19 @@ const Home = () => {
       case 'Initiative':
         return (
           <div>
-            <Initiatives />
+            <Initiatives activeSection={activeSection} setActivesection={setActivesection} />
+          </div>
+        )
+      case 'option1':
+        return <Option1 />;
+      case 'option2':
+        return <Option2 />;
+      case 'option3':
+        return <Option3 />;
+      case 'createInitiatives':
+        return (
+          <div>
+            <CreateInitiative />
           </div>
         )
       default:

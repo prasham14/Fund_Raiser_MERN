@@ -12,7 +12,7 @@ const Option1 = () => {
 
     const fetchFunds = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/auth/option1');
+        const response = await axios.get('http://localhost:5000/option1');
         setFunds(response.data);
       } catch (error) {
         console.error('Error fetching education funds', error);
@@ -30,15 +30,12 @@ const Option1 = () => {
           funds.map((fund, index) => (
             <li key={index} className="fund-card">
               <h2 className="fund-title">{fund.title}</h2>
-              <p><strong>Purpose:</strong> {fund.purpose}</p>
+              <p><strong>Purpose:</strong> {fund.details}</p>
               <p><strong>Funds Available:</strong> ${fund.funds}</p>
               <p><strong>Amount Raised:</strong> ${fund.raised}</p>
               <p><strong>Date Created:</strong> {new Date(fund.date).toLocaleDateString()}</p>
 
               <button onClick={donateHandler}>Donate</button>
-              {fund.documents && (
-                <p><strong>Documents:</strong> {(', ')}</p>
-              )}
             </li>
           ))
         ) : (

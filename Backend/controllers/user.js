@@ -5,6 +5,10 @@ require('dotenv').config();
 const js = process.env.JWT_SECRET;
 const nodemailer = require('nodemailer');
 const { jwtAuthMiddleware, generateToken } = require("./../jwt");
+
+
+
+
 async function signup(req, res) {
   try {
     const data = req.body;
@@ -148,7 +152,6 @@ async function editEmail(req, res) {
     res.status(500).json({ message: 'Error updating user', error });
   }
 }
-
 
 
 module.exports = {

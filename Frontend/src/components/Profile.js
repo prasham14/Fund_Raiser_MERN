@@ -4,7 +4,8 @@ import axios from 'axios';
 function Profile() {
   const [username, setName] = useState(null);
   const [email, setEmail] = useState(null);
-  const [profileImage, setProfileImage] = useState(null);
+  const [profileImage, setProfileImage] = useState('');
+  const [file, setFile] = useState(null);
   const [isChangeEmail, setIsChangeEmail] = useState(false);
 
   const [isChange, setIsChange] = useState(false);
@@ -75,25 +76,37 @@ function Profile() {
 
 
   const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setImageFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfileImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
+    setFile(event.target.files[0]);
+
+    // if (file) {
+    //   setImageFile(file);
+    //   const reader = new FileReader();
+    //   reader.onloadend = () => {
+    //     setProfileImage(reader.result);
+    //   };
+    //   reader.readAsDataURL(file);
+    // }
   };
 
-  const uploadImageHandler = () => {
+  const uploadImageHandler = async (event) => {
+    event.preventDefault();
     const formData = new FormData();
-    formData.append('image', imageFile);
-    axios.post(`http://localhost:5000/user/uploadImage/${email}`, formData, { withCredentials: true })
-      .then(() => {
-        console.log("Image uploaded successfully");
-      })
-      .catch(error => console.error("Error uploading image:", error));
+    formData.append('profileImage', file);
+    formData.append('username', username);
+    formData.append('email', email);
+
+    try {
+      const response = axios.post(`http://localhost:5000/uploadImage/${email}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }, { withCredentials: true });
+      setProfileImage(response.data.user.profileImage); // Update state with uploaded image
+      alert(response.data.message);
+    }
+    catch (error) {
+      console.error("Error uploading image:", error);
+    }
   };
 
 
@@ -165,8 +178,6 @@ function Profile() {
             </div>
           </div>
 
-
-
           {/* Email Section */}
           <div className="mb-8">
             <h2 className="text-lg font-semibold text-gray-700 mb-2">Email:</h2>
@@ -222,24 +233,27 @@ function Profile() {
 
           {/* Image Upload Section */}
           <div className="flex flex-col sm:flex-row justify-between mt-8">
-            <div className="w-full sm:w-auto">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="border border-gray-300 rounded-lg p-2 w-full mb-3"
-              />
-              <button
-                onClick={uploadImageHandler}
-                className="px-6 py-2 bg-indigo-500 text-white rounded-full hover:bg-indigo-600 transition shadow-lg w-full"
-              >
-                Upload Image
-              </button>
-            </div>
+            <form onSubmit={uploadImageHandler}>
+              <div className="w-full sm:w-auto">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="border border-gray-300 rounded-lg p-2 w-full mb-3"
+                />
+                <button
+                  type="submit"
+                  className="px-6 py-2 bg-indigo-500 text-white rounded-full hover:bg-indigo-600 transition shadow-lg w-full"
+                >
+                  Upload Image
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
+
   );
 }
 export default Profile;

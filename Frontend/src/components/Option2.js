@@ -13,7 +13,7 @@ const Option2 = () => {
     // Fetch education-type funds from the backend
     const fetchFunds = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/auth/option2');
+        const response = await axios.get('http://localhost:5000/option2');
         setFunds(response.data);
       } catch (error) {
         console.error('Error fetching education funds', error);
