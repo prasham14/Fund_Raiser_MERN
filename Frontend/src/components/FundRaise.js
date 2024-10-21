@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const FormSubmission = (/*{ isFund, setIsFund }*/) => {
+const FormSubmission = ({ activeSection, setActivesection }) => {
   const [formData, setFormData] = useState({
     title: '',
     details: '',
@@ -10,26 +10,26 @@ const FormSubmission = (/*{ isFund, setIsFund }*/) => {
     raised: 0,
     date: '',
     type: 'Medicine',
-    userId: ''
+    // userId: ''
   });
   const navigate = useNavigate();
-  useEffect(() => {
-    const fetchUserId = async () => {
-      try {
-        const storedUserId = localStorage.getItem('userId'); // Example
-        if (storedUserId) {
-          setFormData((prevData) => ({ ...prevData, userId: storedUserId }));
-        } else {
-          console.error('User not authenticated');
-          // Redirect to login page if needed
-        }
-      } catch (error) {
-        console.error('Error fetching userId:', error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchUserId = async () => {
+  //     try {
+  //       const storedUserId = localStorage.getItem('userId'); // Example
+  //       if (storedUserId) {
+  //         setFormData((prevData) => ({ ...prevData, userId: storedUserId }));
+  //       } else {
+  //         console.error('User not authenticated');
+  //         // Redirect to login page if needed
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching userId:', error);
+  //     }
+  //   };
 
-    fetchUserId();
-  }, []);
+  //   fetchUserId();
+  // }, []);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -43,11 +43,11 @@ const FormSubmission = (/*{ isFund, setIsFund }*/) => {
     try {
       console.log(formData);
       const token = localStorage.getItem(token);
-      const response = await axios.post('http://localhost:5000/raise', formData, {
+      const response = await axios.post('http://localhost:5000/raise', formData);
+      /* {
         headers: {
           Authorization: `Bearer ${token}`,
-        }, withCredentials: true
-      });
+        }*/
       console.log(response);
       console.log('Data submitted successfully:', response.data);
       alert('Form submitted successfully!');
@@ -59,7 +59,7 @@ const FormSubmission = (/*{ isFund, setIsFund }*/) => {
         date: '',
         type: 'Medicine',
       });
-      navigate('/doc');
+      setActivesection('doc')
     } catch (error) {
       console.error('Error submitting form:', error);
       alert('Form submission failed. Please try again.');

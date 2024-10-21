@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -32,8 +33,11 @@ const Login = () => {
       localStorage.setItem('email', email);
       localStorage.setItem('userId', response.data._id);
       navigate('/');
+      // toast.success("LoggedIn Successfully!");
+
     } catch (error) {
       setError(error.response.data.message);
+      // toast.warning('Login Failed , try again later !')
     }
 
     // axios.post("http://localhost:5000/login", { email, password }, { withCredentials: true })
@@ -73,6 +77,7 @@ const Login = () => {
           >
             Login
           </button>
+
           <p className="mt-4 text-center text-gray-600">Don't have an account? Sign-in here!</p>
           <button
             type="button"

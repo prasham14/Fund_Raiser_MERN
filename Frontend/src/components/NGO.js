@@ -17,43 +17,66 @@ const NGO = () => {
         )
     }
   }
-
   const links = [
     {
       id: 1,
-      title: "Digital India",
+      title: "Smile Foundaton",
       image: "https://example.com/digital-india.jpg",
-      url: ""
+      url: "https://www.smilefoundationindia.org/"
     },
     {
       id: 2,
-      title: "Startup India",
+      title: "CRY (Child Rights and You)",
       image: "https://example.com/startup-india.jpg",
-      url: ""
+      url: "https://www.cry.org/"
     },
     {
       id: 3,
-      title: "Swachh Bharat",
+      title: "Give India Foundation  ",
       image: "https://example.com/swachh-bharat.jpg",
-      url: "https://swachhbharat.mygov.in/"
+      url: "https://www.giveindia.org/"
     },
     {
       id: 4,
-      title: "Make in India",
+      title: "Goonj",
       image: "https://example.com/swachh-bharat.jpg",
-      url: "https://swachhbharat.mygov.in/"
+      url: "https://goonj.org/"
     },
     {
       id: 5,
-      title: "NITI Aayog: Transforming India’s Development Agenda",
+      title: "Nanhi Kali ",
       image: "https://example.com/swachh-bharat.jpg",
-      url: "https://swachhbharat.mygov.in/"
+      url: "https://www.nanhikali.org/"
     },
     {
       id: 6,
-      title: "Pradhan Mantri Jan Dhan Yojana",
+      title: "Care India",
       image: "https://example.com/swachh-bharat.jpg",
-      url: "https://swachhbharat.mygov.in/"
+      url: "https://careifoundation.org/"
+    },
+    {
+      id: 7,
+      title: "Helpage India",
+      image: "https://example.com/swachh-bharat.jpg",
+      url: "https://www.helpageindia.org/"
+    },
+    {
+      id: 8,
+      title: "Pratham",
+      image: "https://example.com/swachh-bharat.jpg",
+      url: "https://www.pratham.org/"
+    },
+    {
+      id: 9,
+      title: "Akshaya Patra Foundation",
+      image: "https://example.com/swachh-bharat.jpg",
+      url: "https://www.akshayapatra.org/"
+    },
+    {
+      id: 10,
+      title: "	Save the Children India",
+      image: "https://example.com/swachh-bharat.jpg",
+      url: "https://balrakshabharat.org/"
     },
     // Add more initiatives as needed
   ];
@@ -63,7 +86,7 @@ const NGO = () => {
     <div className="min-h-screen bg-gray-100 py-8 pl-16 pr-8">
       {/* Title */}
       <h1 className="text-center text-4xl font-bold text-blue-600 mb-8">
-        Here are the most popular Initiatives in India!
+        Here are the most popular NGO.s and foundations in India!
       </h1>
 
       {/* Grid Container */}
@@ -80,15 +103,11 @@ const NGO = () => {
           </div>
         ))}
       </div>
-
-      {/* Button Section */}
-      <div className="text-center mt-12">
-        <button onClick={handleButton} className="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
-          Create your own Initiative
-        </button>
-      </div>
-      <div>{renderContent()}</div>
     </div>
+
+
+
+
   );
 };
 

@@ -4,7 +4,7 @@ async function raiseFund(req, res) {
   const { title, details, funds, raised, type, date } = req.body;
 
   try {
-    const userId = req.user._id;
+    // const userId = req.user._id;
     const newRaise = new Raise({
       title,
       details,
@@ -12,7 +12,7 @@ async function raiseFund(req, res) {
       raised,
       date,
       type,
-      userId
+      // userId
     });
     const response = await newRaise.save();
     return res.status(201).json(response);

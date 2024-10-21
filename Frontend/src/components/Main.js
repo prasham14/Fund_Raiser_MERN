@@ -1,89 +1,114 @@
-import React from 'react'
-import image from "./images/images.jpeg";
-import image1 from "./images/images (1).jpeg";
-import image2 from "./images/images (2).jpeg";
+import React from 'react';
+import image from './images/images.jpeg';
+import { useNavigate } from 'react-router-dom';
+
 const Main = () => {
+  const navigate = useNavigate();
+  function handleCLick() {
+    navigate('/signup')
+  }
   return (
     <div>
-      <div className="main-content flex-1 ml-64 mt-16 p-12 bg-gray-50">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-800 mb-8">
-            Welcome! Want to raise funds? We've got you covered.
+      {/* Main content container */}
+      <div className="main-content flex-1 mt-16 p-12 bg-gradient-to-b from-teal-100 to-gray-50">
+        <div className="max-w-7xl mx-auto text-center">
+          {/* Headline */}
+          <h1 className="text-5xl font-extrabold text-teal-600 mb-4">
+            Fundraising Made Simple
           </h1>
-          <p className="text-lg text-gray-600 mb-8">
-            Sign up today to create your fundraiser and start collecting support from people who care.
+          <p className="text-lg text-gray-700 mb-12">
+            Start a fundraiser today and rally support from your community.
           </p>
-          <div className="image-container mb-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+          {/* CTA Button */}
+          <button onClick={handleCLick} className="bg-teal-500 text-white py-3 px-8 rounded-full shadow-lg hover:bg-teal-600 transition duration-300 ease-in-out mb-12">
+            Get Started
+          </button>
+
+          {/* Image Grid */}
+          <div className="image-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {/* Image 1 */}
-            <div className="relative group">
+            <div className="relative group overflow-hidden rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl">
               <img
                 src={image}
                 alt="Fundraiser"
-                className="w-full h-auto rounded-lg shadow-lg transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:shadow-xl border-2 border-transparent group-hover:border-teal-500"
+                className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 ease-in-out rounded-lg"></div>
+              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 ease-in-out"></div>
               <div className="absolute inset-0 flex justify-center items-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                <p className="text-lg font-bold">Create Your Fundraiser</p>
               </div>
             </div>
 
             {/* Image 2 */}
-            <div className="relative group">
+            <div className="relative group overflow-hidden rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl">
               <img
-                src={image1}
+                src={image}
                 alt="Community Support"
-                className="w-full h-auto rounded-lg shadow-lg transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:shadow-xl border-2 border-transparent group-hover:border-teal-500"
+                className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 ease-in-out rounded-lg"></div>
+              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 ease-in-out"></div>
               <div className="absolute inset-0 flex justify-center items-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                <p className="text-lg font-bold">Get Community Support</p>
               </div>
             </div>
-            <div className="relative group">
-              <img
-                src={image1}
-                alt="Community Support"
-                className="w-full h-auto rounded-lg shadow-lg transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:shadow-xl border-2 border-transparent group-hover:border-teal-500"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 ease-in-out rounded-lg"></div>
-              <div className="absolute inset-0 flex justify-center items-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
-              </div>
-            </div>
-            <div className="relative group">
-              <img
-                src={image1}
-                alt="Community Support"
-                className="w-full h-auto rounded-lg shadow-lg transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:shadow-xl border-2 border-transparent group-hover:border-teal-500"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 ease-in-out rounded-lg"></div>
-              <div className="absolute inset-0 flex justify-center items-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
-              </div>
-            </div>
-            <div className="relative group">
-              <img
-                src={image1}
-                alt="Community Support"
-                className="w-full h-auto rounded-lg shadow-lg transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:shadow-xl border-2 border-transparent group-hover:border-teal-500"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 ease-in-out rounded-lg"></div>
-              <div className="absolute inset-0 flex justify-center items-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
-              </div>
-            </div>
+
             {/* Image 3 */}
-            <div className="relative group">
+            <div className="relative group overflow-hidden rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl">
               <img
-                src={image2}
+                src={image}
                 alt="Charity Event"
-                className="w-full h-auto rounded-lg shadow-lg transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:shadow-xl border-2 border-transparent group-hover:border-teal-500"
+                className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 ease-in-out rounded-lg"></div>
+              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 ease-in-out"></div>
               <div className="absolute inset-0 flex justify-center items-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                <p className="text-lg font-bold">Host a Charity Event</p>
+              </div>
+            </div>
+
+            {/* Image 4 */}
+            <div className="relative group overflow-hidden rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl">
+              <img
+                src={image}
+                alt="Fundraising Platform"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 ease-in-out"></div>
+              <div className="absolute inset-0 flex justify-center items-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                <p className="text-lg font-bold">Use Our Platform</p>
+              </div>
+            </div>
+
+            {/* Image 5 */}
+            <div className="relative group overflow-hidden rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl">
+              <img
+                src={image}
+                alt="Support NGOs"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 ease-in-out"></div>
+              <div className="absolute inset-0 flex justify-center items-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                <p className="text-lg font-bold">Support NGOs</p>
+              </div>
+            </div>
+
+            {/* Image 6 */}
+            <div className="relative group overflow-hidden rounded-lg shadow-lg transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl">
+              <img
+                src={image}
+                alt="Fundraiser Success"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 ease-in-out"></div>
+              <div className="absolute inset-0 flex justify-center items-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                <p className="text-lg font-bold">Achieve Your Goals</p>
               </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default Main
+export default Main;

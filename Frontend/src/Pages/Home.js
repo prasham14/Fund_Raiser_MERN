@@ -1,7 +1,9 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import Main from '../components/Main';
+import Doc from '../components/Doc'
 import FormSubmission from '../components/FundRaise';
 import NGO from '../components/NGO';
 import Option1 from '../components/Option1';
@@ -24,9 +26,11 @@ const Home = () => {
     if (isLoggedIn) {
       setActivesection('viewFundRaiser');
 
+
     }
     else {
-      navigate('/signup');
+      navigate('/login');
+
 
     }
   }
@@ -51,8 +55,6 @@ const Home = () => {
   }
   function handleProfile() {
     setActivesection('profile');
-
-
   }
   function handleSignOut() {
     setIsLoggedIn(false);
@@ -64,7 +66,7 @@ const Home = () => {
       setActivesection('form')
     }
     else {
-      navigate('/signup');
+      navigate('/login');
     }
   }
   function handleNgo() {
@@ -72,13 +74,35 @@ const Home = () => {
       setActivesection('ngo')
     }
     else {
-      navigate('/signup');
+      navigate('/login');
     }
   }
   function handleMain() {
     setActivesection('main');
   }
 
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // Menu open/close state
+  const menuRef = useRef(null); // Ref for the menu element
+
+  // Handle toggling the menu when clicking the "Menu" button
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  // Close menu when clicking outside of it
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsMenuOpen(false); // Close menu if click is outside the menu
+      }
+    };
+    // Listen for clicks on the whole document
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside); // Cleanup on component unmount
+    };
+  }, [menuRef]);
   const renderContent = () => {
     switch (activeSection) {
       case 'viewFundRaiser':
@@ -90,7 +114,7 @@ const Home = () => {
       case 'form':
         return (
           <div>
-            <FormSubmission />
+            <FormSubmission activeSection={activeSection} setActivesection={setActivesection} />
           </div>
         )
       case 'ngo':
@@ -128,6 +152,11 @@ const Home = () => {
             <CreateInitiative />
           </div>
         )
+
+      case 'doc':
+        return (
+          <Doc />
+        )
       default:
         return (
           <div>
@@ -139,107 +168,119 @@ const Home = () => {
   return (
 
     <div className="home-container flex flex-col min-h-screen bg-gray-50">
-      <div className="navbar w-full bg-white  fixed top-0 z-50 flex justify-between items-center px-8 py-4">
-        <nav className="navbar-nav flex space-x-4">
-          <button
-            className="nav-button bg-teal-500 text-white py-2 px-6 rounded-lg hover:bg-teal-600 transition duration-200 ease-in-out"
-            onClick={isLoggedIn ? (handleFormSubmission) : (handleSignUp)}
-          >
-            Start a Fundraiser
-          </button>
-
-          <div>
-            {
-              isLoggedIn ? (<div></div>) :
-                (<button
-                  className="nav-button bg-teal-500 text-white py-2 px-6 rounded-lg hover:bg-teal-600 transition duration-200 ease-in-out"
-                  onClick={handleSignUp}
-                >
-                  SignIn
-                </button>)
-            }
+      {/* Navbar */}
+      <div className="navbar w-full bg-white fixed top-0 z-50 flex justify-between items-center px-8 py-4 shadow-md">
+        <nav className="navbar-nav flex items-center justify-between w-full">
+          {/* Left Side - Logo or Brand */}
+          <div className="flex items-center space-x-4">
+            <h1 className="text-2xl font-bold text-teal-500">FundRaiser Platform</h1>
           </div>
 
-          <div>
-            {
-              isLoggedIn ? (<button
-                className="nav-button bg-teal-500 text-white py-2 px-6 rounded-lg hover:bg-teal-600 transition duration-200 ease-in-out"
-                onClick={handleProfile}
-              >
-                Profile
-              </button>) :
-                (<button
-                  className="nav-button bg-teal-500 text-white py-2 px-6 rounded-lg hover:bg-teal-600 transition duration-200 ease-in-out"
-                  onClick={handleLogin}
-                >
-                  LogIn
-                </button>)
-            }
-          </div>
-        </nav>
-
-      </div>
-      <div className="sidebar bg-white w-64 h-full py-8 px-6 fixed top-0 left-0 shadow-lg mt-16">
-        <h2 className="text-xl font-bold text-black mb-6 mt-6 text-center">Menu</h2>
-        <ul className="space-y-4">
-          <li>
+          {/* Right Side - Menu and Buttons */}
+          <div className="flex items-center space-x-6">
+            {/* Start a Fundraiser Button */}
             <button
-              onClick={handleMain}
-              className="sidebar-link w-full text-left text-black  font-semibold py-2 px-4 rounded-lg transition-colors duration-200 hover:bg-teal-100"
+              className="bg-teal-500 text-white py-2 px-6 rounded-lg hover:bg-teal-600 transition duration-200 ease-in-out"
+              onClick={isLoggedIn ? handleFormSubmission : handleSignUp}
             >
-              Home
+              Start a Fundraiser
             </button>
-          </li>
-          <li>
-            <button
-              onClick={handleViewFundRaiser}
-              className="sidebar-link w-full text-left text-black  font-semibold py-2 px-4 rounded-lg transition-colors duration-200 hover:bg-teal-100"
-            >
-              View Fundraisers
-            </button>
-          </li>
-          <li>
             <button
               onClick={handleContactSupport}
-              className="sidebar-link w-full text-left text-black  font-semibold py-2 px-4 rounded-lg transition-colors duration-200 hover:bg-teal-100"
+              className="bg-teal-500 text-white py-2 px-6 rounded-lg hover:bg-teal-600 transition duration-200 ease-in-out"
             >
               Contact Support
             </button>
-          </li>
-          <li>
-            <button
-              onClick={handleInitiatives}
-              className="sidebar-link w-full text-left text-black  font-semibold py-2 px-4 rounded-lg transition-colors duration-200 hover:bg-teal-100"
-            >
-              Initiatives
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={handleNgo}
-              className="sidebar-link w-full text-left text-black  font-semibold py-2 px-4 rounded-lg transition-colors duration-200 hover:bg-teal-100"
-            >
-              NGO's
-            </button>
-          </li>
-          <li>
-            <div >
-              {
-                isLoggedIn ? (<button
-                  className="sidebar-link w-full text-left text-black  font-semibold py-2 px-4 rounded-lg transition-colors duration-200 hover:bg-teal-100"
-                  onClick={handleSignOut}
+            {/* Conditional Render for SignIn/LogIn/Profile */}
+            {isLoggedIn ? (
+              <button
+                className="bg-teal-500 text-white py-2 px-6 rounded-lg hover:bg-teal-600 transition duration-200 ease-in-out"
+                onClick={handleProfile}
+              >
+                Profile
+              </button>
+            ) : (
+              <>
+                <button
+                  className="bg-teal-500 text-white py-2 px-6 rounded-lg hover:bg-teal-600 transition duration-200 ease-in-out"
+                  onClick={handleSignUp}
                 >
-                  Logout
-                </button>) :
-                  (<div></div>)
-              }
+                  Signup
+                </button>
+
+                <button
+                  className="bg-teal-500 text-white py-2 px-6 rounded-lg hover:bg-teal-600 transition duration-200 ease-in-out"
+                  onClick={handleLogin}
+                >
+                  LogIn
+                </button>
+
+              </>
+            )}
+
+            {/* Dropdown Menu */}
+            <div className="relative" ref={menuRef}>
+              <button
+                className="text-gray-700 hover:text-teal-500 focus:outline-none"
+                onClick={toggleMenu}
+              >
+                Menu
+              </button>
+
+              {isMenuOpen && (
+                <ul className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 shadow-lg rounded-lg p-2 text-gray-700 space-y-2">
+                  <li>
+                    <button
+                      onClick={handleMain}
+                      className="w-full text-left hover:text-teal-500"
+                    >
+                      Home
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleViewFundRaiser}
+                      className="w-full text-left hover:text-teal-500"
+                    >
+                      View Fundraisers
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleContactSupport}
+                      className="w-full text-left hover:text-teal-500"
+                    >
+                      Contact Support
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleInitiatives}
+                      className="w-full text-left hover:text-teal-500"
+                    >
+                      Initiatives
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleNgo}
+                      className="w-full text-left hover:text-teal-500"
+                    >
+                      NGO's
+                    </button>
+                  </li>
+
+                </ul>
+              )}
             </div>
-          </li>
-        </ul>
+          </div>
+        </nav>
       </div>
 
-      <div>{renderContent()}</div>
+      {/* Page Content */}
+      <div className="mt-20">{renderContent()}</div>
     </div>
+
   )
 };
 

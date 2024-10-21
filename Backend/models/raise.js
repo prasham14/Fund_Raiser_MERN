@@ -7,11 +7,11 @@ const RaiseSchema = new mongoose.Schema({
   raised: { type: Number, default: '0' },
   date: { type: Date, default: Date.now() },
   type: { type: String },
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
+  // userId: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'User',
+  //   required: true,
+  // },
 });
 
 
