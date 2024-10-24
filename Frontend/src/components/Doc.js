@@ -1,23 +1,27 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { pdfjs } from "react-pdf";
-import PdfComp from "./PdfComp";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
   import.meta.url,
 ).toString();
-function App() {
+function App({ activeSection, setActivesection }) {
   const [title, setTitle] = useState("");
   const [file, setFile] = useState("");
   const [allImage, setAllImage] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
-
+  const [userId, setUserID] = useState(localStorage.getItem('userId'));
+  const token = localStorage.getItem('token');
   useEffect(() => {
     getPdf();
   }, []);
   const getPdf = async () => {
-    const result = await axios.get("http://localhost:5000/get-files");
+    const result = await axios.get("http://localhost:5000/get-files", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     console.log(result.data.data);
     setAllImage(result.data.data);
   };
@@ -27,24 +31,31 @@ function App() {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("file", file);
-    console.log(title, file);
+    formData.append('userId', userId);
+    console.log(title, file, userId);
 
-    const result = await axios.post(
-      "http://localhost:5000/upload-files",
-      formData,
-      {
-        headers: { "Content-Type": "multipart/form-data" },
+    try {
+      const result = await axios.post(
+        `http://localhost:5000/upload-files/${userId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      console.log(result);
+      if (result.data.status == "ok") {
+        alert("Uploaded Successfully!!!");
+        getPdf();
       }
-    );
-    console.log(result);
-    if (result.data.status == "ok") {
-      alert("Uploaded Successfully!!!");
-      getPdf();
+      setActivesection('main');
     }
-  };
-  const showPdf = (pdf) => {
-    // window.open(`http://localhost:5000/files/${pdf}`, "_blank", "noreferrer");
-    setPdfFile(`http://localhost:5000/files/${pdf}`)
+
+    catch (err) {
+      console.log(err);
+    }
+
   };
   return (
     <div className="App bg-gray-50 min-h-screen flex flex-col items-center justify-center">
@@ -53,7 +64,7 @@ function App() {
         onSubmit={submitImage}
       >
         <h4 className="text-xl font-semibold text-gray-800 mb-4 text-center">
-          Upload PDF in React
+          Upload the documents for verifications (the Pdf will be visible to Donor)
         </h4>
 
         <div className="mb-4">
@@ -85,37 +96,6 @@ function App() {
           </button>
         </div>
       </form>
-
-      <div className="uploaded mt-8 w-full max-w-lg">
-        <h4 className="text-xl font-semibold text-gray-800 mb-4 text-center">
-          Uploaded PDFs:
-        </h4>
-
-        <div className="output-div space-y-4">
-          {allImage == null ? (
-            <p className="text-gray-500 text-center">No PDFs uploaded yet.</p>
-          ) : (
-            allImage.map((data) => (
-              <div
-                key={data.title}
-                className="inner-div bg-white shadow-md p-4 rounded-lg"
-              >
-                <h6 className="text-lg font-medium text-gray-700 mb-2">
-                  Title: {data.title}
-                </h6>
-                <button
-                  className="btn btn-primary bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300"
-                  onClick={() => showPdf(data.pdf)}
-                >
-                  Show PDF
-                </button>
-              </div>
-            ))
-          )}
-        </div>
-      </div>
-      <PdfComp pdfFile={pdfFile} />
-
     </div>
   );
 }

@@ -3,14 +3,10 @@ import med from "./images/medicines.jpeg";
 import rf from "./images/relief.png";
 import ed from "./images/education.jpg";
 
-const ViewFundRaiser = ({ activeSection, setActivesection }) => {
-  // State for tracking the selected fund type
-  // Function to handle category clicks
+const ViewFundRaiser = ({ setActivesection }) => {
   const handleCategoryClick = (category) => {
     setActivesection(category);
   };
-
-
   return (
     <div className="donate-container max-w-7xl mx-auto p-6">
       <h1 className="donate-title text-4xl font-bold text-center mb-6 text-gray-800">
@@ -33,7 +29,7 @@ const ViewFundRaiser = ({ activeSection, setActivesection }) => {
                 alt="Education"
                 className="option-image w-20 h-20 mx-auto mb-4"
               />
-              <span className="option-text text-2xl font-semibold text-gray-700">
+              <span className="option-text text-2xl font-semibold text-gray-700 cursor-pointer">
                 Education
               </span>
             </div>
@@ -51,7 +47,7 @@ const ViewFundRaiser = ({ activeSection, setActivesection }) => {
                 alt="Relief Funds"
                 className="option-image w-20 h-20 mx-auto mb-4"
               />
-              <span className="option-text text-2xl font-semibold text-gray-700">
+              <span className="option-text text-2xl font-semibold text-gray-700 cursor-pointer">
                 Relief Funds
               </span>
             </div>
@@ -69,7 +65,7 @@ const ViewFundRaiser = ({ activeSection, setActivesection }) => {
                 alt="Medicines"
                 className="option-image w-20 h-20 mx-auto mb-4"
               />
-              <span className="option-text text-2xl font-semibold text-gray-700">
+              <span className="option-text text-2xl font-semibold text-gray-700 cursor-pointer">
                 Medicines
               </span>
             </div>

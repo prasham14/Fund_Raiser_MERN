@@ -1,27 +1,10 @@
 import React from 'react';
-import { useState } from 'react';
-import CreateInitiative from './CreateInitiative';
-
 const NGO = () => {
-  const [activeSection, setActivesection] = useState(null);
-  function handleButton() {
-    setActivesection('createInitiatives');
-  }
-  const renderContent = () => {
-    switch (activeSection) {
-      case 'createInitiatives':
-        return (
-          <div>
-            <CreateInitiative />
-          </div>
-        )
-    }
-  }
   const links = [
     {
       id: 1,
       title: "Smile Foundaton",
-      image: "https://example.com/digital-india.jpg",
+      image: "https://www.smilefoundationindia.org/",
       url: "https://www.smilefoundationindia.org/"
     },
     {

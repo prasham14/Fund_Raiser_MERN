@@ -4,14 +4,14 @@ import axios from 'axios';
 // import editimg from './images/edit.png'
 import { CiEdit } from "react-icons/ci"
 
-function Profile({ isLoggedin, setIsLoggedIn }) {
-  const [name, setName] = useState(null);
+function Profile({ setIsLoggedIn }) {
+  const [username, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [profileImage, setProfileImage] = useState('');
   const [isChangeEmail, setIsChangeEmail] = useState(false);
   const [isChange, setIsChange] = useState(false);
   const [newData, setNewData] = useState({
-    name: '',
+    username: '',
     email: '',
     image: ''
   });
@@ -24,16 +24,16 @@ function Profile({ isLoggedin, setIsLoggedIn }) {
       return;
     }
 
-    axios.get(`http://localhost:7001/user/getUser/${id}`, { withCredentials: true })
+    axios.get(`http://localhost:5000/getUser/${id}`, { withCredentials: true })
       .then((response) => {
         const userData = response.data.response;
         console.log(userData);
         if (userData) {
-          setName(userData.name);
+          setName(userData.username);
           setEmail(userData.email);
           setProfileImage(userData.profileImage);
           setNewData({
-            name: userData.name,
+            username: userData.username,
             email: userData.email
           });
         }
@@ -46,14 +46,14 @@ function Profile({ isLoggedin, setIsLoggedIn }) {
       });
   }, [id]);
 
-  const userId = localStorage.getItem('user_id');
+  const userId = localStorage.getItem('userId');
   const changeNameHandler = async () => {
 
     try {
-      const res = await axios.put(`http://localhost:7001/user/UpdateName/${userId}`, { name: newData.name }, { withCredentials: true });
+      const res = await axios.put(`http://localhost:5000/UpdateName/${userId}`, { username: newData.username }, { withCredentials: true });
       console.log(res);
-      console.log(newData.name);
-      setName(newData.name);
+      console.log(newData.username);
+      setName(newData.username);
       setIsChange(false);
     }
 
@@ -67,7 +67,7 @@ function Profile({ isLoggedin, setIsLoggedIn }) {
   const changeEmailHandler = () => {
     let OTP = Math.floor(1000 + Math.random() * 9000);
     localStorage.setItem('otp', OTP);
-    axios.patch(`http://localhost:7001/user/EmailVerify/${newData.email}/${OTP}`, { withCredentials: true })
+    axios.patch(`http://localhost:5000/user/EmailVerify/${newData.email}/${OTP}`, { withCredentials: true })
       .then(() => {
         setIsChangeEmail(false);
         setIsEmailChange(true);
@@ -88,7 +88,7 @@ function Profile({ isLoggedin, setIsLoggedIn }) {
     if (otpValue === storedOtp) {
       alert("OTP Verified Successfully!");
       setIsEmailChange(false);
-      axios.patch(`http://localhost:7001/user/editEmail/${email}`, { email: newData.email }, { withCredentials: true }).then(() => {
+      axios.patch(`http://localhost:5000/user/editEmail/${email}`, { email: newData.email }, { withCredentials: true }).then(() => {
         console.log("Email updated successfully.");
         setEmail(newData.email);
       });
@@ -101,12 +101,7 @@ function Profile({ isLoggedin, setIsLoggedIn }) {
     localStorage.removeItem('isLoggedIn');
   }
 
-
-
-
   return (
-
-    // <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 flex items-center justify-center">
     <div className=" w-full max-w-md p-6 backdrop-blur-xl bg-[rgba(5,7,10,0.4)]
       shadow-[rgba(9,11,17,0.7)_0px_4px_16px_0px,rgba(19,23,32,0.8)_0px_8px_16px_-5px] rounded-[calc(16px)]
       border-solid border-[rgba(51,60,77,0.6)] relative min-h-[48px] shrink-0">
@@ -134,12 +129,12 @@ function Profile({ isLoggedin, setIsLoggedIn }) {
               relative text-white rounded-lg border border-[hsla(220,20%,25%,0.6)] bg-[#05080f] transition-[border] 
               duration-[120ms] ease-[ease-in] h-10 px-3 py-2 border-solid"
                 type="text"
-                name="name"
-                value={newData.name}
+                name="username"
+                value={newData.username}
                 onChange={onChangeHandler}
               />
             ) : (
-              <p className=" text-white flex-grow">{name ? name : 'Loading...'}</p>
+              <p className=" text-white flex-grow">{username ? username : 'Loading...'}</p>
             )}
 
             {isChange ? (
@@ -194,8 +189,6 @@ function Profile({ isLoggedin, setIsLoggedIn }) {
             )}
           </div>
         </div>
-
-        {/* OTP Verification */}
         {isEmailChange && (
           <div className="mb-6">
             <h2 className="font-semibold text-white  mb-2">Verify Email:</h2>
@@ -217,34 +210,12 @@ function Profile({ isLoggedin, setIsLoggedIn }) {
           </div>
         )}
 
-        {/* Image Upload Section */}
-        {/* <div className="flex flex-col sm:flex-row justify-between mt-8">
-          <form onSubmit={<div></div>}>
-            <div className="w-full sm:w-auto">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={<div></div>}
-                className="border border-gray-300 rounded-lg p-2 w-full mb-3"
-              />
-              <button
-                type="submit"
-                className="px-6 py-2 bg-indigo-500 text-white rounded-full hover:bg-indigo-600 transition shadow-lg w-full"
-              >
-                Upload Image
-              </button>
-            </div>
-          </form>
-        </div> */}
-
       </div>
       <div className='flex justify-center'>
         <button onClick={handleLogout} className='inline-flex items-center justify-center relative cursor-pointer select-none align-middle appearance-none 
               box-border font-medium text-sm leading-[1.75] min-w-[64px] w-full normal-case h-10 px-4 py-1.5 bg-white rounded-lg hover:bg-red-500 hover:text-white transition duration-300'>Logout </button>
       </div>
     </div>
-    // </div>
-
   );
 }
 export default Profile;

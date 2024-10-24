@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,33 +19,23 @@ const Login = () => {
         email,
         password
       }, { withCredentials: true });
-      console.log(response); // Log the response object  
+      console.log(response);
       if (response && response.data) {
 
         const token = response.data.token;
         localStorage.setItem('token', token);
-
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('email', email);
+        localStorage.setItem('userId', response.data.user.id);
+        navigate('/');
       }
       console.log("No response")
-      // Set the token in local storage or cookies  
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('email', email);
-      localStorage.setItem('userId', response.data._id);
-      navigate('/');
-      // toast.success("LoggedIn Successfully!");
+
 
     } catch (error) {
       setError(error.response.data.message);
-      // toast.warning('Login Failed , try again later !')
+
     }
-
-    // axios.post("http://localhost:5000/login", { email, password }, { withCredentials: true })
-    //   .then((res) => {
-    //     console.log("hello", " ", res);
-
-    //   }).catch((err) => {
-    //     console.log("error");
-    //   })
   };
 
   return (

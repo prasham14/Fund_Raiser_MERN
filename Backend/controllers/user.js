@@ -1,13 +1,6 @@
 const User = require('../models/User');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
-const js = process.env.JWT_SECRET;
 const nodemailer = require('nodemailer');
-const { jwtAuthMiddleware, generateToken } = require("./../jwt");
-
-
-
+const { generateToken } = require("./../jwt");
 
 async function signup(req, res) {
   try {
@@ -67,16 +60,28 @@ const signOut = async (req, res) => {
 
 async function editProfile(req, res) {
   try {
-    const email = req.params.email;
+    const id = req.params.userId;
+    console.log(id);
     const updatedData = req.body;
-    const user = await User.findOneAndUpdate({ email: email }, updatedData, { new: true });
-    if (user) {
-      res.json({ message: 'User updated successfully', response: user });
-    } else {
-      res.status(404).json({ message: 'User not found' });
-    }
-  } catch (error) {
-    res.status(500).json({ message: 'Error updating user', error });
+    const response = await User.findByIdAndUpdate(
+      id,
+      updatedData,
+      {
+        new: true, //returns updated document
+        runValidators: true, // for validations in mongoose , it checks the schema in which what is required
+      }
+    );
+    console.log(response);
+    return res.json({
+      success: true,
+      message: "success",
+      response: response
+    })
+  }
+  catch (error) {
+    return res.json({
+      message: "error occured"
+    })
   }
 }
 
