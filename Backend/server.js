@@ -24,7 +24,7 @@ app.use(cookieparser());
 app.use('/', authRoutes);
 app.use('/', jwtAuthMiddleware, fundRoutes);
 app.use('/', optionRoutes);
-app.use('/', initiativeRoutes);
+app.use('/', jwtAuthMiddleware, initiativeRoutes);
 app.use('/', jwtAuthMiddleware, docRoutes);
 
 const PORT = process.env.PORT || 5000;

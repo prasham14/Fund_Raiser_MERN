@@ -2,12 +2,13 @@ import React from 'react';
 import image from './images/images.jpeg';
 import { useNavigate } from 'react-router-dom';
 
-const Main = ({ isLoggedIn }) => {
+const Main = ({ isLoggedIn, setActivesection }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate('/signup');
   };
+
   isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
   return (
     <div className="main-content flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-teal-100 to-gray-50 px-4">
@@ -31,12 +32,15 @@ const Main = ({ isLoggedIn }) => {
 
       <div className="flex flex-col sm:flex-row justify-center mt-16 gap-8">
         {/* Image 1 */}
-        <div className="relative group overflow-hidden rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-96">
-          <img
-            src={image}
-            alt="Create Fundraiser"
-            className="w-full h-full object-cover"
-          />
+        <div className="relative group overflow-hidden rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-96 cursor-pointer">
+          <button onClick={() => { setActivesection('form') }}>
+            <img
+              src={image}
+              alt="Create Fundraiser"
+              className="w-full h-full object-cover"
+            />
+          </button>
+
           <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-opacity duration-300"></div>
           <div className="absolute inset-0 flex justify-center items-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <p className="text-lg font-bold">Create a Fundraiser</p>
@@ -45,11 +49,14 @@ const Main = ({ isLoggedIn }) => {
 
         {/* Image 2 */}
         <div className="relative group overflow-hidden rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-96">
-          <img
-            src={image}
-            alt="Community Support"
-            className="w-full h-full object-cover"
-          />
+          <button onClick={() => { setActivesection('viewFundRaiser') }}>
+            <img
+              src={image}
+              alt="Community Support"
+              className="w-full h-full object-cover"
+            />
+          </button>
+
           <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-opacity duration-300"></div>
           <div className="absolute inset-0 flex justify-center items-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <p className="text-lg font-bold">Get Support</p>

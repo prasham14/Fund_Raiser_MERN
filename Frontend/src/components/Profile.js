@@ -4,7 +4,7 @@ import axios from 'axios';
 // import editimg from './images/edit.png'
 import { CiEdit } from "react-icons/ci"
 
-function Profile({ setIsLoggedIn }) {
+function Profile({ setIsLoggedIn, setActivesection }) {
   const [username, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [profileImage, setProfileImage] = useState('');
@@ -99,6 +99,7 @@ function Profile({ setIsLoggedIn }) {
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem('isLoggedIn');
+    setActivesection('');
   }
 
   return (

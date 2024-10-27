@@ -24,6 +24,7 @@ function App({ activeSection, setActivesection }) {
     });
     console.log(result.data.data);
     setAllImage(result.data.data);
+
   };
 
   const submitImage = async (e) => {

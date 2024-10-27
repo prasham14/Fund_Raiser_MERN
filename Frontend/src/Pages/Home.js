@@ -10,9 +10,11 @@ import Option3 from '../components/Option3';
 import Profile from '../components/Profile';
 import Initiatives from '../components/Initiatives';
 import ViewFundRaiser from '../components/ViewFundRaiser';
+import MyInitiatives from '../components/MyInitiatives';
 import CreateInitiative from '../components/CreateInitiative';
 import Footer from '../components/Footer';
-
+import Highlights from '../components/Highlights';
+import Faqs from '../components/Faqs';
 const Home = () => {
   const [activeSection, setActivesection] = useState(null);
   const [isClicked, setisClicked] = useState(false);
@@ -87,9 +89,10 @@ const Home = () => {
       case 'option1': return <Option1 setActivesection={setActivesection} />;
       case 'option2': return <Option2 setActivesection={setActivesection} />;
       case 'option3': return <Option3 setActivesection={setActivesection} />;
-      case 'createInitiatives': return (<div><CreateInitiative /></div>)
+      case 'createInitiatives': return (<div><CreateInitiative activeSection={activeSection} setActivesection={setActivesection} /></div>)
       case 'doc': return (<Doc activeSection={activeSection} setActivesection={setActivesection} />)
-      default: return (<div><Main /></div>)
+      case 'getini': return (<MyInitiatives setActivesection={setActivesection} />)
+      default: return (<div><Main setActivesection={setActivesection} /></div>)
     }
   }
 
@@ -142,7 +145,7 @@ const Home = () => {
                 <div className="absolute top-12 right-0 w-[300px] rounded-lg shadow-lg bg-[rgba(5,7,10,0.7)]">
                   {
                     isClicked ? (<div ref={profileRef}>
-                      <Profile isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+                      <Profile isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setActivesection={setActivesection} />
                     </div>) : (null)
                   }
                 </div>
@@ -202,16 +205,27 @@ const Home = () => {
                       NGO's
                     </button>
                   </li>
+                  <li>
+                    <button
+                      onClick={() => { setActivesection('getini') }}
+                      className="w-full text-left hover:bg-gray-100 py-2 px-4 rounded-lg">
+                      My Initiatives
+                    </button>
+                  </li>
                 </ul>
               )}
             </div>
           </div>
         </nav>
       </div>
-      <div className="mt-20">{renderContent()}</div>
+      <div className="mt-20">{renderContent()}</div>\
+
       <div>
+        <Highlights />
+        <Faqs />
         <Footer />
       </div>
+
     </div>
   )
 };

@@ -2,8 +2,8 @@ const Raise = require('../models/Raise');
 const User = require('../models/User');
 
 async function raiseFund(req, res) {
-  const { title, details, funds, raised, type, date, user_id } = req.body;
-  console.log(details, funds);
+  const { title, details, funds, raised, type, date } = req.body;
+  const user_id = req.params.id;
   try {
     const user = await User.findById(user_id);
     console.log(user);
