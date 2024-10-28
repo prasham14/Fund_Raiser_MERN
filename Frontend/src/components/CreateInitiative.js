@@ -40,7 +40,7 @@ const FormSubmission = ({ setActivesection }) => {
           Authorization: `Bearer ${token}`
         }
       });
-
+      // localStorage.setItem('initiativeId', response._id);
       console.log('Data submitted successfully:', response.data);
       alert('Initiative Created!')
       setFormData({

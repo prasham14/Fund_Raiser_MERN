@@ -103,7 +103,7 @@ function Profile({ setIsLoggedIn, setActivesection }) {
   }
 
   return (
-    <div className=" w-full max-w-md p-6 backdrop-blur-xl bg-[rgba(5,7,10,0.4)]
+    <div className=" w-full max-w-md p-6 backdrop-blur-xl bg-[rgba(0,0,0,0.59)]
       shadow-[rgba(9,11,17,0.7)_0px_4px_16px_0px,rgba(19,23,32,0.8)_0px_8px_16px_-5px] rounded-[calc(16px)]
       border-solid border-[rgba(51,60,77,0.6)] relative min-h-[48px] shrink-0">
       <div className="text-center mb-8">

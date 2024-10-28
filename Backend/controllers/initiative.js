@@ -39,10 +39,7 @@ async function getInitiatives(req, res) {
 }
 
 async function getInitiativesByEmail(req, res) {
-
-
   const emailId = req.params.email;
-
   try {
     const initiatives = await Initiative.find({ email: emailId });
     return res.json(initiatives);
@@ -54,6 +51,32 @@ async function getInitiativesByEmail(req, res) {
   }
 }
 
+
+async function editInitiatives(req, res) {
+  const id = req.params.id;
+  console.log(id);
+  const updatedData = req.body;
+
+  try {
+    const response = await Initiative.findByIdAndUpdate(id,
+      updatedData,
+      {
+        new: true,
+        runValidators: true
+      });
+    console.log(response);
+    return res.json({
+      success: true,
+      message: "success",
+      response: response
+    })
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
 module.exports = {
-  createInitiative, getInitiatives, getInitiativesByEmail
+  createInitiative, getInitiatives, getInitiativesByEmail, editInitiatives
 };

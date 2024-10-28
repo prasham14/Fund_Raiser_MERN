@@ -1,5 +1,10 @@
 import React from 'react';
-const NGO = () => {
+import { FaArrowLeft } from "react-icons/fa";
+
+const NGO = ({ setActivesection }) => {
+  const handleBack = () => {
+    setActivesection('')
+  }
   const links = [
     {
       id: 1,
@@ -66,30 +71,41 @@ const NGO = () => {
 
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8 pl-16 pr-8">
+    <div className="min-h-screen bg-gray-100 py-12 px-6 lg:px-16">
       {/* Title */}
-      <h1 className="text-center text-4xl font-bold text-blue-600 mb-8">
-        Here are the most popular NGO.s and foundations in India!
+      <button onClick={handleBack}><FaArrowLeft /></button>
+      <h1 className="text-center text-4xl font-bold text-blue-600 mb-12">
+        Here are the Most Popular NGOs and Foundations in India!
       </h1>
 
       {/* Grid Container */}
-      <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 150px)' }}>
-        {links.map(link => (
-          <div key={link.id} className="bg-white shadow-lg rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300">
-            <img src={link.image} alt={link.title} className="w-full h-48 object-cover" />
-            <div className="p-4 text-center">
-              <a href={link.url} target="_blank" rel="noopener noreferrer"
-                className="text-lg font-semibold text-blue-500 hover:text-blue-700">
+      <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 px-4">
+        {links.map((link) => (
+          <div
+            key={link.id}
+            className="relative group bg-white shadow-lg rounded-lg overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-2"
+          >
+            <img
+              src={link.image}
+              alt={link.title}
+              className="w-full h-52 object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+            <div className="p-6 text-center">
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xl font-semibold text-blue-600 hover:text-blue-800 transition-colors duration-300"
+              >
                 {link.title}
               </a>
             </div>
+            {/* Overlay Effect */}
+            <div className="absolute inset-0 bg-gradient-to-t from-blue-800 via-transparent to-transparent opacity-0 group-hover:opacity-70 transition-opacity duration-300"></div>
           </div>
         ))}
       </div>
     </div>
-
-
-
 
   );
 };

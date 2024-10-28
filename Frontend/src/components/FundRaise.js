@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import { FaArrowLeft } from "react-icons/fa";
 const FormSubmission = ({ activeSection, setActivesection }) => {
   const [formData, setFormData] = useState({
     title: '',
@@ -12,7 +12,9 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
     type: 'Medicine',
     user_id: ''
   });
-
+  const handleBack = () => {
+    setActivesection('');
+  }
   const navigate = useNavigate();
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
@@ -66,6 +68,8 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
 
   return (
     <div className="form-container max-w-md mx-auto bg-white p-6 rounded-lg shadow-md mt-10">
+      <button onClick={handleBack}> <FaArrowLeft /></button>
+
       <h2 className="form-heading text-2xl font-bold text-gray-800 mb-6">Fill this form to raise a fund</h2>
       <form onSubmit={handleSubmit} className="form space-y-4">
         <div>
@@ -115,7 +119,7 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
           />
         </div>
         <div className="form-group">
-          <label className="block text-gray-700 font-semibold mb-1">Raised (Funds Already Raised):</label>
+          <label className="block text-gray-700 font-semibold mb-1">Raised (if raised):</label>
           <input
             name="raised"
             type="number"
@@ -126,7 +130,7 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
           />
         </div>
         <div className="form-group">
-          <label className="block text-gray-700 font-semibold mb-1">Validation Date:(your Funds will be expired after this date)</label>
+          <label className="block text-gray-700 font-semibold mb-1">Validation Date:(The FundRaiser will be expired after this date)</label>
           <input
             name="date"
             type="date"

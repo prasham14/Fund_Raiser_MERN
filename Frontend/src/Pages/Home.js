@@ -11,10 +11,12 @@ import Profile from '../components/Profile';
 import Initiatives from '../components/Initiatives';
 import ViewFundRaiser from '../components/ViewFundRaiser';
 import MyInitiatives from '../components/MyInitiatives';
+import MyFunds from '../components/MyFunds'
 import CreateInitiative from '../components/CreateInitiative';
 import Footer from '../components/Footer';
 import Highlights from '../components/Highlights';
 import Faqs from '../components/Faqs';
+import PdfComp from '../components/PdfComp'
 const Home = () => {
   const [activeSection, setActivesection] = useState(null);
   const [isClicked, setisClicked] = useState(false);
@@ -38,6 +40,7 @@ const Home = () => {
   }
 
   function handleLogin() {
+
     navigate('/login');
 
   }
@@ -83,7 +86,7 @@ const Home = () => {
     switch (activeSection) {
       case 'viewFundRaiser': return (<div><ViewFundRaiser activeSection={activeSection} setActivesection={setActivesection} /></div>)
       case 'form': return (<div><FormSubmission activeSection={activeSection} setActivesection={setActivesection} /></div>)
-      case 'ngo': return (<NGO />)
+      case 'ngo': return (<NGO setActivesection={setActivesection} />)
       case 'Initiative': return (<div>
         <Initiatives activeSection={activeSection} setActivesection={setActivesection} /></div>)
       case 'option1': return <Option1 setActivesection={setActivesection} />;
@@ -91,7 +94,9 @@ const Home = () => {
       case 'option3': return <Option3 setActivesection={setActivesection} />;
       case 'createInitiatives': return (<div><CreateInitiative activeSection={activeSection} setActivesection={setActivesection} /></div>)
       case 'doc': return (<Doc activeSection={activeSection} setActivesection={setActivesection} />)
+      case 'docs': return (<PdfComp />)
       case 'getini': return (<MyInitiatives setActivesection={setActivesection} />)
+      case 'myFunds': return (<MyFunds setActivesection={setActivesection} />)
       default: return (<div><Main setActivesection={setActivesection} /></div>)
     }
   }
@@ -210,6 +215,13 @@ const Home = () => {
                       onClick={() => { setActivesection('getini') }}
                       className="w-full text-left hover:bg-gray-100 py-2 px-4 rounded-lg">
                       My Initiatives
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => { setActivesection('myFunds') }}
+                      className="w-full text-left hover:bg-gray-100 py-2 px-4 rounded-lg">
+                      My Funds
                     </button>
                   </li>
                 </ul>

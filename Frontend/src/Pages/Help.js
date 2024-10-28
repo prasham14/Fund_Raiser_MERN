@@ -1,15 +1,25 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { FaArrowLeft } from "react-icons/fa";
 const Help = () => {
+  const navigate = useNavigate();
+  const handleBack = () => {
+    navigate('/')
+  }
   return (
-    <div class="bg-gray-100 py-12">
-      <div class="max-w-6xl mx-auto bg-white shadow-md rounded-lg p-8 md:p-12">
-        <header class="text-center mb-10">
-          <h1 class="text-4xl font-extrabold text-gray-800">Welcome to Our Fundraising Platform</h1>
-          <p class="mt-3 text-lg text-gray-600">Empowering You to Create Positive Change</p>
+    <div class="bg-gray-100 py-16">
+      <button onClick={handleBack}> <FaArrowLeft /></button>
+
+      <div class="max-w-6xl mx-auto bg-white shadow-lg rounded-lg p-10 md:p-14">
+        <header class="text-center mb-12">
+          <h1 class="text-4xl font-extrabold text-blue-700">Welcome to Our Fundraising Platform</h1>
+          <p class="mt-4 text-lg text-gray-600 leading-relaxed">
+            Empowering You to Create Positive Change
+          </p>
         </header>
 
-        <section class="description mb-8">
-          <h2 class="text-3xl font-semibold text-gray-800 mb-4">About Us</h2>
+        <section class="description mb-10">
+          <h2 class="text-3xl font-semibold text-blue-700 mb-6">About Us</h2>
           <p class="text-gray-700 mb-4 leading-relaxed">
             Our fundraising platform is dedicated to helping individuals, charities, and organizations raise funds for causes that matter.
             Whether you are raising money for medical expenses, education, community projects, or disaster relief, we provide a secure and
@@ -22,26 +32,45 @@ const Help = () => {
           </p>
         </section>
 
-        <section class="features mb-8">
-          <h2 class="text-3xl font-semibold text-gray-800 mb-4">Why Choose Us?</h2>
-          <ul class="list-disc list-inside text-gray-700 space-y-2">
-            <li>✔️ Secure payment gateway to protect your donations</li>
-            <li>✔️ Real-time campaign tracking and analytics</li>
-            <li>✔️ Easy social media sharing to reach a wider audience</li>
-            <li>✔️ 24/7 support to assist with any questions or issues</li>
+        <section class="features mb-12">
+          <h2 class="text-3xl font-semibold text-blue-700 mb-6">Why Choose Us?</h2>
+          <ul class="list-disc list-inside text-gray-700 space-y-3 pl-4">
+            <li class="flex items-center">
+              <span class="mr-2">✔️</span> Secure payment gateway to protect your donations
+            </li>
+            <li class="flex items-center">
+              <span class="mr-2">✔️</span> Real-time campaign tracking and analytics
+            </li>
+            <li class="flex items-center">
+              <span class="mr-2">✔️</span> Easy social media sharing to reach a wider audience
+            </li>
+            <li class="flex items-center">
+              <span class="mr-2">✔️</span> 24/7 support to assist with any questions or issues
+            </li>
           </ul>
         </section>
 
-        <footer class="footer text-center mt-8">
-          <h2 class="text-3xl font-semibold text-gray-800 mb-4">Contact Us</h2>
-          <p class="text-gray-700">Email: <a href="mailto:jprasham3@gmail.com" class="text-teal-600 hover:underline">jprasham3@gmail.com</a></p>
-          <p class="text-gray-700">Phone: <span class="text-teal-600">+91 8209871857</span></p>
-          <p class="text-gray-700">Rajasthan, India</p>
-          <p class="text-gray-700">Follow us on:</p>
-          <div class="flex justify-center space-x-6 mt-2">
-            <a href="#" target="_blank" class="text-teal-600 hover:text-teal-800 transition duration-200">Facebook</a>
-            <a href="#" target="_blank" class="text-teal-600 hover:text-teal-800 transition duration-200">Instagram</a>
-            <a href="#" target="_blank" class="text-teal-600 hover:text-teal-800 transition duration-200">Twitter</a>
+        <footer class="footer text-center mt-10">
+          <h2 class="text-3xl font-semibold text-blue-700 mb-6">Contact Us</h2>
+          <p class="text-gray-700 mb-2">
+            Email: <a href="mailto:jprasham3@gmail.com" class="text-teal-600 hover:underline">jprasham3@gmail.com</a>
+          </p>
+          <p class="text-gray-700 mb-2">
+            Phone: <span class="text-teal-600">+91 8209871857</span>
+          </p>
+          <p class="text-gray-700 mb-2">Rajasthan, India</p>
+          <p class="text-gray-700 mt-6">Follow us on:</p>
+
+          <div class="flex justify-center space-x-8 mt-4">
+            <a href="#" target="_blank" class="text-teal-600 hover:text-teal-800 transition duration-200 flex items-center space-x-2">
+              <span class="material-icons">facebook</span><span>Facebook</span>
+            </a>
+            <a href="#" target="_blank" class="text-teal-600 hover:text-teal-800 transition duration-200 flex items-center space-x-2">
+              <span class="material-icons">instagram</span><span>Instagram</span>
+            </a>
+            <a href="#" target="_blank" class="text-teal-600 hover:text-teal-800 transition duration-200 flex items-center space-x-2">
+              <span class="material-icons">twitter</span><span>Twitter</span>
+            </a>
           </div>
         </footer>
       </div>
