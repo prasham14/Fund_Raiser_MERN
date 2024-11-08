@@ -3,7 +3,9 @@ const connectDB = require('./config/db');
 const authRoutes = require('./routes/auth');
 const fundRoutes = require('./routes/fundRoutes');
 const optionRoutes = require('./routes/optionRoutes');
+const userDetailsRoutes = require('./routes/userDetails')
 const initiativeRoutes = require('./routes/initiative')
+const transactionRoutes = require('./routes/transactionRoutes')
 const docRoutes = require('./routes/docRoutes')
 const bodyParser = require('body-parser');
 const { jwtAuthMiddleware } = require('./jwt')
@@ -26,7 +28,8 @@ app.use('/', jwtAuthMiddleware, fundRoutes);
 app.use('/', optionRoutes);
 app.use('/', jwtAuthMiddleware, initiativeRoutes);
 app.use('/', jwtAuthMiddleware, docRoutes);
-
+app.use('/', jwtAuthMiddleware, userDetailsRoutes);
+app.use('/', jwtAuthMiddleware, transactionRoutes);
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 

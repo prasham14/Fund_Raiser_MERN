@@ -158,7 +158,6 @@ async function editEmail(req, res) {
   }
 }
 
-
 module.exports = {
   signup, login, profile, editProfile, signOut, editEmail, emailVerify
 };

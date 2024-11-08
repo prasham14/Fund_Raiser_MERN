@@ -11,8 +11,6 @@ async function option1(req, res) {
     res.status(500).json({ error: "Internal server error" });
   }
 }
-
-
 async function educationDetails(req, res) {
   try {
 

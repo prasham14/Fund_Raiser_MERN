@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaArrowLeft } from "react-icons/fa";
+import Transaction from "./Transaction";
+
 const Option2 = ({ setActivesection }) => {
   const [funds, setFunds] = useState([]);
-  const [selectedFund, setSelectedFund] = useState(null); // To store the selected fund
+  const [selectedFund, setSelectedFund] = useState(null);
 
   const token = localStorage.getItem('token');
 
@@ -24,20 +26,71 @@ const Option2 = ({ setActivesection }) => {
   }, [token]);
 
   const clickHandler = (fund) => {
-    setSelectedFund(fund); // Set the clicked fund to display its details
+    setSelectedFund(fund);
   };
 
   const goBackHandler = () => {
-    setSelectedFund(null); // Clear the selected fund to go back to the list
+    setSelectedFund(null);
   };
+
   const handleBack = () => {
-    setActivesection('viewFundRaiser')
-  }
+    setActivesection('viewFundRaiser');
+  };
+
+  const handleDonate = async () => {
+    try {
+      // Create a new order on the backend
+      const { data } = await axios.post('http://localhost:5000/api/donations/create-order', {
+        amount: selectedFund.amount, // Send amount here for the selected fund
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      // Open Razorpay payment window
+      const options = {
+        key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+        amount: selectedFund.amount * 100, // Razorpay expects amount in paise
+        currency: "INR",
+        name: "Fundraiser",
+        description: `Donate to ${selectedFund.title}`,
+        order_id: data.orderId,
+        handler: async (response) => {
+          try {
+            // Send payment response to your server for verification and processing
+            await axios.post('http://localhost:5000/api/donations/verify-payment', {
+              orderId: data.orderId,
+              paymentId: response.razorpay_payment_id,
+              signature: response.razorpay_signature,
+            });
+
+            alert('Donation successful');
+          } catch (error) {
+            console.error('Payment verification failed:', error);
+          }
+        },
+        prefill: {
+          name: "", // User's name here
+          email: "", // User's email here
+          contact: "", // User's contact here
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+    } catch (error) {
+      console.error('Error in handleDonate:', error);
+    }
+  };
+
   return (
     <div className="funds-container max-w-7xl mx-auto p-6 bg-gradient-to-b from-gray-100 to-white rounded-lg shadow-lg">
       <button onClick={handleBack}><FaArrowLeft /></button>
       {selectedFund ? (
-        // Render the selected fund's details if a fund is selected
         <div className="fund-details-container max-w-5xl mx-auto p-6 bg-white shadow-lg rounded-lg">
           <h1 className="text-3xl font-bold mb-4 text-gray-900">{selectedFund.title}</h1>
           <p className="mb-3 text-gray-700"><strong>Purpose:</strong> {selectedFund.details}</p>
@@ -46,6 +99,7 @@ const Option2 = ({ setActivesection }) => {
           <p className="mb-6 text-gray-700"><strong>Date Created:</strong> {new Date(selectedFund.date).toLocaleDateString()}</p>
 
           <button
+            onClick={handleDonate}
             className="bg-green-500 text-white py-2 px-4 rounded shadow-lg hover:bg-green-600 transition-all duration-300 ease-in-out"
           >
             Donate to this Fund
@@ -59,7 +113,6 @@ const Option2 = ({ setActivesection }) => {
           </button>
         </div>
       ) : (
-        // Render the list of funds if no fund is selected
         <>
           <h1 className="text-4xl font-bold text-center mb-8 text-gray-900">Relief Funds</h1>
           <ul className="funds-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -92,10 +145,7 @@ const Option2 = ({ setActivesection }) => {
         </>
       )}
     </div>
-
   );
 };
 
 export default Option2;
-
-

@@ -3,6 +3,7 @@ import axios from 'axios';
 // import defaultimg from './images/profile.png';
 // import editimg from './images/edit.png'
 import { CiEdit } from "react-icons/ci"
+import SeeDetails from './SeeDetails';
 
 function Profile({ setIsLoggedIn, setActivesection }) {
   const [username, setName] = useState(null);
@@ -10,6 +11,7 @@ function Profile({ setIsLoggedIn, setActivesection }) {
   const [profileImage, setProfileImage] = useState('');
   const [isChangeEmail, setIsChangeEmail] = useState(false);
   const [isChange, setIsChange] = useState(false);
+  const [isDetailsAdded, setIsDetailsAdded] = useState(false);
   const [newData, setNewData] = useState({
     username: '',
     email: '',
@@ -100,6 +102,10 @@ function Profile({ setIsLoggedIn, setActivesection }) {
     setIsLoggedIn(false);
     localStorage.removeItem('isLoggedIn');
     setActivesection('');
+  }
+  const handleSeeDetails = () => {
+    setActivesection('seeDetails');
+    <SeeDetails isDetailsAdded={isDetailsAdded} setIsDetailsAdded={setIsDetailsAdded} />
   }
 
   return (
@@ -210,7 +216,28 @@ function Profile({ setIsLoggedIn, setActivesection }) {
             </form>
           </div>
         )}
+        <div>
+          {
+            !isDetailsAdded ? (
+              <button onClick={handleSeeDetails} className='text-white' >Add personal details</button>) : (<div>
 
+              </div>)
+          }
+        </div>
+        <div>
+          <button
+            onClick={() => { setActivesection('getini') }}
+            className="w-full text-white text-left hover:bg-gray-100 py-2 px-4 rounded-lg">
+            My Initiatives
+          </button>
+        </div>
+        <div>
+          <button
+            onClick={() => { setActivesection('myFunds') }}
+            className="w-full text-white text-left hover:bg-gray-100 py-2 px-4 rounded-lg">
+            My Funds
+          </button>
+        </div>
       </div>
       <div className='flex justify-center'>
         <button onClick={handleLogout} className='inline-flex items-center justify-center relative cursor-pointer select-none align-middle appearance-none 

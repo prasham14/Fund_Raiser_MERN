@@ -17,15 +17,16 @@ import Footer from '../components/Footer';
 import Highlights from '../components/Highlights';
 import Faqs from '../components/Faqs';
 import PdfComp from '../components/PdfComp'
+import PaymentPage from '../components/Transaction';
+import SeeDetails from '../components/SeeDetails';
+import ShowDetails from '../components/ShowDetails';
 const Home = () => {
   const [activeSection, setActivesection] = useState(null);
   const [isClicked, setisClicked] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem('isLoggedIn') === 'true';
   });
-
   const navigate = useNavigate();
-
   function handleViewFundRaiser() {
     isLoggedIn ? (setActivesection('viewFundRaiser')) : (navigate('/login'))
   }
@@ -94,9 +95,12 @@ const Home = () => {
       case 'option3': return <Option3 setActivesection={setActivesection} />;
       case 'createInitiatives': return (<div><CreateInitiative activeSection={activeSection} setActivesection={setActivesection} /></div>)
       case 'doc': return (<Doc activeSection={activeSection} setActivesection={setActivesection} />)
-      case 'docs': return (<PdfComp />)
+      case 'docs': return (<PdfComp setActivesection={setActivesection} />)
       case 'getini': return (<MyInitiatives setActivesection={setActivesection} />)
       case 'myFunds': return (<MyFunds setActivesection={setActivesection} />)
+      case 'seeDetails': return (<SeeDetails setActivesection={setActivesection} />)
+      case 'transaction': return (<PaymentPage setActivesection={setActivesection} />)
+      case 'showPersonalDetails': return (<ShowDetails setActivesection={setActivesection} />)
       default: return (<div><Main setActivesection={setActivesection} /></div>)
     }
   }
@@ -210,34 +214,18 @@ const Home = () => {
                       NGO's
                     </button>
                   </li>
-                  <li>
-                    <button
-                      onClick={() => { setActivesection('getini') }}
-                      className="w-full text-left hover:bg-gray-100 py-2 px-4 rounded-lg">
-                      My Initiatives
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() => { setActivesection('myFunds') }}
-                      className="w-full text-left hover:bg-gray-100 py-2 px-4 rounded-lg">
-                      My Funds
-                    </button>
-                  </li>
                 </ul>
               )}
             </div>
           </div>
         </nav>
       </div>
-      <div className="mt-20">{renderContent()}</div>\
-
+      <div className="mt-20 bg-gradient-to-br from-teal-100 to-gray-50">{renderContent()}</div>
       <div>
         <Highlights />
         <Faqs />
         <Footer />
       </div>
-
     </div>
   )
 };

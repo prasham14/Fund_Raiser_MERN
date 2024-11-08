@@ -9,7 +9,7 @@ const Footer = () => {
           <div>
             <h3 className="text-2xl font-bold mb-4">About Us</h3>
             <p className="text-gray-400 leading-relaxed">
-              This platform provides you a way to help the needy people by donating them very easily , you can contact them and help them by just one click.
+              We are committed to empowering communities by connecting those in need with generous donors. Our platform makes it simple to raise and donate funds, fostering positive change one contribution at a time.
             </p>
           </div>
 
@@ -17,16 +17,16 @@ const Footer = () => {
             <h3 className="text-2xl font-bold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li><a href="/" className="hover:underline text-gray-400">Home</a></li>
-              <li><a href="/dashboard" className="hover:underline text-gray-400">Home</a></li>
-              <li><a href="/leaderboard" className="hover:underline text-gray-400">Start a FundRaiser</a></li>
-              <li><a href="/streaks" className="hover:underline text-gray-400">View Funds</a></li>
-              <li><a href="/help" className="hover:underline text-gray-400">Help & Support</a></li>
+              <li><a href="/dashboard" className="hover:underline text-gray-400">Dashboard</a></li>
+              <li><a href="/fundraiser/start" className="hover:underline text-gray-400">Start a Fundraiser</a></li>
+              <li><a href="/funds" className="hover:underline text-gray-400">View Fundraisers</a></li>
+              <li><a href="/support" className="hover:underline text-gray-400">Help & Support</a></li>
             </ul>
           </div>
 
           <div>
             <h3 className="text-2xl font-bold mb-4">Contact Us</h3>
-            <p className="text-gray-400">Email: <a href="mailto:info@schedulemanager.com" className="text-teal-500 hover:underline">jprasham3@gmail.com</a></p>
+            <p className="text-gray-400">Email: <a href="mailto:jprasham3@gmail.com" className="text-teal-500 hover:underline">jprasham3@gmail.com</a></p>
             <p className="text-gray-400">Phone: <span className="text-teal-500">+91 8209871857</span></p>
             <p className="text-gray-400">Rajasthan, India</p>
           </div>
@@ -35,22 +35,22 @@ const Footer = () => {
         <hr className="my-8 border-gray-600" />
 
         <div className="flex flex-col md:flex-row items-center justify-between">
-          <p className="text-gray-400">&copy; 2024 Fundraiser. All Rights Reserved.</p>
+          <p className="text-gray-400">&copy; 2024 Fundraiser Platform. All Rights Reserved.</p>
 
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#" className="text-gray-400 hover:text-white text-2xl">
+            <a href="#" className="text-gray-400 hover:text-white text-2xl" aria-label="Facebook">
               <FaFacebook />
             </a>
-            <a href="#" className="text-gray-400 hover:text-white text-2xl">
+            <a href="#" className="text-gray-400 hover:text-white text-2xl" aria-label="Instagram">
               <FaInstagram />
             </a>
-            <a href="#" className="text-gray-400 hover:text-white text-2xl">
+            <a href="#" className="text-gray-400 hover:text-white text-2xl" aria-label="Twitter">
               <FaTwitter />
             </a>
-            <a href="#" className="text-gray-400 hover:text-white text-2xl">
+            <a href="#" className="text-gray-400 hover:text-white text-2xl" aria-label="LinkedIn">
               <FaLinkedin />
             </a>
-            <a href="#" className="text-gray-400 hover:text-white text-2xl">
+            <a href="#" className="text-gray-400 hover:text-white text-2xl" aria-label="GitHub">
               <FaGithub />
             </a>
           </div>

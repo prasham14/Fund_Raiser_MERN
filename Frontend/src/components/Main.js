@@ -8,6 +8,9 @@ const Main = ({ isLoggedIn, setActivesection }) => {
   const handleClick = () => {
     navigate('/signup');
   };
+  const handleImage1 = () => {
+    setActivesection('form')
+  }
 
   isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
   return (
@@ -33,7 +36,7 @@ const Main = ({ isLoggedIn, setActivesection }) => {
       <div className="flex flex-col sm:flex-row justify-center mt-16 gap-8">
         {/* Image 1 */}
         <div className="relative group overflow-hidden rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-96 cursor-pointer">
-          <button onClick={() => { setActivesection('form') }}>
+          <button onClick={handleImage1}>
             <img
               src={image}
               alt="Create Fundraiser"

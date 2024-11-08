@@ -6,7 +6,6 @@ const Option1 = ({ setActivesection }) => {
   const [selectedFund, setSelectedFund] = useState(null); // To store the selected fund
 
   const token = localStorage.getItem('token');
-
   useEffect(() => {
     const fetchFunds = async () => {
       try {
@@ -94,7 +93,6 @@ const Option1 = ({ setActivesection }) => {
         </>
       )}
     </div>
-
   );
 };
 

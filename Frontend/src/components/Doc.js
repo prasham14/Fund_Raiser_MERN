@@ -68,7 +68,7 @@ function App({ activeSection, setActivesection }) {
 
   return (
     <div className="App bg-gray-50 min-h-screen flex flex-col items-center justify-center">
-      <button onClick={handleBack}> <FaArrowLeft /></button>
+
 
       {!selectedFundPdf ? (
         <>
@@ -76,21 +76,27 @@ function App({ activeSection, setActivesection }) {
             className="bg-white shadow-md rounded-lg p-8 w-full max-w-lg"
             onSubmit={submitImage}
           >
-            {/* Form contents */}
-            <h4 className="text-xl font-semibold text-gray-800 mb-4 text-center">
-              Upload the documents for verification
+            {/* Header Information */}
+            <h4 className="text-xl font-semibold text-gray-800 mb-2 text-center">
+              <button onClick={handleBack}>
+                <FaArrowLeft />
+              </button>
+              Upload Verification Documents
             </h4>
-            <h4 className="text-xl font-semibold text-gray-800 mb-4 text-center">
-              (The Documents will be visible to Donor)
-            </h4>
-            {/* Form inputs */}
+            <p className="text-gray-600 mb-6 text-center">
+              Provide documentation to validate this fundraiser. These documents will be accessible to donors.
+            </p>
+
+            {/* Input for Document Title */}
             <input
               type="text"
               className="form-control w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Title"
+              placeholder="Document Title (e.g., Medical Certificate)"
               required
               onChange={(e) => setTitle(e.target.value)}
             />
+
+            {/* File Upload for Document */}
             <input
               type="file"
               className="form-control w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mt-5 mb-5"
@@ -98,11 +104,13 @@ function App({ activeSection, setActivesection }) {
               required
               onChange={(e) => setFile(e.target.files[0])}
             />
+
+            {/* Submit Button */}
             <button
-              className="btn btn-primary bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-600 transition duration-300 "
+              className="btn btn-primary bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-600 transition duration-300"
               type="submit"
             >
-              Submit
+              Upload Document
             </button>
           </form>
         </>
@@ -110,6 +118,7 @@ function App({ activeSection, setActivesection }) {
         <PdfComp pdfFile={selectedFundPdf} />
       )}
     </div>
+
   );
 }
 

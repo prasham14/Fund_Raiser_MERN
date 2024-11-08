@@ -1,35 +1,37 @@
 import React from 'react';
 // import { SettingsSuggestIcon, ConstructionIcon, ThumbUpAltIcon, AutoFixHighIcon, SupportAgentIcon, QueryStatsIcon } from '@mui/icons-material';
+
 const items = [
   {
     // icon: <SettingsSuggestIcon className="opacity-50 text-white" />,
-    title: 'Raise Your fund easily',
-    description: 'You can easily start a fundRaiser and it will be shown to every user on this platform .',
+    title: 'Start Your Fundraiser with Ease',
+    description: 'Launch a fundraiser effortlessly and reach a wide audience, connecting with supporters across the platform.',
   },
   {
     // icon: <ConstructionIcon className="opacity-50 text-white" />,
-    title: 'Optimized Time Management',
-    description: 'Maximize productivity with schedules designed to make the most of your time, helping you reach milestones efficiently.',
+    title: 'Maximized Reach and Visibility',
+    description: 'Get noticed! Our platform optimizes visibility, ensuring your cause is seen by more potential donors ready to help.',
   },
   {
     // icon: <ThumbUpAltIcon className="opacity-50 text-white" />,
-    title: 'Dynamic Scheduling',
-    description: 'Adapt easily to changing priorities—our system updates your schedule in real-time to keep you on track.',
+    title: 'Real-Time Updates and Engagement',
+    description: 'Stay connected with your supporters through live updates and activity tracking, fostering real-time engagement.',
   },
   {
     // icon: <AutoFixHighIcon className="opacity-50 text-white" />,
-    title: 'Progress Insights',
-    description: 'Gain valuable insights into your performance with detailed progress reports and time analytics that guide your journey.',
+    title: 'Insights to Boost Your Impact',
+    description: 'Access insights into your fundraiser’s performance with detailed analytics, helping you make impactful decisions.',
   },
   {
     // icon: <SupportAgentIcon className="opacity-50 text-white" />,
-    title: 'Seamless Goal Integration',
-    description: 'Easily set goals and see them transformed into actionable plans, making big dreams achievable step by step.',
-  },
+    title: 'Support for Initiatives & NGOs',
+    description: 'Launch and promote NGO projects or initiative programs with tools that amplify reach and impact, connecting you with passionate supporters.',
+  }
+  ,
   {
     // icon: <QueryStatsIcon className="opacity-50 text-white" />,
-    title: 'Boosted Productivity',
-    description: 'Focus on what matters most by eliminating distractions and following a clear, organized roadmap to success.',
+    title: 'Boosted Donor Engagement',
+    description: 'Engage supporters with personalized messages, updates, and thank-yous, making every donor feel valued.',
   },
 ];
 
@@ -38,9 +40,9 @@ export default function Highlights() {
     <div id="highlights" className="bg-[#001512] text-white py-8 sm:py-16">
       <div className="container mx-auto flex flex-col items-center gap-6 sm:gap-12">
         <div className="w-full sm:w-4/5 md:w-3/5 text-center sm:text-left">
-          <h2 className="text-3xl font-bold mb-4 flex justify-center items-center">What to do ? </h2>
+          <h2 className="text-3xl font-bold mb-4 flex justify-center items-center">Why Choose Us?</h2>
           <p className="text-gray-400 text-center">
-            Explore why our platform stands out: adaptability, durability, user-friendly design, and innovation. Enjoy reliable customer support and precision in every detail.
+            Discover how our platform empowers fundraisers with visibility, engagement, and user-friendly tools designed to help you reach your goals.
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
