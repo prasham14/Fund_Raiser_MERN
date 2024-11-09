@@ -97,7 +97,6 @@ const Option2 = ({ setActivesection }) => {
           <p className="mb-3 text-gray-700"><strong>Funds Available:</strong> {selectedFund.funds} INR</p>
           <p className="mb-3 text-gray-700"><strong>Amount Raised:</strong> {selectedFund.raised} INR</p>
           <p className="mb-6 text-gray-700"><strong>Date Created:</strong> {new Date(selectedFund.date).toLocaleDateString()}</p>
-
           <button
             onClick={handleDonate}
             className="bg-green-500 text-white py-2 px-4 rounded shadow-lg hover:bg-green-600 transition-all duration-300 ease-in-out"
@@ -128,12 +127,22 @@ const Option2 = ({ setActivesection }) => {
                   <p className="mb-2 text-gray-700"><strong>Amount Raised:</strong> {fund.raised} INR</p>
                   <p className="mb-6 text-gray-700"><strong>Date Created:</strong> {new Date(fund.date).toLocaleDateString()}</p>
 
-                  <button
-                    className="bg-blue-500 text-white py-2 px-4 rounded shadow-lg hover:bg-blue-600 transition-all duration-300 ease-in-out w-full"
-                    onClick={() => clickHandler(fund)}
-                  >
-                    Click here for details
-                  </button>
+                  {fund.isExpired && (
+                    <p className="text-red-500 font-bold">Expired</p>
+                  )}
+                  {
+                    fund.isExpired ? (<div><p>This fund is expired , You can contact to the Raiser if you want to help</p></div>) : (
+                      <div>
+                        <button
+                          className="bg-blue-500 text-white py-2 px-4 rounded shadow-lg hover:bg-blue-600 transition-all duration-300 ease-in-out w-full"
+                          onClick={() => clickHandler(fund)}
+                        >
+                          Click here for details
+                        </button>
+                      </div>
+                    )
+                  }
+
                 </li>
               ))
             ) : (

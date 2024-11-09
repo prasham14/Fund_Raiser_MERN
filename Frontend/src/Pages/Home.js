@@ -20,6 +20,7 @@ import PdfComp from '../components/PdfComp'
 import PaymentPage from '../components/Transaction';
 import SeeDetails from '../components/SeeDetails';
 import ShowDetails from '../components/ShowDetails';
+import ShowDoc from "../components/ShowDoc";
 const Home = () => {
   const [activeSection, setActivesection] = useState(null);
   const [isClicked, setisClicked] = useState(false);
@@ -101,13 +102,14 @@ const Home = () => {
       case 'seeDetails': return (<SeeDetails setActivesection={setActivesection} />)
       case 'transaction': return (<PaymentPage setActivesection={setActivesection} />)
       case 'showPersonalDetails': return (<ShowDetails setActivesection={setActivesection} />)
+      case 'showdoc': return (<ShowDoc setActivesection={setActivesection} />);
       default: return (<div><Main setActivesection={setActivesection} /></div>)
     }
   }
 
   return (
     <div className="home-container flex flex-col min-h-screen bg-gray-50">
-      <div className="navbar w-full bg-[#001512] fixed top-0 z-50 flex justify-between items-center px-8 py-4 shadow-md">
+      <div className="navbar w-full bg-gradient-to-r from-[#001512] to-[#00393c] fixed top-0 z-50 flex justify-between items-center px-8 py-4 shadow-md">
         <nav className="navbar-nav flex items-center justify-between w-full">
           <div className="flex items-center space-x-4">
             <h1 className="text-2xl font-bold text-white">FundRaiser Platform</h1>
@@ -220,7 +222,9 @@ const Home = () => {
           </div>
         </nav>
       </div>
-      <div className="mt-20 bg-gradient-to-br from-teal-100 to-gray-50">{renderContent()}</div>
+
+
+      <div className="mt-20 bg-gradient-to-r from-[#cbeee9] to-[#f0f8f8]">{renderContent()}</div>
       <div>
         <Highlights />
         <Faqs />

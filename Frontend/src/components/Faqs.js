@@ -42,33 +42,33 @@ export default function Faqs() {
   };
 
   return (
-    <div id="faqs" className="bg-[#001512] text-white py-8 sm:py-16">
+    <div id="faqs" className="bg-gradient-to-r from-[#cbeee9] to-[#f0f8f8] text-gray-800 py-8 sm:py-16">
       <div className="container mx-auto flex flex-col items-center gap-6 sm:gap-12">
         <div className="w-full sm:w-4/5 md:w-3/5 text-center sm:text-left">
-          <h2 className="text-3xl font-bold mb-1 flex justify-center items-center">
-            Frequently Asked Questions
+          <h2 className="text-3xl font-bold text-teal-600 mb-4 flex justify-center sm:justify-start items-center">
+            Frequently Asked Questions (FAQs)
           </h2>
         </div>
 
-        <div className="border-gray-700 max-w-[900px]">
+        <div className="max-w-[900px] w-full ">
           {questions.map((item, index) => (
             <div
               key={index}
-              className="bg-customBlue p-6 rounded-md border border-gray-700 mb-4"
+              className="bg-white p-6 rounded-md border border-gray-300 shadow-sm mb-4 hover:shadow-md transition-shadow duration-300"
             >
               {/* Question and Icon Section */}
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full flex justify-between items-center text-lg font-medium focus:outline-none"
+                className="w-full flex justify-between items-center text-lg font-medium text-black focus:outline-none"
               >
                 {/* Question */}
                 <span className="text-left">{item.question}</span>
 
                 {/* Icon on the Right */}
                 {openIndex === index ? (
-                  <FaChevronUp className="text-gray-400" />
+                  <FaChevronUp className="text-teal-400" />
                 ) : (
-                  <FaChevronDown className="text-gray-400" />
+                  <FaChevronDown className="text-teal-400" />
                 )}
               </button>
 
@@ -77,12 +77,13 @@ export default function Faqs() {
                 className={`transition-all duration-300 overflow-hidden ${openIndex === index ? 'max-h-60 mt-4' : 'max-h-0'
                   }`}
               >
-                <p className="text-customBlue-400 text-sm">{item.answer}</p>
+                <p className="text-gray-600 text-sm mt-2">{item.answer}</p>
               </div>
             </div>
           ))}
         </div>
       </div>
     </div>
+
   );
 }

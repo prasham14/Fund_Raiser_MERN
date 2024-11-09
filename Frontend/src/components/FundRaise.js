@@ -67,100 +67,103 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
   };
 
   return (
-    <div className="form-container max-w-md mx-auto bg-white p-6 rounded-lg shadow-md mt-10">
-      <button onClick={handleBack}>
-        <FaArrowLeft />
+    <div className="form-container max-w-lg mx-auto bg-white p-8 rounded-2xl shadow-lg mt-12">
+      {/* Back Button */}
+      <button onClick={handleBack} className="text-teal-500 hover:text-teal-700 transition duration-150 mb-4">
+        <FaArrowLeft size={20} />
       </button>
 
-      <h2 className="form-heading text-2xl font-bold text-gray-800 mb-6">Start a Fundraiser</h2>
-      <p className="text-gray-600 mb-6">Complete the form below to share your cause and start raising funds.</p>
+      {/* Heading */}
+      <h2 className="text-3xl font-semibold text-gray-700 mb-3">Start a Fundraiser</h2>
+      <p className="text-gray-500 text-base mb-6">
+        Complete the form below to share your cause and start raising funds.
+      </p>
 
-      <form onSubmit={handleSubmit} className="form space-y-4">
-        <div>
-          <label className="block text-gray-700 font-semibold mb-1">Fundraiser Title:</label>
-          <input
-            name="title"
-            type="text"
-            value={formData.title}
-            onChange={handleChange}
-            required
-            className="form-input w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-          />
+      {/* Form */}
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {/* Fundraiser Title */}
+          <div className="form-group col-span-1 sm:col-span-2">
+            <label className="block text-gray-600 font-medium mb-1">Fundraiser Title</label>
+            <input
+              name="title"
+              type="text"
+              value={formData.title}
+              onChange={handleChange}
+              required
+              className="w-full p-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200"
+              placeholder="Enter title for your fundraiser"
+            />
+          </div>
+
+          {/* Category Select */}
+          <div className="form-group">
+            <label className="block text-gray-600 font-medium mb-1">Category</label>
+            <select
+              name="type"
+              value={formData.type}
+              onChange={handleChange}
+              className="w-full p-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200"
+            >
+              <option value="Medicine">Medicine</option>
+              <option value="Education">Education</option>
+              <option value="Relief Fund">Relief Fund</option>
+            </select>
+          </div>
+
+          {/* Goal Amount */}
+          <div className="form-group">
+            <label className="block text-gray-600 font-medium mb-1">Goal Amount (₹)</label>
+            <input
+              name="funds"
+              type="number"
+              value={formData.funds}
+              onChange={handleChange}
+              required
+              className="w-full p-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200"
+              placeholder="Set a target amount"
+            />
+          </div>
+
+          {/* Details */}
+          <div className="form-group col-span-1 sm:col-span-2">
+            <label className="block text-gray-600 font-medium mb-1">Details</label>
+            <textarea
+              name="details"
+              value={formData.details}
+              onChange={handleChange}
+              required
+              className="w-full p-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200"
+              placeholder="Provide a brief description of the fundraiser and why support is needed."
+              rows="4"
+            />
+          </div>
+
+          {/* End Date */}
+          <div className="form-group">
+            <label className="block text-gray-600 font-medium mb-1">Fundraiser End Date</label>
+            <input
+              name="date"
+              type="date"
+              value={formData.date}
+              onChange={handleChange}
+              required
+              className="w-full p-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200"
+            />
+            <p className="text-gray-400 text-xs mt-2">Your fundraiser will close on this date.</p>
+          </div>
         </div>
 
-        <div className="form-group">
-          <label className="block text-gray-700 font-semibold mb-1">Category:</label>
-          <select
-            name="type"
-            value={formData.type}
-            onChange={handleChange}
-            className="form-input w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-            id="type"
-          >
-            <option value="Medicine">Medicine</option>
-            <option value="Education">Education</option>
-            <option value="Relief Fund">Relief Fund</option>
-            {/* Add more categories as needed */}
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label className="block text-gray-700 font-semibold mb-1">Cause Details:</label>
-          <textarea
-            name="details"
-            value={formData.details}
-            onChange={handleChange}
-            required
-            className="form-input w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-            placeholder="Provide a brief description of the fundraiser and why support is needed."
-          />
-        </div>
-
-        <div className="form-group">
-          <label className="block text-gray-700 font-semibold mb-1">Goal Amount (₹):</label>
-          <input
-            name="funds"
-            type="number"
-            value={formData.funds}
-            onChange={handleChange}
-            required
-            className="form-input w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-          />
-        </div>
-
-        <div className="form-group">
-          <label className="block text-gray-700 font-semibold mb-1">Amount Raised So Far (₹):</label>
-          <input
-            name="raised"
-            type="number"
-            value={formData.raised}
-            onChange={handleChange}
-            className="form-input w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-            placeholder="Leave blank if none raised yet"
-          />
-        </div>
-
-        <div className="form-group">
-          <label className="block text-gray-700 font-semibold mb-1">Fundraiser End Date:</label>
-          <input
-            name="date"
-            type="date"
-            value={formData.date}
-            onChange={handleChange}
-            required
-            className="form-input w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-          />
-          <p className="text-gray-500 text-xs mt-1">Your fundraiser will close on this date.</p>
-        </div>
-
+        {/* Submit Button */}
         <button
           type="submit"
-          className="form-button w-full bg-teal-500 text-white py-2 rounded-lg hover:bg-teal-600 transition duration-200"
+          className="w-full py-3 bg-teal-500 text-white font-medium rounded-lg hover:bg-teal-600 transition duration-200 ease-in-out transform hover:scale-105 mt-4"
         >
           Launch Fundraiser
         </button>
       </form>
     </div>
+
 
   );
 };

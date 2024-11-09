@@ -37,24 +37,30 @@ const items = [
 
 export default function Highlights() {
   return (
-    <div id="highlights" className="bg-[#001512] text-white py-8 sm:py-16">
+    <div id="highlights" className="bg-gradient-to-r from-[#cbeee9] to-[#f0f8f8] text-gray-800 py-8 sm:py-16">
       <div className="container mx-auto flex flex-col items-center gap-6 sm:gap-12">
         <div className="w-full sm:w-4/5 md:w-3/5 text-center sm:text-left">
-          <h2 className="text-3xl font-bold mb-4 flex justify-center items-center">Why Choose Us?</h2>
-          <p className="text-gray-400 text-center">
+          <h2 className="text-3xl font-bold text-teal-600 mb-4 flex justify-center sm:justify-start items-center">
+            Why Choose Us? Below are some Highlights of this platform
+          </h2>
+          <p className="text-gray-600 text-center sm:text-left">
             Discover how our platform empowers fundraisers with visibility, engagement, and user-friendly tools designed to help you reach your goals.
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {items.map((item, index) => (
-            <div key={index} className="bg-customBlue p-6 rounded-lg border border-gray-700 flex flex-col items-start max-w-[400px]">
+            <div
+              key={index}
+              className="bg-white p-6 rounded-lg shadow-lg border border-gray-300 flex flex-col items-start max-w-[400px] hover:shadow-xl transition-shadow duration-300"
+            >
               {/* <div className="mb-4">{item.icon}</div> */}
-              <h3 className="text-lg font-medium mb-2">{item.title}</h3>
-              <p className="text-gray-400 text-sm">{item.description}</p>
+              <h3 className="text-lg font-medium text-black mb-2">{item.title}</h3>
+              <p className="text-gray-500 text-sm">{item.description}</p>
             </div>
           ))}
         </div>
       </div>
     </div>
+
   );
 }

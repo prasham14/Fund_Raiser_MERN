@@ -3,7 +3,7 @@ import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin, FaGithub } from 'react-
 
 const Footer = () => {
   return (
-    <footer className="bg-[#001512] text-white py-10 border-t-2 border-gray-600">
+    <footer className="bg-gradient-to-r from-[#001512] to-[#00393c] text-white py-10 border-t-2 border-gray-600">
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>

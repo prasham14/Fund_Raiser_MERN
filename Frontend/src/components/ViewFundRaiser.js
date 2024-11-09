@@ -12,7 +12,7 @@ const ViewFundRaiser = ({ setActivesection }) => {
     setActivesection('')
   }
   return (
-    <div className="donate-container max-w-7xl mx-auto p-8 bg-gradient-to-b from-blue-50 to-white rounded-xl shadow-lg">
+    <div className="donate-container max-w-7xl mx-auto p-8 bg-gradient-to-b from-blue-50 to-white rounded-xl shadow-lg ">
       <button onClick={handleBack}><FaArrowLeft /></button>
       <h1 className="donate-title text-4xl font-bold text-center mb-4 text-gray-900">
         What type of Funds would you like to donate?

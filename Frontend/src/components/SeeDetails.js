@@ -1,103 +1,159 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { FaArrowLeft } from 'react-icons/fa';
+// src/UserDetailsForm.js
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-const SeeDetails = ({ setActivesection }) => {
-  const [formData, setFormData] = useState({
-    AccountNo: '',
-    Bank: '',
-    AdhaarNo: '',
-    Address: '',
-    mobileNo: '',
-    Upi: '',
-    user_id: ''
+const UserDetailsForm = () => {
+  const [userDetails, setUserDetails] = useState({
+    AccountNo: "",
+    Bank: "",
+    AdhaarNo: "",
+    Address: "",
+    mobileNo: "",
+    Upi: ""
   });
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => {
-    const storedUserId = localStorage.getItem('userId');
-    if (storedUserId) {
-      setFormData((prevData) => ({ ...prevData, user_id: storedUserId }));
-      fetchUserData(storedUserId); // Fetch data if editing existing details
-    } else {
-      console.error('User not authenticated');
-    }
-  }, []);
-
-  const fetchUserData = async (userId) => {
-    try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:5000/user/${userId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (response.data) {
-        setFormData(response.data);
-        setIsEditMode(true);
-      }
-    } catch (error) {
-      console.error('Error fetching user details:', error);
-    }
-  };
-
-  const handleBack = () => setActivesection('showPersonalDetails');
+    axios
+      .get(`http://localhost:5000/user-details/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((response) => {
+        if (response.data) {
+          setUserDetails(response.data);
+          setIsEditing(true);
+        }
+      })
+      .catch((error) => console.error("Error fetching user details:", error));
+  }, [userId]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    setUserDetails({ ...userDetails, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const token = localStorage.getItem('token');
-      await axios.post(`http://localhost:5000/fill`, formData, {
-        headers: { Authorization: `Bearer ${token}` }
+
+    axios
+      .post(
+        "http://localhost:5000/user-details",
+        { userId, ...userDetails },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
+      .then((response) => {
+        alert(response.data.message);
+      })
+      .catch((error) => {
+        console.error("Error saving user details:", error);
+        alert("An error occurred while saving data");
       });
-      alert(isEditMode ? 'Data updated successfully!' : 'Data entered successfully!');
-      setActivesection('showPersonalDetails');
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      alert(error.response?.data?.msg || 'Form submission failed. Please try again.');
-    }
   };
 
   return (
-    <div className="form-container max-w-md mx-auto bg-white p-6 rounded-lg shadow-md mt-10">
-      <button onClick={handleBack} className="mb-4"><FaArrowLeft /></button>
-      <form onSubmit={handleSubmit} className="form space-y-4">
-        <h2 className="form-heading text-2xl font-bold text-gray-800 mb-6">
-          {isEditMode ? 'Edit Personal Details' : 'Add Personal Details'}
-        </h2>
-        <div className="form-group">
-          <label className="block text-gray-700 font-semibold mb-1">Adhaar Number</label>
-          <input name="AdhaarNo" type="number" value={formData.AdhaarNo} onChange={handleChange} required className="form-input w-full p-2 border border-gray-300 rounded-lg" />
+    <div className="max-w-lg mx-auto p-8 bg-white shadow-lg rounded-lg mt-10">
+      <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
+        {isEditing ? "Update Your Details" : "Enter Your Details"}
+      </h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-gray-700 font-medium mb-1">
+            Account Number:
+          </label>
+          <input
+            type="number"
+            name="AccountNo"
+            value={userDetails.AccountNo}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your account number"
+          />
         </div>
-        <div className="form-group">
-          <label className="block text-gray-700 font-semibold mb-1">Bank Name</label>
-          <input name="Bank" value={formData.Bank} onChange={handleChange} required className="form-input w-full p-2 border border-gray-300 rounded-lg" />
+        <div>
+          <label className="block text-gray-700 font-medium mb-1">
+            Bank Name:
+          </label>
+          <input
+            type="text"
+            name="Bank"
+            value={userDetails.Bank}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your bank name"
+          />
         </div>
-        <div className="form-group">
-          <label className="block text-gray-700 font-semibold mb-1">Account Number</label>
-          <input name="AccountNo" type="number" value={formData.AccountNo} onChange={handleChange} required className="form-input w-full p-2 border border-gray-300 rounded-lg" />
+        <div>
+          <label className="block text-gray-700 font-medium mb-1">
+            Aadhaar Number:
+          </label>
+          <input
+            type="number"
+            name="AdhaarNo"
+            value={userDetails.AdhaarNo}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your Aadhaar number"
+          />
         </div>
-        <div className="form-group">
-          <label className="block text-gray-700 font-semibold mb-1">Address</label>
-          <input name="Address" value={formData.Address} onChange={handleChange} required className="form-input w-full p-2 border border-gray-300 rounded-lg" />
+        <div>
+          <label className="block text-gray-700 font-medium mb-1">
+            Address:
+          </label>
+          <input
+            type="text"
+            name="Address"
+            value={userDetails.Address}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your address"
+          />
         </div>
-        <div className="form-group">
-          <label className="block text-gray-700 font-semibold mb-1">Mobile Number</label>
-          <input name="mobileNo" type="number" value={formData.mobileNo} onChange={handleChange} required className="form-input w-full p-2 border border-gray-300 rounded-lg" />
+        <div>
+          <label className="block text-gray-700 font-medium mb-1">
+            Mobile Number:
+          </label>
+          <input
+            type="text"
+            name="mobileNo"
+            value={userDetails.mobileNo}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your mobile number"
+          />
         </div>
-        <div className="form-group">
-          <label className="block text-gray-700 font-semibold mb-1">UPI ID (optional)</label>
-          <input name="Upi" value={formData.Upi} onChange={handleChange} className="form-input w-full p-2 border border-gray-300 rounded-lg" />
+        <div>
+          <label className="block text-gray-700 font-medium mb-1">
+            UPI ID:
+          </label>
+          <input
+            type="text"
+            name="Upi"
+            value={userDetails.Upi}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your UPI ID"
+          />
         </div>
-        <button type="submit" className="form-button w-full bg-teal-500 text-white py-2 rounded-lg hover:bg-teal-600">
-          {isEditMode ? 'Save Changes' : 'Add Details'}
+        <button
+          type="submit"
+          className="w-full py-2 mt-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          {isEditing ? "Update Details" : "Submit Details"}
         </button>
       </form>
     </div>
   );
 };
 
-export default SeeDetails;
+export default UserDetailsForm;

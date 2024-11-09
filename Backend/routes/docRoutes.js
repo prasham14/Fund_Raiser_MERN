@@ -37,4 +37,16 @@ router.get("/get-files", async (req, res) => {
     });
   } catch (error) { }
 });
+
+
+router.get("/get-user-files/:userId", async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    const userDocuments = await PdfSchema.find({ userId }); // Replace `Document` with your model
+    res.json({ data: userDocuments });
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching user documents" });
+  }
+});
+
 module.exports = router;

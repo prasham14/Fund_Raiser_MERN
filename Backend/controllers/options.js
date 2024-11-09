@@ -3,14 +3,21 @@ const Raise = require('../models/raise')
 
 async function option1(req, res) {
   try {
+    const currentDate = new Date();
     const educationFunds = await Raise.find({ type: 'Education' });
-    res.json(educationFunds);
-  }
-  catch (err) {
+
+    const fundsWithExpiration = educationFunds.map(fund => ({
+      ...fund._doc,
+      isExpired: new Date(fund.date) < currentDate, // Set isExpired if the current date is past the fund's date
+    }));
+
+    res.json(fundsWithExpiration);
+  } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Internal server error" });
   }
 }
+
 async function educationDetails(req, res) {
   try {
 
@@ -25,22 +32,35 @@ async function educationDetails(req, res) {
 }
 async function option2(req, res) {
   try {
+    const currentDate = new Date();
     const educationFunds = await Raise.find({ type: 'Relief Fund' });
-    res.json(educationFunds);
-  }
-  catch (err) {
+
+    const fundsWithExpiration = educationFunds.map(fund => ({
+      ...fund._doc,
+      isExpired: new Date(fund.date) < currentDate, // Set isExpired if the current date is past the fund's date
+    }));
+
+    res.json(fundsWithExpiration);
+  } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Internal server error" });
   }
 }
 async function option3(req, res) {
   try {
+    const currentDate = new Date();
     const educationFunds = await Raise.find({ type: 'Medicine' });
-    res.json(educationFunds);
-  }
-  catch (err) {
+
+    const fundsWithExpiration = educationFunds.map(fund => ({
+      ...fund._doc,
+      isExpired: new Date(fund.date) < currentDate, // Set isExpired if the current date is past the fund's date
+    }));
+
+    res.json(fundsWithExpiration);
+  } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Internal server error" });
   }
 }
+
 module.exports = { option1, option2, option3, educationDetails };

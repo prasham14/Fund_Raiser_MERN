@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaArrowLeft } from "react-icons/fa";
+
 const Option1 = ({ setActivesection }) => {
   const [funds, setFunds] = useState([]);
-  const [selectedFund, setSelectedFund] = useState(null); // To store the selected fund
+  const [selectedFund, setSelectedFund] = useState(null);
 
   const token = localStorage.getItem('token');
+
   useEffect(() => {
     const fetchFunds = async () => {
       try {
@@ -21,30 +23,37 @@ const Option1 = ({ setActivesection }) => {
     };
     fetchFunds();
   }, [token]);
+
   const handleDocument = () => {
     setActivesection('docs');
-  }
+  };
+
   const clickHandler = (fund) => {
-    setSelectedFund(fund); // Set the clicked fund to display its details
+    setSelectedFund(fund);
   };
 
   const goBackHandler = () => {
-    setSelectedFund(null); // Clear the selected fund to go back to the list
+    setSelectedFund(null);
   };
+
   const handleBack = () => {
-    setActivesection('viewFundRaiser')
-  }
+    setActivesection('viewFundRaiser');
+  };
+
   return (
     <div className="funds-container max-w-7xl mx-auto p-6 bg-gradient-to-b from-gray-100 to-white rounded-lg shadow-lg">
       <button onClick={handleBack}><FaArrowLeft /></button>
       {selectedFund ? (
-        // Render the selected fund's details if a fund is selected
         <div className="fund-details-container max-w-5xl mx-auto p-6 bg-white shadow-lg rounded-lg">
           <h1 className="text-3xl font-bold mb-4 text-gray-900">{selectedFund.title}</h1>
           <p className="mb-3 text-gray-700"><strong>Purpose:</strong> {selectedFund.details}</p>
           <p className="mb-3 text-gray-700"><strong>Funds Available:</strong> {selectedFund.funds} INR</p>
           <p className="mb-3 text-gray-700"><strong>Amount Raised:</strong> {selectedFund.raised} INR</p>
           <p className="mb-6 text-gray-700"><strong>Date Created:</strong> {new Date(selectedFund.date).toLocaleDateString()}</p>
+
+          {selectedFund.isExpired && (
+            <p className="text-red-500 font-bold text-lg">Expired</p>
+          )}
 
           <button
             onClick={() => handleDocument(selectedFund.documentUrl)}
@@ -76,12 +85,22 @@ const Option1 = ({ setActivesection }) => {
                   <p className="mb-2 text-gray-700"><strong>Amount Raised:</strong> {fund.raised} INR</p>
                   <p className="mb-6 text-gray-700"><strong>Date Created:</strong> {new Date(fund.date).toLocaleDateString()}</p>
 
-                  <button
-                    className="bg-blue-500 text-white py-2 px-4 rounded shadow-lg hover:bg-blue-600 transition-all duration-300 ease-in-out w-full"
-                    onClick={() => clickHandler(fund)}
-                  >
-                    Click here for details
-                  </button>
+                  {fund.isExpired && (
+                    <p className="text-red-500 font-bold">Expired</p>
+                  )}
+                  {
+                    fund.isExpired ? (<div><p>This fund is expired , You can contact to the Raiser if you want to help</p></div>) : (
+                      <div>
+                        <button
+                          className="bg-blue-500 text-white py-2 px-4 rounded shadow-lg hover:bg-blue-600 transition-all duration-300 ease-in-out w-full"
+                          onClick={() => clickHandler(fund)}
+                        >
+                          Click here for details
+                        </button>
+                      </div>
+                    )
+                  }
+
                 </li>
               ))
             ) : (
@@ -97,5 +116,3 @@ const Option1 = ({ setActivesection }) => {
 };
 
 export default Option1;
-
-
