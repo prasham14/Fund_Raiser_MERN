@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaArrowLeft } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 
-const MyFunds = ({ setActivesection }) => {
+const MyFunds = () => {
   const [funds, setFunds] = useState([]);
   const [editInitiativeId, setEditInitiativeId] = useState(null);
   const [editData, setEditData] = useState({
@@ -14,14 +15,15 @@ const MyFunds = ({ setActivesection }) => {
     type: 'Medicine',
     user_id: ''
   });
+  const navigate = useNavigate();
   const handleBack = () => {
-    setActivesection('')
+    navigate('/')
   }
   const userId = localStorage.getItem('userId'); // Store user_id in localStorage or pass it as a prop
   const token = localStorage.getItem('token');
 
   function handleButton() {
-    setActivesection('form');
+
   }
 
   useEffect(() => {
@@ -84,19 +86,20 @@ const MyFunds = ({ setActivesection }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-12 px-6 lg:px-12">
+    <div className="min-h-screen py-12 px-6 lg:px-12 overflow-y-auto no-scrollbar">
       <button onClick={handleBack}><FaArrowLeft /></button>
-      {/* Raise Funds Button (Top Left) */}
-      <div className="flex justify-start mb-6">
-        <button
-          onClick={handleButton}
-          className="bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-300"
-        >
-          Raise More Funds
-        </button>
-      </div>
 
-      <div className="max-w-7xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+      {/* Raise Funds Button (Top Left) */}
+      {/* <div className="flex justify-start mb-6">
+    <button
+      onClick={handleButton}
+      className="bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-300"
+    >
+      Raise More Funds
+    </button>
+  </div> */}
+
+      <div className="max-w-7xl mx-auto p-8 rounded-lg shadow-lg">
         {/* Title */}
         <h2 className="text-4xl font-bold text-center text-blue-600 mb-12">
           Your Raised Funds
@@ -161,74 +164,75 @@ const MyFunds = ({ setActivesection }) => {
             ))
           ) : (
             <p className="text-center text-gray-600 text-lg col-span-full">
-              No funds found! An error occurred.
+              No funds found!
             </p>
           )}
         </ul>
 
         {/* Edit Form */}
         {editInitiativeId && (
-          <div className="bg-white mt-12 p-8 rounded-lg shadow-lg transition duration-300">
-            <h3 className="text-3xl font-bold text-gray-800 mb-6">Edit Fund</h3>
-            <input
-              type="text"
-              name="title"
-              value={editData.title}
-              onChange={handleEditChange}
-              placeholder="Title"
-              className="block w-full p-4 mb-4 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
-            />
-            <input
-              type="text"
-              name="details"
-              value={editData.details}
-              onChange={handleEditChange}
-              placeholder="Details"
-              className="block w-full p-4 mb-4 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
-            />
-            <input
-              type="number"
-              name="funds"
-              value={editData.funds}
-              onChange={handleEditChange}
-              placeholder="Funds Needed"
-              className="block w-full p-4 mb-4 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
-            />
-            <input
-              type="number"
-              name="raised"
-              value={editData.raised}
-              onChange={handleEditChange}
-              placeholder="Amount Raised"
-              className="block w-full p-4 mb-4 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
-            />
-            <input
-              type="text"
-              name="type"
-              value={editData.type}
-              onChange={handleEditChange}
-              placeholder="Type"
-              className="block w-full p-4 mb-4 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
-            />
-            <div className="flex justify-end space-x-4">
-              <button
-                onClick={handleEditSubmit}
-                className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition duration-300"
-              >
-                Save Changes
-              </button>
-              <button
-                onClick={() => setEditInitiativeId(null)}
-                className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition duration-300"
-              >
-                Cancel
-              </button>
+          <div className="fixed inset-0 z-10 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center">
+            <div className="bg-white w-full max-w-3xl p-8 rounded-lg shadow-lg">
+              <h3 className="text-3xl font-bold text-gray-800 mb-6">Edit Fund</h3>
+              <input
+                type="text"
+                name="title"
+                value={editData.title}
+                onChange={handleEditChange}
+                placeholder="Title"
+                className="block w-full p-4 mb-4 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
+              />
+              <input
+                type="text"
+                name="details"
+                value={editData.details}
+                onChange={handleEditChange}
+                placeholder="Details"
+                className="block w-full p-4 mb-4 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
+              />
+              <input
+                type="number"
+                name="funds"
+                value={editData.funds}
+                onChange={handleEditChange}
+                placeholder="Funds Needed"
+                className="block w-full p-4 mb-4 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
+              />
+              <input
+                type="number"
+                name="raised"
+                value={editData.raised}
+                onChange={handleEditChange}
+                placeholder="Amount Raised"
+                className="block w-full p-4 mb-4 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
+              />
+              <input
+                type="text"
+                name="type"
+                value={editData.type}
+                onChange={handleEditChange}
+                placeholder="Type"
+                className="block w-full p-4 mb-4 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
+              />
+              <div className="flex justify-end space-x-4">
+                <button
+                  onClick={handleEditSubmit}
+                  className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition duration-300"
+                >
+                  Save Changes
+                </button>
+                <button
+                  onClick={() => setEditInitiativeId(null)}
+                  className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition duration-300"
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
         )}
       </div>
     </div>
-
   );
 };
 

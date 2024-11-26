@@ -9,7 +9,7 @@ const NGO = ({ setActivesection }) => {
     {
       id: 1,
       title: "Smile Foundaton",
-      image: "https://www.smilefoundationindia.org/",
+      image: "https://images.app.goo.gl/hfzieoQc7jVQBsV77",
       url: "https://www.smilefoundationindia.org/"
     },
     {
@@ -71,10 +71,10 @@ const NGO = ({ setActivesection }) => {
 
 
   return (
-    <div className="min-h-screen bg-gray-100 py-12 px-6 lg:px-16">
+    <div className="min-h-screen bg-gradient-to-r from-[#cbeee9] to-[#f0f8f8] py-12 px-6 lg:px-16">
       {/* Title */}
       <button onClick={handleBack}><FaArrowLeft /></button>
-      <h1 className="text-center text-4xl font-bold text-blue-600 mb-12">
+      <h1 className="text-center text-4xl font-bold text-teal-700 mb-12">
         Here are the Most Popular NGOs and Foundations in India!
       </h1>
 

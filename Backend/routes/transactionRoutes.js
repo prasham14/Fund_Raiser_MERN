@@ -1,30 +1,24 @@
-const express = require('express');
-const Razorpay = require('razorpay');
+const express = require("express");
+const Stripe = require("stripe");
 const router = express.Router();
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
-// Set up Razorpay instance
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_SECRET,
-});
-
-// Route to create an order
-router.post('/create-order', async (req, res) => {
+router.post("/create-payment-intent", async (req, res) => {
+  const { amount } = req.body;
   try {
-    const { amount } = req.body;
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency: "inr",
+      payment_method_types: ["card"],
+    });
 
-    const options = {
-      amount: amount * 100,
-      currency: 'INR',
-      receipt: `receipt_order_${Math.random() * 10 ** 9}`,
-    };
-
-    const order = await razorpay.orders.create(options);
-    res.json({ orderId: order.id });
+    res.send({
+      clientSecret: paymentIntent.client_secret,
+    });
   } catch (error) {
-    console.error('Error creating order:', error);
-    res.status(500).json({ error: 'Failed to create order' });
+    res.status(500).send({ error: error.message });
   }
 });
+
 
 module.exports = router;

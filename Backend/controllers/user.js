@@ -29,7 +29,7 @@ async function login(req, res) {
     };
     const token = generateToken(payload);
     const options = {
-      expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+      expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
       httpOnly: true, // Prevents JavaScript from accessing cookies  
       sameSite: 'Lax' // Adjust based on your needs  
     };

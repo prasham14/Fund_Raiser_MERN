@@ -1,7 +1,7 @@
 // routes/userDetailsRoutes.js
 const express = require("express");
 const router = express.Router();
-const UserDetails = require("../models/UserDetails");
+const UserDetails = require("../models/userDetails");
 
 // Create or Update User Details
 router.post("/user-details", async (req, res) => {

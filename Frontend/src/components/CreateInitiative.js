@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-const FormSubmission = ({ setActivesection }) => {
+import { Navigate, useNavigate } from 'react-router-dom';
+import { ImCross } from "react-icons/im";
+
+const FormSubmission = ({ setActive }) => {
   const [formData, setFormData] = useState({
     title: '',
     purpose: '',
@@ -9,6 +12,7 @@ const FormSubmission = ({ setActivesection }) => {
     phone: '',
     email: ''
   });
+  const navigate = useNavigate();
   const emailId = localStorage.getItem('email');
   useEffect(() => {
     // const storedUserId = localStorage.getItem('userId');
@@ -27,7 +31,10 @@ const FormSubmission = ({ setActivesection }) => {
       [name]: value,
     }));
   };
-
+  const handleBack = () => {
+    navigate('/')
+    // setActivesection('');
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -52,7 +59,7 @@ const FormSubmission = ({ setActivesection }) => {
         email: localStorage.getItem('email')
       });
 
-      setActivesection('');
+      navigate('/')
     } catch (error) {
       console.error('Error submitting form:', error);
       alert(error.response?.data?.msg || 'Form submission failed. Please try again.');
@@ -60,8 +67,18 @@ const FormSubmission = ({ setActivesection }) => {
   };
 
   return (
-    <div className="form-container max-w-md mx-auto bg-white p-6 rounded-lg shadow-md mt-10">
-      <h2 className="form-heading text-2xl font-bold text-gray-800 mb-6">Fill this form to create an Initiative</h2>
+    <div className=" p-3 rounded-lg shadow-md mt-5">
+      <div className="relative mb-3">
+        <button
+          onClick={handleBack}
+          className="absolute right-0 top-0 text-teal-500 hover:text-teal-700 transition duration-150 flex items-center space-x-2"
+        >
+          <ImCross size={20} />
+        </button>
+        <h2 className="form-heading text-lg font-bold text-gray-800 mb-6">Fill this form to create an Initiative</h2>
+      </div>
+
+
       <form onSubmit={handleSubmit} className="form space-y-4">
         <div>
           <label className="block text-gray-700 font-semibold mb-1">Title:</label>

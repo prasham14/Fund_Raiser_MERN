@@ -3,6 +3,10 @@ import Signup from './Pages/Signup';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home'
 import Help from './Pages/Help';
+import Initiatives from './components/Initiatives';
+import NGO from './components/NGO';
+import MyFunds from './components/MyFunds';
+import MyInitiatives from './components/MyInitiatives';
 function App() {
   return (
     <Router>
@@ -11,7 +15,11 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
+          <Route path='/initiatives' element={<Initiatives />} />
+          <Route path='/ngos' element={<NGO />} />
+          <Route path='/myFunds' element={<MyFunds />} />
           <Route path="/help" element={<Help />} />
+          <Route path='/myInitiatives' element={<MyInitiatives />} />
         </Routes>
       </div>
     </Router>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaArrowLeft } from "react-icons/fa";
+import ShowBankDetails from './ShowBankDetails';
 
 const Option1 = ({ setActivesection }) => {
   const [funds, setFunds] = useState([]);
@@ -17,15 +18,16 @@ const Option1 = ({ setActivesection }) => {
           },
         });
         setFunds(response.data);
+        console.log(response);
       } catch (error) {
         console.error('Error fetching education funds', error);
       }
     };
     fetchFunds();
   }, [token]);
-
-  const handleDocument = () => {
-    setActivesection('docs');
+  const handleBankDetails = () => {
+    localStorage.setItem('fundUserId', selectedFund.userId);
+    setActivesection('bankdetailsoffund');
   };
 
   const clickHandler = (fund) => {
@@ -41,7 +43,7 @@ const Option1 = ({ setActivesection }) => {
   };
 
   return (
-    <div className="funds-container max-w-7xl mx-auto p-6 bg-gradient-to-b from-gray-100 to-white rounded-lg shadow-lg">
+    <div className="funds-container max-w-5xl mx-auto p-6 bg-gradient-to-b from-gray-100 to-white rounded-lg shadow-lg overflow-y-auto no-scrollbar">
       <button onClick={handleBack}><FaArrowLeft /></button>
       {selectedFund ? (
         <div className="fund-details-container max-w-5xl mx-auto p-6 bg-white shadow-lg rounded-lg">
@@ -49,17 +51,16 @@ const Option1 = ({ setActivesection }) => {
           <p className="mb-3 text-gray-700"><strong>Purpose:</strong> {selectedFund.details}</p>
           <p className="mb-3 text-gray-700"><strong>Funds Available:</strong> {selectedFund.funds} INR</p>
           <p className="mb-3 text-gray-700"><strong>Amount Raised:</strong> {selectedFund.raised} INR</p>
-          <p className="mb-6 text-gray-700"><strong>Date Created:</strong> {new Date(selectedFund.date).toLocaleDateString()}</p>
-
+          <p className="mb-6 text-gray-700"><strong>Needed before:</strong> {new Date(selectedFund.date).toLocaleDateString()}</p>
           {selectedFund.isExpired && (
             <p className="text-red-500 font-bold text-lg">Expired</p>
           )}
 
           <button
-            onClick={() => handleDocument(selectedFund.documentUrl)}
+            onClick={handleBankDetails}
             className="bg-green-500 text-white py-2 px-4 rounded shadow-lg hover:bg-green-600 transition-all duration-300 ease-in-out"
           >
-            Documents
+            Bank Details
           </button>
 
           <button
@@ -83,7 +84,7 @@ const Option1 = ({ setActivesection }) => {
                   <p className="mb-2 text-gray-700"><strong>Purpose:</strong> {fund.details}</p>
                   <p className="mb-2 text-gray-700"><strong>Funds Available:</strong> {fund.funds} INR</p>
                   <p className="mb-2 text-gray-700"><strong>Amount Raised:</strong> {fund.raised} INR</p>
-                  <p className="mb-6 text-gray-700"><strong>Date Created:</strong> {new Date(fund.date).toLocaleDateString()}</p>
+                  <p className="mb-6 text-gray-700"><strong>Needed Before:</strong> {new Date(fund.date).toLocaleDateString()}</p>
 
                   {fund.isExpired && (
                     <p className="text-red-500 font-bold">Expired</p>

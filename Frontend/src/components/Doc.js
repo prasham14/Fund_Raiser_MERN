@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { pdfjs } from "react-pdf";
 import PdfComp from "./PdfComp"; // Import PdfComp component
 import { FaArrowLeft } from "react-icons/fa";
@@ -21,7 +22,7 @@ function App({ activeSection, setActivesection }) {
   useEffect(() => {
     getPdf();
   }, []);
-
+  const navigate = useNavigate();
   const getPdf = async () => {
     const result = await axios.get("http://localhost:5000/get-files", {
       headers: {
@@ -59,15 +60,15 @@ function App({ activeSection, setActivesection }) {
         alert("Uploaded Successfully!!!");
         getPdf();
       }
-      alert('Document uploaded Successfully')
-      setActivesection('main');
+      alert('Fund Raised Successfully')
+      setActivesection('form');
     } catch (err) {
       console.log(err);
     }
   };
 
   return (
-    <div className="App bg-gray-50 min-h-screen flex flex-col items-center justify-center">
+    <div className="form-container max-w-lg mx-auto bg-white p-8 shadow-lg mt-12 overflow-y-auto no-scrollbar rounded-lg border border-gray-200">
 
 
       {!selectedFundPdf ? (
@@ -76,13 +77,17 @@ function App({ activeSection, setActivesection }) {
             className="bg-white shadow-md rounded-lg p-8 w-full max-w-lg"
             onSubmit={submitImage}
           >
-            {/* Header Information */}
-            <h4 className="text-xl font-semibold text-gray-800 mb-2 text-center">
-              <button onClick={handleBack}>
-                <FaArrowLeft />
+            <div className="relative mb-6">
+              <button
+                onClick={handleBack}
+                className="absolute left-0 top-0 text-teal-500 hover:text-teal-700 transition duration-150 flex items-center space-x-2"
+              >
+                <FaArrowLeft size={20} />
               </button>
-              Upload Verification Documents
-            </h4>
+              <h4 className="text-3xl font-semibold text-gray-700 text-center">
+                Document Verifiation
+              </h4>
+            </div>
             <p className="text-gray-600 mb-6 text-center">
               Provide documentation to validate this fundraiser. These documents will be accessible to donors.
             </p>

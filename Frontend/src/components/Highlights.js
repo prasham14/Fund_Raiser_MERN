@@ -37,7 +37,7 @@ const items = [
 
 export default function Highlights() {
   return (
-    <div id="highlights" className="bg-gradient-to-r from-[#cbeee9] to-[#f0f8f8] text-gray-800 py-8 sm:py-16">
+    <div id="highlights" className="bg-white text-gray-800 py-8 sm:py-16">
       <div className="container mx-auto flex flex-col items-center gap-6 sm:gap-12">
         <div className="w-full sm:w-4/5 md:w-3/5 text-center sm:text-left">
           <h2 className="text-3xl font-bold text-teal-600 mb-4 flex justify-center sm:justify-start items-center">

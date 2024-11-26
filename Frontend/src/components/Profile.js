@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { CiLogout } from "react-icons/ci";
 // import defaultimg from './images/profile.png';
 // import editimg from './images/edit.png'
 import { CiEdit } from "react-icons/ci"
 import SeeDetails from './SeeDetails';
-
+import { useNavigate } from 'react-router-dom';
 function Profile({ setIsLoggedIn, setActivesection }) {
   const [username, setName] = useState(null);
   const [email, setEmail] = useState(null);
@@ -12,6 +13,7 @@ function Profile({ setIsLoggedIn, setActivesection }) {
   const [isChangeEmail, setIsChangeEmail] = useState(false);
   const [isChange, setIsChange] = useState(false);
   const [isDetailsAdded, setIsDetailsAdded] = useState(false);
+  const navigate = useNavigate();
   const [newData, setNewData] = useState({
     username: '',
     email: '',
@@ -101,60 +103,80 @@ function Profile({ setIsLoggedIn, setActivesection }) {
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('token');
     setActivesection('');
   }
   const handleSeeDetails = () => {
     setActivesection('seeDetails');
     <SeeDetails isDetailsAdded={isDetailsAdded} setIsDetailsAdded={setIsDetailsAdded} />
   }
+  const handleMyFunds = () => {
+    navigate('/myFunds');
+  }
+  const handleMyInitiatives = () => {
+    navigate('/myInitiatives')
+  }
 
   return (
-    <div className=" w-full max-w-md p-6 backdrop-blur-xl bg-[rgba(0,0,0,0.59)]
-      shadow-[rgba(9,11,17,0.7)_0px_4px_16px_0px,rgba(19,23,32,0.8)_0px_8px_16px_-5px] rounded-[calc(16px)]
-      border-solid border-[rgba(51,60,77,0.6)] relative min-h-[48px] shrink-0">
-      <div className="text-center mb-8">
-        {profileImage ? (
-          <img
-            src=""
-            alt="Profile"
-            className="w-20 h-20 rounded-full mx-auto object-cover border-4 border-[hsla(220,20%,25%,0.6)]"
-          />
-        ) : (
-          <div className="w-20 h-20 rounded-full mx-auto bg-gray-200 animate-pulse"></div>
-        )}
-        <h1 className="text-2xl font-bold text-white mt-4 mb-2">Profile</h1>
-        <p className="text-xl text-white ">Manage your account details</p>
+    <div className="w-full p-6 bg-gradient-to-br from-black via-gray-900 to-black shadow-lg rounded-xl border border-gray-700 relative">
+      {/* Logout Icon */}
+      <div className="absolute top-4 left-4 flex items-center space-x-4 text-white">
+        {/* Logout Icon */}
+        <button
+          onClick={handleLogout}
+          className="p-2 bg-gray-800 rounded-full hover:bg-gray-700 transition shadow-md"
+        >
+          <CiLogout className="text-lg" />
+        </button>
+
+        {/* Profile Text */}
+        <h1 className="text-3xl pl-9 font-bold text-white">Profile</h1>
       </div>
-      {/* <div></div> */}
-      <div className="border-t border-gray-200 pt-4">
-        <div className="mb-8">
-          <h2 className="font-semibold text-white  mb-2">Name:</h2>
-          <div className="flex items-center justify-between">
+
+
+      {/* Profile Image and Header */}
+      <div className="text-center mb-8 mt-8">
+        {/* {profileImage ? (
+          // <img
+          //   src=""
+          //   alt="Profile"
+          //   className="w-20 h-20 rounded-full mx-auto object-cover border-4 border-teal-500 shadow-lg"
+          // />
+        ): (
+            <div className = "w-20 h-20 rounded-full mx-auto bg-gray-600 animate-pulse"></div>
+        )} */}
+        {/* <h1 className="text-3xl font-bold text-white mt-4 mb-2">Profile</h1> */}
+        {/* <p className="text-lg text-gray-400">Manage your account details</p> */}
+      </div>
+
+      {/* Profile Details */}
+      <div className="border-t border-gray-700 pt-3">
+        {/* Name Section */}
+        <div className="mb-3">
+          <h2 className="text-lg font-semibold text-white mb-1">Name:</h2>
+          <div className="flex items-center">
             {isChange ? (
               <input
-                className="font-normal text-sm leading-[1.4375em] box-border cursor-text inline-flex items-center w-full 
-              relative text-white rounded-lg border border-[hsla(220,20%,25%,0.6)] bg-[#05080f] transition-[border] 
-              duration-[120ms] ease-[ease-in] h-10 px-3 py-2 border-solid"
                 type="text"
                 name="username"
                 value={newData.username}
                 onChange={onChangeHandler}
+                className="flex-grow text-white bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 transition"
               />
             ) : (
-              <p className=" text-white flex-grow">{username ? username : 'Loading...'}</p>
+              <p className="text-gray-300 flex-grow">{username || 'Loading...'}</p>
             )}
-
             {isChange ? (
               <button
-                className="ml-4 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-600 transition shadow-md"
                 onClick={changeNameHandler}
+                className="ml-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition shadow-md"
               >
                 Save
               </button>
             ) : (
               <button
-                className="ml-4 px-4 py-2 text-white  rounded-xl transition shadow-md translate-x-3"
                 onClick={() => setIsChange(true)}
+                className="ml-4 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition shadow-md"
               >
                 <CiEdit fontSize="1.45rem" />
               </button>
@@ -163,87 +185,90 @@ function Profile({ setIsLoggedIn, setActivesection }) {
         </div>
 
         {/* Email Section */}
-        <div className="mb-8">
-          <h2 className="font-semibold text-white  mb-2">Email:</h2>
-          <div className="flex items-center justify-between">
+        <div className="mb-3">
+          <h2 className="text-lg font-semibold text-white mb-1">Email:</h2>
+          <div className="flex items-center">
             {isChangeEmail ? (
               <input
-                className="font-normal text-sm leading-[1.4375em] box-border cursor-text inline-flex items-center w-full 
-              relative text-white rounded-lg border border-[hsla(220,20%,25%,0.6)] bg-[#05080f] transition-[border] 
-              duration-[120ms] ease-[ease-in] h-10 px-3 py-2 border-solid"
                 type="email"
                 name="email"
                 value={newData.email}
                 onChange={onChangeHandler}
+                className="flex-grow text-white bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 transition"
               />
             ) : (
-              <p className="text-white  flex-grow">{email || 'Loading...'}</p>
+              <p className="text-gray-300 flex-grow">{email || 'Loading...'}</p>
             )}
             {isChangeEmail ? (
               <button
-                className="ml-4 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-600 transition shadow-md"
                 onClick={changeEmailHandler}
+                className="ml-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition shadow-md"
               >
                 Save
               </button>
             ) : (
               <button
-                className="ml-4 px-4 py-2 text-white  rounded-xl transition shadow-md"
                 onClick={() => setIsChangeEmail(true)}
+                className="ml-4 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition shadow-md"
               >
                 <CiEdit fontSize="1.45rem" />
               </button>
             )}
           </div>
         </div>
+
+        {/* Email Verification Section */}
         {isEmailChange && (
           <div className="mb-6">
-            <h2 className="font-semibold text-white  mb-2">Verify Email:</h2>
+            <h2 className="text-lg font-semibold text-white mb-2">Verify Email:</h2>
             <form onSubmit={OTPHandler} className="flex space-x-4">
               <input
                 type="text"
                 placeholder="Enter OTP"
-                className="font-normal text-sm leading-[1.4375em] box-border cursor-text inline-flex items-center w-full 
-              relative text-white rounded-lg border border-[hsla(220,20%,25%,0.6)] bg-[#05080f] transition-[border] 
-              duration-[120ms] ease-[ease-in] h-10 px-3 py-2 border-solid"
+                className="flex-grow text-white bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 transition"
               />
               <button
                 type="submit"
-                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition shadow-md"
+                className="px-6 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition shadow-md"
               >
                 Verify
               </button>
             </form>
           </div>
         )}
-        <div>
-          {
-            !isDetailsAdded ? (
-              <button onClick={handleSeeDetails} className='text-white' >Add personal details</button>) : (<div>
 
-              </div>)
-          }
+        {/* Additional Details Section */}
+        <div className="mb-6">
+          {!isDetailsAdded ? (
+            <button
+              onClick={handleSeeDetails}
+              className="text-teal-400 underline hover:text-teal-500 transition"
+            >
+              Add personal details
+            </button>
+          ) : (
+            <div></div>
+          )}
         </div>
-        <div>
+
+        {/* Navigation Buttons */}
+        <div className="space-y-4">
           <button
-            onClick={() => { setActivesection('getini') }}
-            className="w-full text-white text-left hover:bg-gray-100 py-2 px-4 rounded-lg">
+            onClick={handleMyInitiatives}
+            className="w-full text-left px-4 py-2 text-white bg-gray-700 rounded-lg hover:bg-gray-600 transition"
+          >
             My Initiatives
           </button>
-        </div>
-        <div>
           <button
-            onClick={() => { setActivesection('myFunds') }}
-            className="w-full text-white text-left hover:bg-gray-100 py-2 px-4 rounded-lg">
+            onClick={handleMyFunds}
+            className="w-full text-left px-4 py-2 text-white bg-gray-700 rounded-lg hover:bg-gray-600 transition"
+          >
             My Funds
           </button>
         </div>
       </div>
-      <div className='flex justify-center'>
-        <button onClick={handleLogout} className='inline-flex items-center justify-center relative cursor-pointer select-none align-middle appearance-none 
-              box-border font-medium text-sm leading-[1.75] min-w-[64px] w-full normal-case h-10 px-4 py-1.5 bg-white rounded-lg hover:bg-red-500 hover:text-white transition duration-300'>Logout </button>
-      </div>
-    </div>
+    </div >
+
   );
 }
 export default Profile;

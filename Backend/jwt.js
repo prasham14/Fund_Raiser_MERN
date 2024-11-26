@@ -17,15 +17,15 @@ const jwtAuthMiddleware = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (err) {
-    console.error(err);
-    res.status(401).json({ error: "Invalid token" });
+    res.clearCookie('cookies'); // Clear expired token cookie
+    return res.status(401).json({ message: "Session expired. Please log in again." });
   }
 };
 
 // Function to generate JWT token
 const generateToken = (userData) => {
   // Generate a new JWT token using user data
-  return jwt.sign(userData, process.env.JWT_SECRET, { expiresIn: 30000 });
+  return jwt.sign(userData, process.env.JWT_SECRET, { expiresIn: "24h" });
 };
 
 module.exports = { jwtAuthMiddleware, generateToken };

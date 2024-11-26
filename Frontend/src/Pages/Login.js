@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../components/Spinner';
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleSignUp = () => {
     navigate('/signup');
   }
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login'); // Redirect to login page
+    }
+  }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,9 +29,8 @@ const Login = () => {
         email,
         password
       }, { withCredentials: true });
-      console.log(response);
-      if (response && response.data) {
 
+      if (response && response.data) {
         const token = response.data.token;
         localStorage.setItem('token', token);
         localStorage.setItem('isLoggedIn', 'true');
@@ -32,12 +38,16 @@ const Login = () => {
         localStorage.setItem('userId', response.data.user.id);
         navigate('/');
       }
-      console.log("No response")
       setIsLoading(false);
 
     } catch (error) {
-      setError(error.response.data.message);
-
+      // Checking for specific error message from the server response
+      if (error.response && error.response.data) {
+        setError(error.response.data.message);  // Set the error message from the server
+      } else {
+        setError("An error occurred. Please try again later.");  // General error message if no specific message is available
+      }
+      setIsLoading(false);  // Stop loading spinner if error occurs
     }
   };
 
@@ -63,7 +73,7 @@ const Login = () => {
                 className="w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
 
-              {error && <div className="text-red-500">{error}</div>}
+              {error && <div className="text-red-500 text-center">{error}</div>} {/* Display error here */}
 
               <button
                 type="submit"
@@ -72,11 +82,11 @@ const Login = () => {
                 Login
               </button>
 
-              <p className="mt-4 text-center text-gray-600">Don't have an account? Sign-in here!</p>
+              <p className="mt-4 text-center text-gray-600">Don't have an account? Sign-up here!</p>
               <button
                 type="button"
                 onClick={handleSignUp}
-                className="mt-2 w-full  hover:underline focus:outline-none"
+                className="mt-2 w-full hover:underline focus:outline-none"
               >
                 SignUp
               </button>
@@ -84,7 +94,6 @@ const Login = () => {
           </div>
         )
       }
-
     </div>
   );
 };

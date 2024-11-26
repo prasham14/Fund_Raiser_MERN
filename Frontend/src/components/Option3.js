@@ -36,11 +36,12 @@ const Option3 = ({ setActivesection }) => {
     setActivesection('viewFundRaiser')
   }
   return (
-    <div className="funds-container max-w-7xl mx-auto p-6 bg-gradient-to-b from-gray-100 to-white rounded-lg shadow-lg">
+    <div className="funds-container max-w-5xl mx-auto p-6 bg-gradient-to-b from-gray-100 to-white rounded-lg shadow-lg overflow-y-auto max-h-screen sm:max-h-[80vh] no-scrollbar">
       <button onClick={handleBack}><FaArrowLeft /></button>
+
       {selectedFund ? (
         // Render the selected fund's details if a fund is selected
-        <div className="fund-details-container max-w-5xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+        <div className="fund-details-container max-w-5xl mx-auto p-6 bg-white shadow-lg rounded-lg overflow-y-auto no-scrollbar">
           <h1 className="text-3xl font-bold mb-4 text-gray-900">{selectedFund.title}</h1>
           <p className="mb-3 text-gray-700"><strong>Purpose:</strong> {selectedFund.details}</p>
           <p className="mb-3 text-gray-700"><strong>Funds Available:</strong> {selectedFund.funds} INR</p>
@@ -82,7 +83,7 @@ const Option3 = ({ setActivesection }) => {
                     <p className="text-red-500 font-bold">Expired</p>
                   )}
                   {
-                    fund.isExpired ? (<div><p>This fund is expired , You can contact to the Raiser if you want to help</p></div>) : (
+                    fund.isExpired ? (<div><p>This fund is expired, You can contact the Raiser if you want to help</p></div>) : (
                       <div>
                         <button
                           className="bg-blue-500 text-white py-2 px-4 rounded shadow-lg hover:bg-blue-600 transition-all duration-300 ease-in-out w-full"
@@ -104,6 +105,7 @@ const Option3 = ({ setActivesection }) => {
         </>
       )}
     </div>
+
 
   );
 };
