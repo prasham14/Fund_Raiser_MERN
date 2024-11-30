@@ -88,6 +88,43 @@ async function activeFunds(req, res) {
     res.status(500).json({ msg: 'Server error fetching active fundraisers' });
   }
 };
+
+// DELETE request handler
+async function deleteFund(req, res) {
+  const id = req.params.id;
+
+  try {
+    const deletedFund = await Raise.findByIdAndDelete(id);
+    if (!deletedFund) {
+      return res.status(404).json({ message: "Fund not found" });
+    }
+
+    console.log(`Fund with ID: ${id} deleted successfully`);
+    res.json({ success: true, message: "Fund deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting fund:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+async function getFundsByFundId(req, res) {
+  const fundId = req.params.id;
+  // console.log(`Fetching funds for user ID: ${userId}`);
+  console.log(fundId);
+  try {
+    const funds = await Raise.findById(fundId);
+    console.log(funds);
+
+
+    console.log(funds);
+    return res.json(funds);
+  } catch (err) {
+    console.error("Error fetching funds:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+
 module.exports = {
-  raiseFund, getFundsById, editFunds, activeFunds
+  raiseFund, getFundsById, editFunds, activeFunds, deleteFund, getFundsByFundId
 };

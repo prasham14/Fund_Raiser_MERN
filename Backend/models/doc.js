@@ -9,6 +9,11 @@ const PdfDetailsSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
+    fundId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'raise',
+      required: true,
+    }
   },
   { collection: "PdfDetails" }
 );

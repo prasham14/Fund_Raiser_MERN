@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
-import CheckoutForm from "./CheckoutForm"; // Import the checkout form
+import { FaArrowLeft } from "react-icons/fa";
 
-const stripePromise = loadStripe("YOUR_PUBLISHABLE_KEY"); // Replace with your actual Stripe publishable key
-
-const ShowBankDetails = () => {
+const ShowBankDetails = ({ setActivesection }) => {
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,7 +10,9 @@ const ShowBankDetails = () => {
   const [amount, setAmount] = useState("");
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("fundUserId");
-
+  const handleBack = () => {
+    setActivesection('viewFundRaiser');
+  };
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
@@ -32,24 +30,16 @@ const ShowBankDetails = () => {
     };
     fetchUserDetails();
   }, [userId]);
-  const handleDonate = async () => {
-    try {
-      const response = await axios.post("http://localhost:5000/create-payment-intent", { amount: amount * 100 }, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      setClientSecret(response.data.clientSecret);
-    } catch (error) {
-      setError("Error creating payment intent.");
-    }
-  };
 
+  const handlePay = () => {
+    setActivesection('pay')
+  }
   if (loading) return <p className="text-center text-blue-500">Loading...</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+      <button onClick={handleBack}><FaArrowLeft /></button>
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">User Details</h2>
       <div className="space-y-4">
         <div className="flex justify-between items-center">
@@ -69,26 +59,7 @@ const ShowBankDetails = () => {
           <span className="font-medium">{userDetails.Upi || "N/A"}</span>
         </div>
       </div>
-
-      <div className="mt-4">
-        <label className="block text-gray-600">Donation Amount (USD):</label>
-        <input
-          type="number"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-1 w-full"
-        />
-      </div>
-
-      <button onClick={handleDonate} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
-        Donate
-      </button>
-
-      {clientSecret && (
-        <Elements stripe={stripePromise} options={{ clientSecret }}>
-          <CheckoutForm />
-        </Elements>
-      )}
+      <button onClick={handlePay}>Donate</button>
     </div>
   );
 };

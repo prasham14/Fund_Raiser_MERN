@@ -6,10 +6,10 @@ const Footer = () => {
     alert('Thank you')
   }
   return (
-    <footer className="bg-black text-white py-12 border-t-2 border-gray-600">
-      <div className="max-w-6xl mx-auto px-4">
+    <footer className="bg-gray-900 text-white py-10 border-t-2 border-gray-600">
+      <div className="max-w-7xl mx-auto px-4">
         {/* Join Our Community */}
-        <div className="flex flex-col md:flex-row items-center justify-between mb-10">
+        <div className="flex flex-col md:flex-row items-center justify-between mb-6">
           <h3 className="text-2xl font-bold mb-4 md:mb-0">Join Our Community</h3>
           <div className="flex items-center w-full md:w-auto">
             <input

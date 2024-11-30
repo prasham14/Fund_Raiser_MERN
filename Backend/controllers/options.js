@@ -62,5 +62,21 @@ async function option3(req, res) {
     res.status(500).json({ error: "Internal server error" });
   }
 }
+async function others(req, res) {
+  try {
+    const currentDate = new Date();
+    const educationFunds = await Raise.find({ type: 'Others' });
 
-module.exports = { option1, option2, option3, educationDetails };
+    const fundsWithExpiration = educationFunds.map(fund => ({
+      ...fund._doc,
+      isExpired: new Date(fund.date) < currentDate, // Set isExpired if the current date is past the fund's date
+    }));
+
+    res.json(fundsWithExpiration);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+module.exports = { option1, option2, option3, educationDetails, others };

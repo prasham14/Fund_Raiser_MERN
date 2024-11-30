@@ -7,14 +7,12 @@ const Help = () => {
   const handleBack = () => {
     navigate('/')
   }
-
   return (
     <div className=" bg-white shadow-lg rounded-lg p-10 md:p-14 py-16">
       <button onClick={handleBack} className="text-teal-500 hover:text-black transition duration-200">
         <FaArrowLeft />
       </button>
-      {/* /*<div className="max-w-6xl mx-auto bg-gradient-to-br from-[#001512] to-[#00393c] shadow-lg rounded-lg p-10 md:p-14">*/}
-      {/* Header Section */}
+
       <header className="text-center mb-12">
         <h1 className="text-4xl font-extrabold text-teal-500">Welcome to Our Fundraising Platform</h1>
         <p className="mt-4 text-lg text-black leading-relaxed">
@@ -22,7 +20,7 @@ const Help = () => {
         </p>
       </header>
 
-      {/* About Us Section */}
+
       <section className="description mb-10">
         <h2 className="text-3xl font-semibold text-teal-500 mb-6">About Us</h2>
         <p className="text-black mb-4 leading-relaxed">
@@ -55,7 +53,7 @@ const Help = () => {
         </ul>
       </section>
 
-      {/* Contact Us Section */}
+
       <footer className="footer text-center mt-10">
         <h2 className="text-3xl font-semibold text-teal-500 mb-6">Contact Us</h2>
         <p className="text-black mb-2">

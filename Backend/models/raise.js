@@ -11,6 +11,7 @@ const RaiseSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
+
 });
 
 const Raise = mongoose.models.Raise || mongoose.model('Raise', RaiseSchema);

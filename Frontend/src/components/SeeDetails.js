@@ -29,6 +29,7 @@ const UserDetailsForm = ({ setActivesection }) => {
         if (response.data) {
           setUserDetails(response.data);
           setIsEditing(true);
+
         }
       })
       .catch((error) => console.error("Error fetching user details:", error));

@@ -22,6 +22,9 @@ function Profile({ setIsLoggedIn, setActivesection }) {
   const [isEmailChange, setIsEmailChange] = useState(false);
   const id = localStorage.getItem('email');
   console.log(id);
+  const handleMyDonations = () => {
+    navigate('/myDonations')
+  }
   useEffect(() => {
     if (!id) {
       console.error('No email found in localStorage');
@@ -121,7 +124,6 @@ function Profile({ setIsLoggedIn, setActivesection }) {
     <div className="w-full p-6 bg-gradient-to-br from-black via-gray-900 to-black shadow-lg rounded-xl border border-gray-700 relative">
       {/* Logout Icon */}
       <div className="absolute top-4 left-4 flex items-center space-x-4 text-white">
-        {/* Logout Icon */}
         <button
           onClick={handleLogout}
           className="p-2 bg-gray-800 rounded-full hover:bg-gray-700 transition shadow-md"
@@ -129,30 +131,27 @@ function Profile({ setIsLoggedIn, setActivesection }) {
           <CiLogout className="text-lg" />
         </button>
 
-        {/* Profile Text */}
-        <h1 className="text-3xl pl-9 font-bold text-white">Profile</h1>
+        <h1 className="text-3xl font-bold text-white ml-9">Profile</h1>
       </div>
 
-
       {/* Profile Image and Header */}
-      <div className="text-center mb-8 mt-8">
-        {/* {profileImage ? (
-          // <img
-          //   src=""
-          //   alt="Profile"
-          //   className="w-20 h-20 rounded-full mx-auto object-cover border-4 border-teal-500 shadow-lg"
-          // />
-        ): (
-            <div className = "w-20 h-20 rounded-full mx-auto bg-gray-600 animate-pulse"></div>
-        )} */}
-        {/* <h1 className="text-3xl font-bold text-white mt-4 mb-2">Profile</h1> */}
-        {/* <p className="text-lg text-gray-400">Manage your account details</p> */}
+      <div className="text-center mb-8 mt-16">
+        {/* Profile Image Placeholder */}
+        {profileImage ? (
+          <img
+            src={profileImage} // Assuming profileImage is the source
+            alt="Profile"
+            className="w-24 h-24 rounded-full mx-auto object-cover border-4 border-teal-500 shadow-lg"
+          />
+        ) : (
+          <div className="w-24 h-24 rounded-full mx-auto bg-gray-600 animate-pulse"></div>
+        )}
       </div>
 
       {/* Profile Details */}
-      <div className="border-t border-gray-700 pt-3">
+      <div className="border-t border-gray-700 pt-3 space-y-6">
         {/* Name Section */}
-        <div className="mb-3">
+        <div>
           <h2 className="text-lg font-semibold text-white mb-1">Name:</h2>
           <div className="flex items-center">
             {isChange ? (
@@ -169,7 +168,7 @@ function Profile({ setIsLoggedIn, setActivesection }) {
             {isChange ? (
               <button
                 onClick={changeNameHandler}
-                className="ml-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition shadow-md"
+                className="ml-4 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition shadow-md"
               >
                 Save
               </button>
@@ -185,7 +184,7 @@ function Profile({ setIsLoggedIn, setActivesection }) {
         </div>
 
         {/* Email Section */}
-        <div className="mb-3">
+        <div>
           <h2 className="text-lg font-semibold text-white mb-1">Email:</h2>
           <div className="flex items-center">
             {isChangeEmail ? (
@@ -197,12 +196,14 @@ function Profile({ setIsLoggedIn, setActivesection }) {
                 className="flex-grow text-white bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 transition"
               />
             ) : (
-              <p className="text-gray-300 flex-grow">{email || 'Loading...'}</p>
+              <p className="text-gray-300 flex-grow truncate" style={{ maxWidth: 'calc(100% - 3rem)' }}>
+                {email || 'Loading...'}
+              </p>
             )}
             {isChangeEmail ? (
               <button
                 onClick={changeEmailHandler}
-                className="ml-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition shadow-md"
+                className="ml-4 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition shadow-md"
               >
                 Save
               </button>
@@ -219,7 +220,7 @@ function Profile({ setIsLoggedIn, setActivesection }) {
 
         {/* Email Verification Section */}
         {isEmailChange && (
-          <div className="mb-6">
+          <div>
             <h2 className="text-lg font-semibold text-white mb-2">Verify Email:</h2>
             <form onSubmit={OTPHandler} className="flex space-x-4">
               <input
@@ -238,7 +239,7 @@ function Profile({ setIsLoggedIn, setActivesection }) {
         )}
 
         {/* Additional Details Section */}
-        <div className="mb-6">
+        <div>
           {!isDetailsAdded ? (
             <button
               onClick={handleSeeDetails}
@@ -265,9 +266,16 @@ function Profile({ setIsLoggedIn, setActivesection }) {
           >
             My Funds
           </button>
+          <button
+            onClick={handleMyDonations}
+            className="w-full text-left px-4 py-2 text-white bg-gray-700 rounded-lg hover:bg-gray-600 transition"
+          >
+            My Donations
+          </button>
         </div>
       </div>
-    </div >
+    </div>
+
 
   );
 }

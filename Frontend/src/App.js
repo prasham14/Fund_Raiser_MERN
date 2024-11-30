@@ -7,6 +7,7 @@ import Initiatives from './components/Initiatives';
 import NGO from './components/NGO';
 import MyFunds from './components/MyFunds';
 import MyInitiatives from './components/MyInitiatives';
+import MyDonations from './components/MyDonations';
 function App() {
   return (
     <Router>
@@ -19,6 +20,7 @@ function App() {
           <Route path='/ngos' element={<NGO />} />
           <Route path='/myFunds' element={<MyFunds />} />
           <Route path="/help" element={<Help />} />
+          <Route path='/myDonations' element={<MyDonations />} />
           <Route path='/myInitiatives' element={<MyInitiatives />} />
         </Routes>
       </div>

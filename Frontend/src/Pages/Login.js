@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Spinner from '../components/Spinner';
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -17,7 +17,7 @@ const Login = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      navigate('/login'); // Redirect to login page
+      navigate('/login');
     }
   }, [navigate]);
 
@@ -41,20 +41,20 @@ const Login = () => {
       setIsLoading(false);
 
     } catch (error) {
-      // Checking for specific error message from the server response
+
       if (error.response && error.response.data) {
-        setError(error.response.data.message);  // Set the error message from the server
+        setError(error.response.data.message);
       } else {
-        setError("An error occurred. Please try again later.");  // General error message if no specific message is available
+        setError("An error occurred. Please try again later.");
       }
-      setIsLoading(false);  // Stop loading spinner if error occurs
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       {
-        isLoading ? (<Spinner />) : (
+        isLoading ? (null) : (
           <div className="bg-white shadow-lg rounded-lg p-8 md:w-1/3 w-full">
             <h2 className="text-2xl font-semibold text-center text-gray-700">Login</h2>
             <form className="mt-4" onSubmit={handleLogin}>

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { pdfjs } from "react-pdf";
-import PdfComp from "./PdfComp"; // Import PdfComp component
 import { FaArrowLeft } from "react-icons/fa";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
@@ -39,12 +38,14 @@ function App({ activeSection, setActivesection }) {
   const handleBack = () => {
     setActivesection('form')
   }
+  const fundId = localStorage.getItem('fundId');
   const submitImage = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("title", title);
     formData.append("file", file);
     formData.append('userId', userId);
+    formData.append('fundId', fundId);
 
     try {
       const result = await axios.post(
@@ -57,11 +58,11 @@ function App({ activeSection, setActivesection }) {
         }
       );
       if (result.data.status === "ok") {
-        alert("Uploaded Successfully!!!");
+        // alert("Uploaded Successfully!!!");
         getPdf();
       }
       alert('Fund Raised Successfully')
-      setActivesection('form');
+      setActivesection('');
     } catch (err) {
       console.log(err);
     }
@@ -120,7 +121,7 @@ function App({ activeSection, setActivesection }) {
           </form>
         </>
       ) : (
-        <PdfComp pdfFile={selectedFundPdf} />
+        <div></div>
       )}
     </div>
 

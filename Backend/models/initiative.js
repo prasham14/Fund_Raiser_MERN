@@ -6,6 +6,10 @@ const InitiativeSchema = new mongoose.Schema({
   desc: { type: String },
   email: { type: String, required: true },
   phone: { type: Number },
+  members: {
+    type: Number,
+    default: 0
+  }
 
 });
 const Initiative = mongoose.model('Initiative', InitiativeSchema);

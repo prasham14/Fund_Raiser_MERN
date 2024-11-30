@@ -37,7 +37,7 @@ const items = [
 
 export default function Highlights() {
   return (
-    <div id="highlights" className="bg-white text-gray-800 py-8 sm:py-16">
+    <div id="highlights" className="bg-gray-100 text-gray-800 py-8 sm:py-16">
       <div className="container mx-auto flex flex-col items-center gap-6 sm:gap-12">
         <div className="w-full sm:w-4/5 md:w-3/5 text-center sm:text-left">
           <h2 className="text-3xl font-bold text-teal-600 mb-4 flex justify-center sm:justify-start items-center">
@@ -59,6 +59,19 @@ export default function Highlights() {
             </div>
           ))}
         </div>
+      </div>
+      <div className="inline-flex items-center justify-center w-full my-8">
+        {/* Left Line */}
+        <hr className="w-64 h-px bg-gray-200 border-0 dark:bg-gray-700" />
+
+        {/* Dots */}
+        <div className="flex items-center justify-center space-x-2 mx-4">
+          <span className="w-2 h-2 bg-gray-600 rounded-full"></span>
+          <span className="w-2 h-2 bg-gray-600 rounded-full"></span>
+          <span className="w-2 h-2 bg-gray-600 rounded-full"></span>
+        </div>
+        {/* Right Line */}
+        <hr className="w-64 h-px bg-gray-200 border-0 dark:bg-gray-700" />
       </div>
     </div>
 

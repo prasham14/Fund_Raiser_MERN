@@ -1,14 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import Main from '../components/Main';
+import { useNavigate } from 'react-router-dom';
 import Doc from '../components/Doc'
 import FormSubmission from '../components/FundRaise';
 import NGO from '../components/NGO';
 import Option1 from '../components/Option1';
 import Option2 from '../components/Option2';
 import Option3 from '../components/Option3';
-import Profile from '../components/Profile';
-import Initiatives from '../components/Initiatives';
 import ViewFundRaiser from '../components/ViewFundRaiser';
 import MyInitiatives from '../components/MyInitiatives';
 import MyFunds from '../components/MyFunds'
@@ -16,13 +13,13 @@ import CreateInitiative from '../components/CreateInitiative';
 import Footer from '../components/Footer';
 import Highlights from '../components/Highlights';
 import Faqs from '../components/Faqs';
-import PdfComp from '../components/PdfComp'
-import PaymentPage from '../components/Transaction';
 import SeeDetails from '../components/SeeDetails';
-import ShowDetails from '../components/ShowDetails';
-import ShowDoc from "../components/ShowDoc";
 import ShowBankDetails from '../components/ShowBankDetails';
 import Working from '../components/Working'
+import NavBar from '../components/NavBar';
+import im from '../components/images/OIP.jpeg'
+import PaymentPage from '../components/PaymentPage';
+import Others from '../components/Others'
 const Home = () => {
   const [activeSection, setActivesection] = useState(null);
   const [isClicked, setisClicked] = useState(false);
@@ -31,22 +28,6 @@ const Home = () => {
     return localStorage.getItem('isLoggedIn') === 'true';
   });
   const navigate = useNavigate();
-  function handleViewFundRaiser() {
-    isLoggedIn ? (setActivesection('viewFundRaiser')) : (navigate('/login'))
-  }
-  function handleContactSupport() {
-    navigate('/help');
-  }
-  function handleInitiatives() {
-
-    // <Initiatives setActivesection={setActivesection} />
-    // setActivesection('Initiative');
-    isLoggedIn ? (navigate('/initiatives')) : (navigate('/login'));
-  }
-  function handleSignUp() {
-    navigate('/signup');
-  }
-
   function handleLogin() {
 
     navigate('/login');
@@ -57,42 +38,7 @@ const Home = () => {
     setIsFormClicked(true);
 
   }
-  function handleNgo() {
 
-    isLoggedIn ? (navigate('/ngos')) : (navigate('/login'))
-  }
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const menuRef = useRef(null);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setIsMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [menuRef]);
-
-  const profileRef = useRef(null);
-
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (profileRef.current && !profileRef.current.contains(event.target)) {
-        setisClicked(false);
-      }
-    }
-    isClicked ? (document.addEventListener("mousedown", handleClickOutside)) : (document.removeEventListener("mousedown", handleClickOutside));
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isClicked]);
   const renderContent = () => {
     // If there's an active section, we render the component on top with a blurred background
     if (activeSection) {
@@ -102,15 +48,16 @@ const Home = () => {
         </div>
       );
     }
-    // If there's no active section, just render the default content
-    // return <Main setActivesection={setActivesection} />;
   };
 
 
   useEffect(() => {
     const checkCookie = () => {
       // Check if the cookie is present
-      const token = document.cookie.split(';').find(cookie => cookie.trim().startsWith('cookies='));
+      const token = document.cookie
+        .split('; ')
+        .find(cookie => cookie.startsWith('cookies='));
+      console.log(token);
       if (!token) {
         setIsLoggedIn(false);
         localStorage.setItem('isLoggedIn', 'false');
@@ -118,10 +65,13 @@ const Home = () => {
       }
     };
 
-    // Check for cookie expiration every 5 seconds
-    const interval = setInterval(checkCookie, Date.now() + 1 * 0.0167 * 60 * 60 * 1000);
+    // Run `checkCookie` every minute (1 * 60 * 1000 ms)
+    const interval = setInterval(checkCookie, 24 * 60 * 1000);
+
+    // Cleanup interval on component unmount
     return () => clearInterval(interval);
   }, [navigate]);
+
   const renderActiveComponent = () => {
     switch (activeSection) {
       case 'viewFundRaiser': return (<ViewFundRaiser activeSection={activeSection} setActivesection={setActivesection} />);
@@ -133,139 +83,131 @@ const Home = () => {
       case 'option3': return <Option3 setActivesection={setActivesection} />;
       case 'createInitiatives': return (<CreateInitiative activeSection={activeSection} setActivesection={setActivesection} />);
       case 'doc': return (<Doc activeSection={activeSection} setActivesection={setActivesection} />);
-      case 'docs': return (<PdfComp setActivesection={setActivesection} />);
       case 'getini': return (<MyInitiatives setActivesection={setActivesection} />);
       case 'myFunds': return (<MyFunds setActivesection={setActivesection} />);
       case 'seeDetails': return (<SeeDetails setActivesection={setActivesection} />);
-      case 'transaction': return (<PaymentPage setActivesection={setActivesection} />);
-      case 'showPersonalDetails': return (<ShowDetails setActivesection={setActivesection} />);
-      case 'showdoc': return (<ShowDoc setActivesection={setActivesection} />);
+      case 'pay': return (<PaymentPage />)
       case 'bankdetailsoffund': return (<ShowBankDetails setActivesection={setActivesection} />);
-      default: return <Home />;
+      case 'others': return (<Others setActivesection={setActivesection} />)
+      default: return <div><Home /></div>;
     }
   };
+  const handleClick = () => {
+    navigate('/signup');
+  };
 
+  const handlePersonalDetails = () => {
+    setActivesection('seeDetails')
+  }
+  // isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
   return (
-    <div className="home-container flex flex-col min-h-screen bg-gray-50 ">
-      {/* Navbar */}
-      <div className="navbar w-full bg-black fixed top-0 z-50 flex justify-between items-center px-8 py-4 shadow-md">
-        <nav className="navbar-nav flex items-center justify-between w-full">
-          <div className="flex items-center space-x-4">
-            <h1 className="text-2xl font-bold text-white">FundRaiser Platform</h1>
-          </div>
-          <div className="flex items-center space-x-6">
-            {/* Home Button */}
-            <button
-              className="inline-flex items-center justify-center relative cursor-pointer select-none box-border font-medium leading-[1.75] min-w-[64px] bg-[color:var(--variant-textBg)] text-[0.8125rem] h-9 text-[rgb(245,246,250)] m-0 px-3 py-2 rounded-lg border-0 hover:bg-white/30 transition-all duration-300"
-              onClick={() => { setActivesection(null); }}
-            >
-              Home
-            </button>
-
-            {/* Conditional Buttons for Logged In State */}
-            {isLoggedIn ? (
-              <button
-                className="inline-flex items-center justify-center relative cursor-pointer select-none box-border font-medium leading-[1.75] min-w-[64px] bg-[color:var(--variant-textBg)] text-[0.8125rem] h-9 text-[rgb(245,246,250)] m-0 px-3 py-2 rounded-lg border-0 hover:bg-white/30 transition-all duration-300"
-                onClick={handleFormSubmission}
-              >
-                Start a Fundraiser
-              </button>
-            ) : null}
-
-            {/* Help Button */}
-            <button
-              onClick={handleContactSupport}
-              className="inline-flex items-center justify-center relative cursor-pointer select-none box-border font-medium leading-[1.75] min-w-[64px] bg-[color:var(--variant-textBg)] text-[0.8125rem] h-9 text-[rgb(245,246,250)] m-0 px-3 py-2 rounded-lg border-0 hover:bg-white/30 transition-all duration-300"
-            >
-              Help
-            </button>
-
-            {/* Profile Button */}
-            {isLoggedIn ? (
-              <div>
-                <button
-                  className="inline-flex items-center justify-center relative cursor-pointer select-none box-border font-medium leading-[1.75] min-w-[64px] bg-[color:var(--variant-textBg)] text-[0.8125rem] h-9 text-[rgb(245,246,250)] m-0 px-3 py-2 rounded-lg border-0 hover:bg-white/30 transition-all duration-300"
-                  onClick={() => setisClicked(!isClicked)}
-                >
-                  Profile
-                </button>
-                {isClicked && (
-                  <div className="absolute top-12 right-0 w-[300px] rounded-lg shadow-lg bg-[rgba(5,7,10,0.7)]">
-                    <div ref={profileRef}>
-                      <Profile isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setActivesection={setActivesection} />
-                    </div>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <>
-                <button
-                  className="inline-flex items-center justify-center relative cursor-pointer select-none box-border font-medium leading-[1.75] min-w-[64px] bg-[color:var(--variant-textBg)] text-[0.8125rem] h-9 text-[rgb(245,246,250)] m-0 px-3 py-2 rounded-lg border-0 hover:bg-white/30 transition-all duration-300"
-                  onClick={handleSignUp}
-                >
-                  Signup
-                </button>
-                <button
-                  className="inline-flex items-center justify-center relative cursor-pointer select-none box-border font-medium leading-[1.75] min-w-[64px] bg-[color:var(--variant-textBg)] text-[0.8125rem] h-9 text-[rgb(245,246,250)] m-0 px-3 py-2 rounded-lg border-0 hover:bg-white/30 transition-all duration-300"
-                  onClick={handleLogin}
-                >
-                  LogIn
-                </button>
-              </>
-            )}
-            {/* Menu Button */}
-            <div className="relative" ref={menuRef}>
-              <button
-                className="inline-flex items-center justify-center relative cursor-pointer select-none box-border font-medium leading-[1.75] min-w-[64px] bg-[color:var(--variant-textBg)] text-[0.8125rem] h-9 text-[rgb(245,246,250)] m-0 px-3 py-2 rounded-lg border-0 hover:bg-white/30 transition-all duration-300"
-                onClick={toggleMenu}
-              >
-                Menu
-              </button>
-              {isMenuOpen && (
-                <ul className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 shadow-lg rounded-lg p-2 text-gray-700 space-y-2">
-                  <li>
-                    <button
-                      onClick={handleViewFundRaiser}
-                      className="w-full text-left hover:bg-gray-100 py-2 px-4 rounded-lg">
-                      View Fundraisers
-                    </button>
-                  </li>
-                  <li>
-
-                    <button
-                      onClick={handleInitiatives}
-                      className="w-full text-left hover:bg-gray-100 py-2 px-4 rounded-lg">
-                      Initiatives
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      onClick={handleNgo}
-                      className="w-full text-left hover:bg-gray-100 py-2 px-4 rounded-lg">
-                      NGO's
-                    </button>
-                  </li>
-                </ul>
-              )}
-            </div>
-          </div>
-        </nav>
-      </div>
-
-      {/* Main Content Area with Scroll */}
+    <div className="mt-0">
       <div className="mt-20 bg-white flex-grow">
         {renderContent()}
       </div>
+      <div className="overflow-y-auto no-scrollbar">
+        <div className="mt-[0px] flex-1">
+          <NavBar setActivesection={setActivesection} />
+          {/* <Main setActivesection={setActivesection} /> */}
 
-      {/* Sections Below the Main Content */}
-      <div className=" overflow-y-auto">
-        <Main setActivesection={setActivesection} />
-        <Working />
-        <Highlights />
-        <Faqs />
-        <Footer />
+          <div className="main-content flex flex-col items-center justify-center min-h-screen bg-gray-100 px-6 py-10">
+            {/* Main Content */}
+            <div className="flex flex-col md:flex-row items-center md:justify-between w-full max-w-7xl mx-auto">
+              {/* Text Section */}
+              <div className="text-center md:text-left max-w-3xl mb-12 px-4">
+                <h1 className="text-5xl md:text-6xl font-extrabold text-teal-600 mb-4">
+                  Fundraising, Simplified
+                </h1>
+
+                <div>
+                  <p className="text-gray-700 text-lg md:text-xl mb-8 max-w-2xl mx-auto">
+                    Create your fundraiser and rally support for your cause in just a few steps. Empower your community to make a difference.
+                  </p>
+                  {
+                    isLoggedIn ? (<button className='bg-teal-500 text-white py-3 px-8 rounded-full shadow-lg hover:bg-teal-600 transition duration-300 ease-in-out transform hover:scale-105 mb-10' onClick={isLoggedIn ? (handleFormSubmission) : (handleLogin)}>
+                      Start a Fund Raiser Now!
+                    </button>) : (
+                      <button onClick={handleLogin} className='bg-teal-500 text-white py-3 px-8 rounded-full shadow-lg hover:bg-teal-600 transition duration-300 ease-in-out transform hover:scale-105 mb-10'>Login Now for raising Funds at 0 cost</button>
+                    )
+                  }
+
+                </div>
+
+                {isLoggedIn ? (
+                  <div className="flex flex-col items-center md:items-start space-y-4">
+                    <p className="text-gray-600 text-lg">
+                      Make sure to add your personal details so that people can reach you easily.
+                    </p>
+                    <button
+                      onClick={handlePersonalDetails}
+                      className="bg-teal-500 text-white py-3 px-8 rounded-full shadow-lg hover:bg-teal-600 transition duration-300 ease-in-out transform hover:scale-105"
+                    >
+                      Add Personal Details
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={handleClick}
+                    className="bg-teal-500 text-white py-3 px-10 rounded-full shadow-lg hover:bg-teal-600 transition duration-300 ease-in-out transform hover:scale-105"
+                  >
+                    Get Started Now
+                  </button>
+                )}
+              </div>
+
+              {/* Image Section */}
+              <div className="bg-no-repeat mt-0 bg-right-top -top-12 h-[500px] md:h-[600px] max-h-[500px] bg-[length:40%] flex flex-col">
+                <img
+                  src={im}
+                  alt="Fundraising"
+                  className="h-[70vh] md:h-[90vh] object-cover rounded-lg shadow-lg"
+                />
+              </div>
+            </div>
+
+            {/* Slider Section */}
+            <div className="w-full max-w-5xl overflow-hidden mt-10">
+              <div className="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth">
+                {[1, 2, 3, 4].map((index) => (
+                  <div
+                    key={index}
+                    className="flex-shrink-0 w-full sm:w-80 h-[350px] bg-gray-200 rounded-lg overflow-hidden shadow-lg snap-center transform transition-transform duration-300 ease-in-out hover:scale-105"
+                  >
+                    <img
+                      src={`./images/-${index}.jpg`} // replace with actual image paths
+                      alt={`Slide ${index}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="inline-flex items-center justify-center w-full my-8">
+              {/* Left Line */}
+              <hr className="w-64 h-px bg-gray-200 border-0 dark:bg-gray-700" />
+
+              {/* Dots */}
+              <div className="flex items-center justify-center space-x-2 mx-4">
+                <span className="w-2 h-2 bg-gray-600 rounded-full"></span>
+                <span className="w-2 h-2 bg-gray-600 rounded-full"></span>
+                <span className="w-2 h-2 bg-gray-600 rounded-full"></span>
+              </div>
+              {/* Right Line */}
+              <hr className="w-64 h-px bg-gray-200 border-0 dark:bg-gray-700" />
+            </div>
+          </div>
+
+          <div className="mt-0">
+            <Working />
+            <Highlights />
+            <Faqs />
+            <Footer />
+          </div>
+        </div>
       </div>
     </div>
+
 
   )
 }

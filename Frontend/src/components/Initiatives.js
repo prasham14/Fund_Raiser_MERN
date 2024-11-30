@@ -81,7 +81,19 @@ const Initiatives = ({ setActivesection }) => {
       url: "https://swachhbharat.mygov.in/"
     },
   ];
-
+  // const selectedinitiativeId = localStorage.getItem('selectedinitiativeId');
+  // const handleJoinInitiative = async () => {
+  //   try {
+  //     await axios.post(`http://localhost:5000/join/${initiativeId}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`
+  //       }
+  //     });
+  //   } catch (err) {
+  //     console.error(err);
+  //     alert('Join failed, internal server error');
+  //   }
+  // }
   return (
     <div className="relative h-screen w-screen bg-gradient-to-b from-white to-gray-100 py-8 px-6 shadow-xl overflow-y-auto">
       {/* Top Bar with Back Button and Create Initiative */}
@@ -190,6 +202,11 @@ const Initiatives = ({ setActivesection }) => {
                     {new Date(ini.date).toLocaleDateString()}
                   </p>
                 </div>
+                {/* <button onClick={
+                  handleJoinInitiative
+                }>
+                  Join
+                </button> */}
               </li>
             ))
           ) : (

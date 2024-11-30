@@ -9,11 +9,14 @@ const ViewFundRaiser = ({ setActivesection }) => {
     setActivesection(category);
   };
   const handleBack = () => {
-    setActivesection('')
-  }
+    setActivesection('');
+  };
+
   return (
-    <div className="donate-container max-w-5xl mx-auto p-8 bg-gradient-to-b from-blue-50 to-white rounded-xl shadow-lg ">
-      <button onClick={handleBack}><FaArrowLeft /></button>
+    <div className="donate-container max-w-5xl mx-auto p-8 bg-gradient-to-b from-blue-50 to-white rounded-xl shadow-lg">
+      <button onClick={handleBack} className="mb-4">
+        <FaArrowLeft />
+      </button>
       <h1 className="donate-title text-4xl font-bold text-center mb-4 text-gray-900">
         What type of Funds would you like to donate?
       </h1>
@@ -22,7 +25,7 @@ const ViewFundRaiser = ({ setActivesection }) => {
       </p>
 
       {/* Categories */}
-      <ul className="donate-options grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <ul className="donate-options flex flex-row gap-8 justify-center">
         <li
           className="donate-option bg-white shadow-lg rounded-lg transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
           onClick={() => handleCategoryClick('option1')}
@@ -73,9 +76,25 @@ const ViewFundRaiser = ({ setActivesection }) => {
             <p className="text-gray-500 text-sm mt-2">Provide essential medicines to those in need of healthcare support.</p>
           </div>
         </li>
+
+        <li
+          className="donate-option bg-white shadow-lg rounded-lg transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
+          onClick={() => handleCategoryClick('others')}
+        >
+          <div className="donate-link block p-8 text-center cursor-pointer">
+            <img
+              src={med}
+              alt="Others"
+              className="option-image w-24 h-24 mx-auto mb-6 rounded-full border-4 border-blue-100 hover:border-blue-200 transition-all duration-200"
+            />
+            <span className="option-text text-2xl font-semibold text-gray-800">
+              Others
+            </span>
+            <p className="text-gray-500 text-sm mt-2">Other Funds including charity else</p>
+          </div>
+        </li>
       </ul>
     </div>
-
   );
 };
 

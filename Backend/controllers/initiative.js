@@ -76,7 +76,22 @@ async function editInitiatives(req, res) {
     res.status(500).json({ error: "Internal server error" });
   }
 }
+async function deleteInitiative(req, res) {
+  const id = req.params.id;
+
+  try {
+    const deletedInitiative = await Initiative.findByIdAndDelete(id);
+    if (!deletedInitiative) {
+      return res.status(404).json({ message: 'Initiative not found' });
+    }
+
+    res.json({ success: true, message: 'Initiative deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting initiative:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
 
 module.exports = {
-  createInitiative, getInitiatives, getInitiativesByEmail, editInitiatives
+  createInitiative, getInitiatives, getInitiativesByEmail, editInitiatives, deleteInitiative
 };
