@@ -76,11 +76,12 @@ router.get('/download/:fileName', (req, res) => {
     }
   });
 });
-router.delete('/delete/:pdfId', async (req, res) => {
-  const { pdfId } = req.params;
+router.delete('/deleteDoc/:fundId', async (req, res) => {
+  const { fundId } = req.params;
 
   try {
-    const result = await PdfDetails.findByIdAndDelete(pdfId);
+    // If `fundId` is not the `_id`, use findOneAndDelete with a filter object
+    const result = await PdfSchema.findOneAndDelete({ fundId: fundId });
 
     if (!result) {
       return res.status(404).json({ message: 'PDF not found' });
@@ -88,8 +89,9 @@ router.delete('/delete/:pdfId', async (req, res) => {
 
     res.status(200).json({ message: 'PDF deleted successfully' });
   } catch (error) {
-    console.error(error);
+    console.error('Error deleting PDF:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
+
 module.exports = router;

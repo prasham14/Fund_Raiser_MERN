@@ -92,6 +92,38 @@ async function deleteInitiative(req, res) {
   }
 }
 
+
+async function membersJoin(req, res) {
+  const { initiativeId } = req.params;
+  const { name, phone } = req.body;
+
+  if (!name || !phone) {
+    return res.status(400).json({ error: 'Name and phone number are required.' });
+  }
+
+  try {
+    // Find the initiative by ID
+    const initiative = await Initiative.findById(initiativeId);
+    console.log(initiative)
+    if (!initiative) {
+      return res.status(404).json({ error: 'Initiative not found.' });
+    }
+
+    // Update the initiative: increment members count, add name and phone
+    initiative.members += 1;
+    initiative.memberNames.push(name);
+    initiative.memberPhone.push(phone);
+
+    // Save the updated initiative
+    await initiative.save();
+
+    res.status(200).json({ message: 'Joined initiative successfully.', initiative });
+  } catch (error) {
+    console.error('Error joining initiative:', error);
+    res.status(500).json({ error: 'Server error.' });
+  }
+}
+
 module.exports = {
-  createInitiative, getInitiatives, getInitiativesByEmail, editInitiatives, deleteInitiative
+  createInitiative, getInitiatives, getInitiativesByEmail, editInitiatives, deleteInitiative, membersJoin
 };

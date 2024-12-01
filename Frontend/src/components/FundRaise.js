@@ -17,6 +17,7 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
     raised: 0,
     date: '',
     type: 'Medicine',
+    phone: '',
     user_id: ''
   });
   const [title, setTitle] = useState("");
@@ -75,6 +76,7 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
         documentData.append('userId', formData.user_id);
         documentData.append('fundId', fundId);
 
+
         const docResponse = await axios.post(
           `http://localhost:5000/upload-files/${formData.user_id}`,
           documentData,
@@ -103,12 +105,13 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
         raised: 0,
         date: '',
         type: 'Medicine',
+        phone: '',
         user_id: localStorage.getItem('userId')
       });
       setTitle("");
       setFile(null);
-
-      setActivesection('doc');
+      alert("Fund Raised Successfully")
+      setActivesection('');
     } catch (error) {
       console.error('Error during submission:', error);
       alert(error.response?.data?.msg || 'Submission failed. Please try again.');
@@ -117,7 +120,7 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
 
   return (
     <div
-      className="form-container max-w-lg mx-auto bg-white p-6 shadow-lg mt-12 overflow-y-auto no-scrollbar rounded-lg border border-gray-200"
+      className="form-container max-w-3xl mx-auto bg-white p-6 shadow-lg shadow-teal-400 mt-12 overflow-y-auto no-scrollbar rounded-lg border border-teal-300"
       style={{ maxHeight: '80vh' }}
     >
       {/* Top Bar */}
@@ -139,51 +142,98 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div className="form-group col-span-1 sm:col-span-2">
-            <label className="block text-gray-600 font-medium mb-1">
-              Fundraiser Title
-            </label>
-            <input
-              name="title"
-              type="text"
-              value={formData.title}
-              onChange={handleChange}
-              required
-              className="w-full p-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200"
-              placeholder="Enter title for your fundraiser"
-            />
+          <div>
+
+
+            <div className="form-group col-span-1 sm:col-span-2">
+              <label className="block text-gray-600 font-medium mb-1">
+                Fundraiser Title
+              </label>
+              <input
+                name="title"
+                type="text"
+                value={formData.title}
+                onChange={handleChange}
+                required
+                className="w-full p-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200"
+                placeholder="Enter title for your fundraiser"
+              />
+            </div>
+
+            <div className="form-group col-span-1 sm:col-span-2">
+              <label className="block text-gray-600 font-medium mb-1">
+                Phone Number
+              </label>
+              <input
+                name="phone"
+                type="number"
+                value={formData.phone}
+                onChange={handleChange}
+                required
+                className="w-full p-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200"
+                placeholder="Enter phone number of the fundRaiser"
+              />
+            </div>
+
+
           </div>
 
-          <div className="form-group">
-            <label className="block text-gray-600 font-medium mb-1">Category</label>
-            <select
-              name="type"
-              value={formData.type}
-              onChange={handleChange}
-              className="w-full p-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200"
-            >
-              <option value="Medicine">Medicine</option>
-              <option value="Education">Education</option>
-              <option value="Relief Fund">Relief Fund</option>
-              <option value="Others">Others</option>
-            </select>
+          <div >
+            <div className='flex gap-6'>
+              <div className="form-group">
+                <label className="block text-gray-600 font-medium mb-1">Category</label>
+                <select
+                  name="type"
+                  value={formData.type}
+                  onChange={handleChange}
+                  className="w-full p-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200"
+                >
+                  <option value="Medicine">Medicine</option>
+                  <option value="Education">Education</option>
+                  <option value="Relief Fund">Relief Fund</option>
+                  <option value="Others">Others</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label className="block text-gray-600 font-medium mb-1">
+                  Goal Amount (₹)
+                </label>
+                <input
+                  name="funds"
+                  type="number"
+                  value={formData.funds}
+                  onChange={handleChange}
+                  required
+                  className="w-full p-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200"
+                  placeholder="Set a target amount"
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center col-span-1 sm:col-span-2">
+              <div className="w-2/3">
+                <label className="block text-gray-600 font-medium mb-1">
+                  Fundraiser End Date
+                </label>
+                <input
+                  name="date"
+                  type="date"
+                  value={formData.date}
+                  onChange={handleChange}
+                  required
+                  className="w-full p-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200"
+                />
+                <p className="text-gray-400 text-xs mt-2">
+                  Your fundraiser will close on this date.
+                </p>
+              </div>
+            </div>
+
           </div>
 
-          <div className="form-group">
-            <label className="block text-gray-600 font-medium mb-1">
-              Goal Amount (₹)
-            </label>
-            <input
-              name="funds"
-              type="number"
-              value={formData.funds}
-              onChange={handleChange}
-              required
-              className="w-full p-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200"
-              placeholder="Set a target amount"
-            />
-          </div>
 
           <div className="form-group col-span-1 sm:col-span-2">
             <label className="block text-gray-600 font-medium mb-1">Details</label>
@@ -198,24 +248,7 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
             />
           </div>
 
-          <div className="flex justify-between items-center col-span-1 sm:col-span-2">
-            <div className="w-2/3">
-              <label className="block text-gray-600 font-medium mb-1">
-                Fundraiser End Date
-              </label>
-              <input
-                name="date"
-                type="date"
-                value={formData.date}
-                onChange={handleChange}
-                required
-                className="w-full p-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200"
-              />
-              <p className="text-gray-400 text-xs mt-2">
-                Your fundraiser will close on this date.
-              </p>
-            </div>
-          </div>
+
         </div>
 
         {/* Document Title */}

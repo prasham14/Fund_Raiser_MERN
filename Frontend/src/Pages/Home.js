@@ -17,16 +17,14 @@ import SeeDetails from '../components/SeeDetails';
 import ShowBankDetails from '../components/ShowBankDetails';
 import Working from '../components/Working'
 import NavBar from '../components/NavBar';
-import im from '../components/images/OIP.jpeg'
+import im from '../components/images/mainpage.webp'
 import PaymentPage from '../components/PaymentPage';
 import Others from '../components/Others'
 const Home = () => {
   const [activeSection, setActivesection] = useState(null);
   const [isClicked, setisClicked] = useState(false);
   const [isFormClicked, setIsFormClicked] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem('isLoggedIn') === 'true';
-  });
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn'));
   const navigate = useNavigate();
   function handleLogin() {
 
@@ -50,7 +48,6 @@ const Home = () => {
     }
   };
 
-
   useEffect(() => {
     const checkCookie = () => {
       // Check if the cookie is present
@@ -60,7 +57,7 @@ const Home = () => {
       console.log(token);
       if (!token) {
         setIsLoggedIn(false);
-        localStorage.setItem('isLoggedIn', 'false');
+        localStorage.setItem('isLoggedIn', false);
         navigate('/');
       }
     };
@@ -71,6 +68,7 @@ const Home = () => {
     // Cleanup interval on component unmount
     return () => clearInterval(interval);
   }, [navigate]);
+
 
   const renderActiveComponent = () => {
     switch (activeSection) {
@@ -99,23 +97,22 @@ const Home = () => {
   const handlePersonalDetails = () => {
     setActivesection('seeDetails')
   }
-  // isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
   return (
-    <div className="mt-0">
-      <div className="mt-20 bg-white flex-grow">
+    <div className=" ">
+      <div className=" bg-white flex-grow">
         {renderContent()}
       </div>
       <div className="overflow-y-auto no-scrollbar">
-        <div className="mt-[0px] flex-1">
-          <NavBar setActivesection={setActivesection} />
+        <div className="flex-1">
+          <NavBar setActivesection={setActivesection} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
           {/* <Main setActivesection={setActivesection} /> */}
 
-          <div className="main-content flex flex-col items-center justify-center min-h-screen bg-gray-100 px-6 py-10">
+          <div className=" flex flex-col items-center justify-between min-h-screen bg-[#f2f1ed] pt-28 gap-6 w-[100vw]">
             {/* Main Content */}
             <div className="flex flex-col md:flex-row items-center md:justify-between w-full max-w-7xl mx-auto">
               {/* Text Section */}
               <div className="text-center md:text-left max-w-3xl mb-12 px-4">
-                <h1 className="text-5xl md:text-6xl font-extrabold text-teal-600 mb-4">
+                <h1 className="text-5xl md:text-6xl font-bold text-black mb-4">
                   Fundraising, Simplified
                 </h1>
 
@@ -124,10 +121,10 @@ const Home = () => {
                     Create your fundraiser and rally support for your cause in just a few steps. Empower your community to make a difference.
                   </p>
                   {
-                    isLoggedIn ? (<button className='bg-teal-500 text-white py-3 px-8 rounded-full shadow-lg hover:bg-teal-600 transition duration-300 ease-in-out transform hover:scale-105 mb-10' onClick={isLoggedIn ? (handleFormSubmission) : (handleLogin)}>
+                    isLoggedIn ? (<button className='bg-[#aa4528] text-white py-3 px-8 rounded-full shadow-lg  transition duration-300 ease-in-out transform hover:scale-105 mb-10' onClick={isLoggedIn ? (handleFormSubmission) : (handleLogin)}>
                       Start a Fund Raiser Now!
                     </button>) : (
-                      <button onClick={handleLogin} className='bg-teal-500 text-white py-3 px-8 rounded-full shadow-lg hover:bg-teal-600 transition duration-300 ease-in-out transform hover:scale-105 mb-10'>Login Now for raising Funds at 0 cost</button>
+                      <button onClick={handleLogin} className='bg-[#aa4528] text-white py-3 px-8 rounded-full shadow-lg  transition duration-300 ease-in-out transform hover:scale-105 mb-10'>Login Now for raising Funds at 0 cost</button>
                     )
                   }
 
@@ -140,7 +137,7 @@ const Home = () => {
                     </p>
                     <button
                       onClick={handlePersonalDetails}
-                      className="bg-teal-500 text-white py-3 px-8 rounded-full shadow-lg hover:bg-teal-600 transition duration-300 ease-in-out transform hover:scale-105"
+                      className="bg-[#aa4528] text-white py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
                     >
                       Add Personal Details
                     </button>
@@ -148,7 +145,7 @@ const Home = () => {
                 ) : (
                   <button
                     onClick={handleClick}
-                    className="bg-teal-500 text-white py-3 px-10 rounded-full shadow-lg hover:bg-teal-600 transition duration-300 ease-in-out transform hover:scale-105"
+                    className="bg-[#aa4528] text-white py-3 px-10 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
                   >
                     Get Started Now
                   </button>
@@ -160,42 +157,33 @@ const Home = () => {
                 <img
                   src={im}
                   alt="Fundraising"
-                  className="h-[70vh] md:h-[90vh] object-cover rounded-lg shadow-lg"
+                  className="md:h-[70vh] h-[50vh] object-cover rounded-lg shadow-lg"
                 />
               </div>
             </div>
 
             {/* Slider Section */}
-            <div className="w-full max-w-5xl overflow-hidden mt-10">
-              <div className="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth">
-                {[1, 2, 3, 4].map((index) => (
-                  <div
-                    key={index}
-                    className="flex-shrink-0 w-full sm:w-80 h-[350px] bg-gray-200 rounded-lg overflow-hidden shadow-lg snap-center transform transition-transform duration-300 ease-in-out hover:scale-105"
-                  >
-                    <img
-                      src={`./images/-${index}.jpg`} // replace with actual image paths
-                      alt={`Slide ${index}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                ))}
+            <div className='w-[100vw] bg-[#d5bd8d] mt-20'>
+              <div className="max-w-5xl overflow-hidden m-6 mx-auto">
+                <div className="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth">
+                  {[1, 2, 3, 4].map((index) => (
+                    <div
+                      key={index}
+                      className="flex-shrink-0 w-full sm:w-80 h-[350px] bg-gray-200 rounded-lg overflow-hidden shadow-lg snap-center transform transition-transform duration-300 ease-in-out hover:scale-105"
+                    >
+                      <img
+                        src={`./images/-${index}.jpg`} // replace with actual image paths
+                        alt={`Slide ${index}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
-            <div className="inline-flex items-center justify-center w-full my-8">
-              {/* Left Line */}
-              <hr className="w-64 h-px bg-gray-200 border-0 dark:bg-gray-700" />
 
-              {/* Dots */}
-              <div className="flex items-center justify-center space-x-2 mx-4">
-                <span className="w-2 h-2 bg-gray-600 rounded-full"></span>
-                <span className="w-2 h-2 bg-gray-600 rounded-full"></span>
-                <span className="w-2 h-2 bg-gray-600 rounded-full"></span>
-              </div>
-              {/* Right Line */}
-              <hr className="w-64 h-px bg-gray-200 border-0 dark:bg-gray-700" />
-            </div>
+
           </div>
 
           <div className="mt-0">

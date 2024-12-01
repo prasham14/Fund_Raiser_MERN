@@ -3,36 +3,45 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaArrowLeft, FaPlus } from "react-icons/fa";
 import CreateInitiative from './CreateInitiative';
+import JoinInitiative from "./JoinInitiative";
 
 const Initiatives = ({ setActivesection }) => {
   const location = useLocation();
   const [initiatives, setInitiatives] = useState([]);
   const [active, setActive] = useState('');
   const navigate = useNavigate();
+  const initiativeId = localStorage.getItem('selectedinitiativeId');
+  const token = localStorage.getItem('token');
 
   function handleButton() {
     setActive('createInitiative');
   }
 
   const handleBack = () => {
-    navigate('/');
-  }
+    navigate(-1); // Navigate back to the previous page
+  };
 
   const render = () => {
     switch (active) {
       case 'createInitiative': return (<CreateInitiative />);
+      case 'join': return <JoinInitiative initiativeId={initiativeId} />;
       default: return null;
     }
   };
 
-  const token = localStorage.getItem('token');
   useEffect(() => {
+    if (!token) {
+      console.error('Token not found. User must log in.');
+      navigate('/login'); // Redirect to login if necessary
+      return;
+    }
+
     const fetchFunds = async () => {
       try {
         const response = await axios.get('http://localhost:5000/getinitiatives', {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
         setInitiatives(response.data);
       } catch (error) {
@@ -41,7 +50,7 @@ const Initiatives = ({ setActivesection }) => {
     };
 
     fetchFunds();
-  }, [token]);
+  }, [token, navigate]);
 
   const links = [
     {
@@ -81,19 +90,7 @@ const Initiatives = ({ setActivesection }) => {
       url: "https://swachhbharat.mygov.in/"
     },
   ];
-  // const selectedinitiativeId = localStorage.getItem('selectedinitiativeId');
-  // const handleJoinInitiative = async () => {
-  //   try {
-  //     await axios.post(`http://localhost:5000/join/${initiativeId}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`
-  //       }
-  //     });
-  //   } catch (err) {
-  //     console.error(err);
-  //     alert('Join failed, internal server error');
-  //   }
-  // }
+
   return (
     <div className="relative h-screen w-screen bg-gradient-to-b from-white to-gray-100 py-8 px-6 shadow-xl overflow-y-auto">
       {/* Top Bar with Back Button and Create Initiative */}
@@ -201,12 +198,19 @@ const Initiatives = ({ setActivesection }) => {
                   <p className="text-gray-700">
                     {new Date(ini.date).toLocaleDateString()}
                   </p>
+                  <p className="text-gray-700">
+                    members joined : {ini.members}
+                  </p>
                 </div>
-                {/* <button onClick={
-                  handleJoinInitiative
-                }>
+                <button
+                  onClick={() => {
+                    localStorage.setItem('selectedinitiativeId', ini._id);
+                    setActive('join');
+                  }}
+                  className="bg-teal-700 text-white px-4 py-2 rounded-md hover:bg-teal-800 transition duration-300"
+                >
                   Join
-                </button> */}
+                </button>
               </li>
             ))
           ) : (
@@ -218,11 +222,13 @@ const Initiatives = ({ setActivesection }) => {
       </div>
 
       {/* Render modal content */}
-      <div className={`fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex justify-center items-center ${active === 'createInitiative' ? 'block' : 'hidden'}`}>
-        <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
-          {render()}
+      {active && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex justify-center items-center">
+          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+            {render()}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -2,13 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Profile from '../components/Profile';
 import { CgProfile } from "react-icons/cg";
-const NavBar = ({ setActivesection }) => {
+import { CgMenuRightAlt } from "react-icons/cg";
+const NavBar = ({ setActivesection, isLoggedIn, setIsLoggedIn }) => {
   // const [activeSection, setActivesection] = useState(null);
   const [isClicked, setisClicked] = useState(false);
   const [isFormClicked, setIsFormClicked] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem('isLoggedIn') === 'true';
-  });
+  // const [isLoggedIn, setIsLoggedIn] = useState(() => {
+  //   return localStorage.getItem('isLoggedIn') === 'true';
+  // });
+  console.log(isLoggedIn);
   const navigate = useNavigate();
   function handleViewFundRaiser() {
     isLoggedIn ? (setActivesection('viewFundRaiser')) : (navigate('/login'))
@@ -79,35 +81,44 @@ const NavBar = ({ setActivesection }) => {
     };
   }, [profileRef]);
 
-
   useEffect(() => {
     const checkCookie = () => {
-      const token = document.cookie.split(';').find(cookie => cookie.trim().startsWith('cookies='));
+      // Check if the cookie is present
+      const token = document.cookie
+        .split('; ')
+        .find(cookie => cookie.startsWith('cookies='));
+      console.log(token);
       if (!token) {
         setIsLoggedIn(false);
-        localStorage.setItem('isLoggedIn', 'false');
+        localStorage.setItem('isLoggedIn', false);
         navigate('/');
       }
     };
 
-    const interval = setInterval(checkCookie, Date.now() + 1 * 0.0167 * 60 * 60 * 1000);
+    // Run `checkCookie` every minute (1 * 60 * 1000 ms)
+    const interval = setInterval(checkCookie, 24 * 60 * 1000);
+
+    // Cleanup interval on component unmount
     return () => clearInterval(interval);
   }, [navigate]);
+
+
+
   return (
-    <div className="home-container flex flex-col bg-gray-100 overflow-hidden">
-      <div className="navbar w-full bg-white fixed top-0 z-50 flex justify-between items-center px-8 py-4 shadow-md shadow-teal-400">
+    <div className="flex flex-col bg-[#f2f1ed] overflow-hidden">
+      <div className="navbar w-full bg-[#f2f1ed] fixed top-0 z-50 flex justify-between items-center px-8 py-4 ">
         <nav className="navbar-nav flex items-center justify-between w-full">
           {/* Logo and Title Section */}
-          <div className="flex items-center space-x-4">
-            <h1 className="text-3xl font-bold text-teal-600 hover:text-teal-700 transition duration-300">
-              FundRaiser Platform
-            </h1>
-          </div>
+          <div className='flex gap-6 justify-evenly items-center mx-20'>
 
-          {/* Action Buttons and Profile/Menu Section */}
-          <div className="flex items-center space-x-6">
+            <div className="flex items-center space-x-4 ">
+              <h1 className="text-xl items-center font-bold text-black hover:text-gray-700 transition duration-300 cursor-pointer pr-8">
+                FundRaiser
+              </h1>
+            </div>
+
             <button
-              className="inline-flex items-center justify-center bg-teal-500 text-white font-medium leading-[1.75] h-10 px-4 py-2 rounded-lg hover:bg-teal-600 shadow-md transition-all duration-300"
+              className="inline-flex items-center justify-center hover:underline text-black leading-[1.75] h-10 px-2 py-2 transition-all duration-300"
               onClick={handleHome}
             >
               Home
@@ -115,7 +126,7 @@ const NavBar = ({ setActivesection }) => {
             {/* Start Fundraiser Button */}
             {isLoggedIn && (
               <button
-                className="inline-flex items-center justify-center bg-teal-500 text-white font-medium leading-[1.75] h-10 px-4 py-2 rounded-lg hover:bg-teal-600 shadow-md transition-all duration-300"
+                className="inline-flex items-center justify-center  text-black hover:underline leading-[1.75] h-10 px-2 py-2  transition-all duration-300"
                 onClick={handleFormSubmission}
               >
                 Start a Fundraiser
@@ -125,24 +136,30 @@ const NavBar = ({ setActivesection }) => {
             {/* Help Button */}
             <button
               onClick={handleContactSupport}
-              className="inline-flex items-center justify-center bg-gray-200 text-gray-700 font-medium leading-[1.75] h-10 px-4 py-2 rounded-lg hover:bg-gray-300 shadow-md transition-all duration-300"
+              className="inline-flex items-center justify-cente text-black hover:underline leading-[1.75] h-10 px-2 py-2  transition-all duration-300"
             >
               Help
             </button>
+          </div>
+
+
+          {/* Action Buttons and Profile/Menu Section */}
+          <div className="flex items-center space-x-6">
+
 
             {/* Profile Section */}
             <div className="relative flex items-center space-x-4" ref={profileRef}>
               {isLoggedIn ? (
                 <div className='relative' >
                   <button
-                    className="inline-flex items-center justify-center bg-gray-200 text-gray-700 font-medium leading-[1.75] h-10 px-4 py-2 rounded-lg hover:bg-gray-300 shadow-md transition-all duration-300"
+                    className="inline-flex items-center justify-center text-black font-medium leading-[1.75] h-10 px-4 py-2  transition-all duration-300"
                     onClick={toggleProfile}
 
                   >
                     <CgProfile className="text-2xl" />
                   </button>
                   {isProfileOpen && (
-                    <div className="absolute top-12 right-0 w-[300px] bg-gray-800 text-white rounded-lg shadow-lg p-4">
+                    <div className="absolute top-12 right-0 w-[300px]  text-white  p-4">
                       <div>
                         <Profile
                           isLoggedIn={isLoggedIn}
@@ -156,13 +173,13 @@ const NavBar = ({ setActivesection }) => {
               ) : (
                 <>
                   <button
-                    className="bg-teal-500 text-white font-medium leading-[1.75] h-10 px-4 py-2 rounded-lg hover:bg-teal-600 shadow-md transition-all duration-300"
+                    className="inline-flex items-center text-center text-black leading-[1.75] px-4 py-1  transition-all duration-300 border border-black hover:bg-[#a4a3a0] font-semibold rounded-md"
                     onClick={handleSignUp}
                   >
                     Signup
                   </button>
                   <button
-                    className="bg-gray-200 text-gray-700 font-medium leading-[1.75] h-10 px-4 py-2 rounded-lg hover:bg-gray-300 shadow-md transition-all duration-300"
+                    className="inline-flex items-center text-center text-white font-semibold leading-[1.75] px-4 py-1  transition-all duration-300 border bg-black border-black hover:text-black hover:bg-[#a4a3a0]  rounded-md"
                     onClick={handleLogin}
                   >
                     LogIn
@@ -172,12 +189,12 @@ const NavBar = ({ setActivesection }) => {
             </div>
 
             {/* Menu Section */}
-            <div className="relative" ref={menuRef}>
+            <div className="relative pr-2" ref={menuRef}>
               <button
-                className="inline-flex items-center justify-center bg-gray-200 text-gray-700 font-medium leading-[1.75] h-10 px-4 py-2 rounded-lg hover:bg-gray-300 shadow-md transition-all duration-300"
+                className="inline-flex items-center justify-center  text-[#aa4528] font-medium leading-[1.75] h-10 px-4 py-2 transition-all duration-300 "
                 onClick={toggleMenu}
               >
-                Menu
+                <CgMenuRightAlt fontSize="1.45rem" />
               </button>
               {isMenuOpen && (
                 <ul className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 shadow-lg rounded-lg p-2 text-gray-700 space-y-2">

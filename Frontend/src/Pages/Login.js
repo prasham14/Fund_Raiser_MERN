@@ -33,7 +33,7 @@ const Login = () => {
       if (response && response.data) {
         const token = response.data.token;
         localStorage.setItem('token', token);
-        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('isLoggedIn', true);
         localStorage.setItem('email', email);
         localStorage.setItem('userId', response.data.user.id);
         navigate('/');

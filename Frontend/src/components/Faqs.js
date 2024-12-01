@@ -108,10 +108,10 @@ export default function Faqs() {
   };
 
   return (
-    <div id="faqs" className="bg-gray-100 text-gray-800 py-8 sm:py-16">
+    <div id="faqs" className="bg-[#151513] py-8 sm:py-16">
       <div className="container mx-auto flex flex-col items-center gap-6 sm:gap-12">
         <div className="w-full sm:w-4/5 md:w-3/5 text-center sm:text-left">
-          <h2 className="text-3xl font-bold text-teal-600  flex justify-center sm:justify-start items-center">
+          <h2 className="text-3xl font-bold text-white  flex justify-center sm:justify-start items-center">
             Frequently Asked Questions (FAQs)
           </h2>
         </div>
@@ -120,21 +120,21 @@ export default function Faqs() {
           {questions.map((item, index) => (
             <div
               key={index}
-              className="bg-white p-2  border-gray-300 shadow-sm mb-4 hover:shadow-md transition-shadow duration-300"
+              className="p-2 mb-4 hover:shadow-md transition-shadow duration-300"
             >
               {/* Question and Icon Section */}
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full flex justify-between items-center text-lg font-medium text-black focus:outline-none"
+                className="w-full flex justify-between items-center text-lg font-medium text-white focus:outline-none"
               >
                 {/* Question */}
                 <span className="text-left">{item.question}</span>
 
                 {/* Icon on the Right */}
                 {openIndex === index ? (
-                  <FaChevronUp className="text-teal-400" />
+                  <FaChevronUp className="text-[#aa4528]" />
                 ) : (
-                  <FaChevronDown className="text-teal-400" />
+                  <FaChevronDown className="text-[#aa4528]" />
                 )}
               </button>
 
@@ -143,7 +143,7 @@ export default function Faqs() {
                 className={`transition-all duration-300 overflow-hidden ${openIndex === index ? 'max-h-60 mt-4' : 'max-h-0'
                   }`}
               >
-                <p className="text-gray-600 text-sm mt-2">{item.answer}</p>
+                <p className="text-gray-200 text-sm mt-2">{item.answer}</p>
               </div>
             </div>
           ))}

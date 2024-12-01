@@ -6,6 +6,7 @@ const RaiseSchema = new mongoose.Schema({
   raised: { type: Number, default: 0 },
   date: { type: Date, default: Date.now },
   type: { type: String, default: 'Medicine' },
+  phone: { type: Number, required: true },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

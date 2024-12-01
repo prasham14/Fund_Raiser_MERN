@@ -2,8 +2,8 @@ import React from 'react';
 import med from "./images/medicines.jpeg";
 import rf from "./images/relief.png";
 import ed from "./images/education.jpg";
-import { FaArrowLeft } from "react-icons/fa";
-
+import { FaArrowLeft, FaCross } from "react-icons/fa";
+import { ImCross } from "react-icons/im";
 const ViewFundRaiser = ({ setActivesection }) => {
   const handleCategoryClick = (category) => {
     setActivesection(category);
@@ -13,19 +13,21 @@ const ViewFundRaiser = ({ setActivesection }) => {
   };
 
   return (
-    <div className="donate-container max-w-5xl mx-auto p-8 bg-gradient-to-b from-blue-50 to-white rounded-xl shadow-lg">
-      <button onClick={handleBack} className="mb-4">
-        <FaArrowLeft />
-      </button>
-      <h1 className="donate-title text-4xl font-bold text-center mb-4 text-gray-900">
+    <div className="donate-container max-w-6xl mx-10  mt-20 p-8 bg-gradient-to-b from-blue-50 to-white rounded-xl shadow-lg relative 
+      h-[500px] overflow-y-auto ">
+
+      {/* <button onClick={handleBack} className="mb-4 p-2 text-blue-600 hover:text-blue-800 transition-all absolute right-6 top-2 ">
+        <ImCross />
+      </button> */}
+      <h1 className="donate-title lg:text-4xl md:text-3xl text-2xl mx-auto font-bold text-center mb-4 text-gray-900">
         What type of Funds would you like to donate?
       </h1>
-      <p className="donate-subtitle text-lg text-center mb-8 text-gray-600">
-        We currently have three categories of funds. Choose one to make an impact.
+      <p className="donate-subtitle sm:text-lg text-sm text-center mb-8 px-6 text-gray-600">
+        We currently have four categories of funds. Choose one to make an impact.
       </p>
 
       {/* Categories */}
-      <ul className="donate-options flex flex-row gap-8 justify-center">
+      <ul className="donate-options grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-center">
         <li
           className="donate-option bg-white shadow-lg rounded-lg transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
           onClick={() => handleCategoryClick('option1')}
@@ -90,11 +92,12 @@ const ViewFundRaiser = ({ setActivesection }) => {
             <span className="option-text text-2xl font-semibold text-gray-800">
               Others
             </span>
-            <p className="text-gray-500 text-sm mt-2">Other Funds including charity else</p>
+            <p className="text-gray-500 text-sm mt-2">Other Funds including charity and more.</p>
           </div>
         </li>
       </ul>
     </div>
+
   );
 };
 

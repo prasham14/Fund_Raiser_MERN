@@ -9,7 +9,9 @@ const InitiativeSchema = new mongoose.Schema({
   members: {
     type: Number,
     default: 0
-  }
+  },
+  memberPhone: [{ type: Number }],
+  memberNames: [{ type: String }]
 
 });
 const Initiative = mongoose.model('Initiative', InitiativeSchema);

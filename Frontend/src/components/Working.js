@@ -28,7 +28,7 @@ function Working() {
   ];
 
   return (
-    <section className="bg-gray-100 py-16">
+    <section className="bg-[#9d9c98] py-16">
       <div className="max-w-4xl mx-auto px-4 text-center">
         <h2 className="text-4xl font-bold text-gray-800 mb-10">
           How Fundraising Works

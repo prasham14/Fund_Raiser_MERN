@@ -6,7 +6,7 @@ import { CiLogout } from "react-icons/ci";
 import { CiEdit } from "react-icons/ci"
 import SeeDetails from './SeeDetails';
 import { useNavigate } from 'react-router-dom';
-function Profile({ setIsLoggedIn, setActivesection }) {
+function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
   const [username, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [profileImage, setProfileImage] = useState('');
@@ -19,6 +19,7 @@ function Profile({ setIsLoggedIn, setActivesection }) {
     email: '',
     image: ''
   });
+  console.log('profie', isLoggedIn);
   const [isEmailChange, setIsEmailChange] = useState(false);
   const id = localStorage.getItem('email');
   console.log(id);
@@ -123,36 +124,39 @@ function Profile({ setIsLoggedIn, setActivesection }) {
   return (
     <div className="w-full p-6 bg-gradient-to-br from-black via-gray-900 to-black shadow-lg rounded-xl border border-gray-700 relative">
       {/* Logout Icon */}
-      <div className="absolute top-4 left-4 flex items-center space-x-4 text-white">
+      <div className="absolute top-6 left-4 flex items-center space-x-4 text-white ">
         <button
           onClick={handleLogout}
           className="p-2 bg-gray-800 rounded-full hover:bg-gray-700 transition shadow-md"
         >
           <CiLogout className="text-lg" />
         </button>
-
-        <h1 className="text-3xl font-bold text-white ml-9">Profile</h1>
       </div>
+      <div>
+        <h1 className="text-3xl font-bold text-white text-center items-center">Profile</h1>
+      </div>
+
+
 
       {/* Profile Image and Header */}
-      <div className="text-center mb-8 mt-16">
+      {/* <div className="text-center mb-8 mt-16">
         {/* Profile Image Placeholder */}
-        {profileImage ? (
-          <img
-            src={profileImage} // Assuming profileImage is the source
-            alt="Profile"
-            className="w-24 h-24 rounded-full mx-auto object-cover border-4 border-teal-500 shadow-lg"
-          />
-        ) : (
-          <div className="w-24 h-24 rounded-full mx-auto bg-gray-600 animate-pulse"></div>
-        )}
-      </div>
+      {/* {profileImage ? (
+        <img
+          src={profileImage} // Assuming profileImage is the source
+          alt="Profile"
+          className="w-24 h-24 rounded-full mx-auto object-cover border-4 border-teal-500 shadow-lg"
+        />
+      ) : (
+        <div className="w-24 h-24 rounded-full mx-auto bg-gray-600 animate-pulse"></div>
+      )}
+    </div> * /} */}
 
       {/* Profile Details */}
-      <div className="border-t border-gray-700 pt-3 space-y-6">
+      <div className="pt-3 space-y-6 mt-2">
         {/* Name Section */}
         <div>
-          <h2 className="text-lg font-semibold text-white mb-1">Name:</h2>
+          <h2 className="text-md font-semibold text-white">Name:</h2>
           <div className="flex items-center">
             {isChange ? (
               <input
@@ -163,7 +167,7 @@ function Profile({ setIsLoggedIn, setActivesection }) {
                 className="flex-grow text-white bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 transition"
               />
             ) : (
-              <p className="text-gray-300 flex-grow">{username || 'Loading...'}</p>
+              <p className="text-gray-300 text-md flex-grow">{username || 'Loading...'}</p>
             )}
             {isChange ? (
               <button
@@ -175,7 +179,7 @@ function Profile({ setIsLoggedIn, setActivesection }) {
             ) : (
               <button
                 onClick={() => setIsChange(true)}
-                className="ml-4 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition shadow-md"
+                className="ml-4 px-4 py-2  text-white "
               >
                 <CiEdit fontSize="1.45rem" />
               </button>
@@ -185,8 +189,8 @@ function Profile({ setIsLoggedIn, setActivesection }) {
 
         {/* Email Section */}
         <div>
-          <h2 className="text-lg font-semibold text-white mb-1">Email:</h2>
-          <div className="flex items-center">
+          <h2 className="text-md font-semibold text-white ">Email:</h2>
+          <div className="flex items-center justify-between">
             {isChangeEmail ? (
               <input
                 type="email"
@@ -196,7 +200,7 @@ function Profile({ setIsLoggedIn, setActivesection }) {
                 className="flex-grow text-white bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 transition"
               />
             ) : (
-              <p className="text-gray-300 flex-grow truncate" style={{ maxWidth: 'calc(100% - 3rem)' }}>
+              <p className="text-gray-300 flex-grow text-md truncate" style={{ maxWidth: 'calc(100% - 6rem)' }}>
                 {email || 'Loading...'}
               </p>
             )}
@@ -210,7 +214,7 @@ function Profile({ setIsLoggedIn, setActivesection }) {
             ) : (
               <button
                 onClick={() => setIsChangeEmail(true)}
-                className="ml-4 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition shadow-md"
+                className="ml-4 px-4 py-2 text-white rounded-lg "
               >
                 <CiEdit fontSize="1.45rem" />
               </button>
@@ -274,7 +278,7 @@ function Profile({ setIsLoggedIn, setActivesection }) {
           </button>
         </div>
       </div>
-    </div>
+    </div >
 
 
   );

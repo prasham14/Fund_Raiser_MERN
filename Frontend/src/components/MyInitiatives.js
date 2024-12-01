@@ -9,6 +9,7 @@ const MyInitiatives = ({ setActivesection }) => {
   const [editInitiativeId, setEditInitiativeId] = useState(null);
   const [editData, setEditData] = useState({ title: '', purpose: '', desc: '', phone: '' });
   const [active, setActive] = useState('');
+  const [memberDetails, setmemberDetails] = useState(false);
   const emailId = localStorage.getItem('email');
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
@@ -122,6 +123,37 @@ const MyInitiatives = ({ setActivesection }) => {
                 <p className="text-sm text-gray-600 mb-2"><strong>Description:</strong> {initiative.desc}</p>
                 <p className="text-sm text-gray-600 mb-2"><strong>Phone:</strong> +91 {initiative.phone}</p>
                 <p className="text-sm text-gray-600"><strong>Date:</strong> {new Date(initiative.date).toLocaleDateString()}</p>
+                <p className="text-sm text-gray-600 mb-2"><strong>Memebers joined:</strong> {initiative.members}</p>
+                <button onClick={() => {
+                  setmemberDetails(true);
+                }} className="text-sm text-gray-600 mb-2">Memebers</button>
+                {memberDetails && initiative.memberNames.length > 0 ? (
+                  <div className="mt-4">
+                    <h4 className="text-lg font-bold text-teal-700 mb-2">Members Details</h4>
+                    <div className="overflow-auto bg-gray-50 rounded-lg shadow-md p-4 border border-gray-200">
+                      <table className="w-full text-sm text-left text-gray-600">
+                        <thead>
+                          <tr className="bg-teal-600 text-white">
+                            <th scope="col" className="px-4 py-2">#</th>
+                            <th scope="col" className="px-4 py-2">Name</th>
+                            <th scope="col" className="px-4 py-2">Phone Number</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {initiative.memberNames.map((name, index) => (
+                            <tr key={index} className="bg-white border-b hover:bg-gray-100">
+                              <td className="px-4 py-2 font-medium text-teal-700">{index + 1}</td>
+                              <td className="px-4 py-2">{name}</td>
+                              <td className="px-4 py-2">{initiative.memberPhone[index]}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                ) : (
+                  <p className="text-sm text-gray-500 mt-2">No members have joined yet.</p>
+                )}
 
                 <div className="mt-4 flex justify-between">
                   <button

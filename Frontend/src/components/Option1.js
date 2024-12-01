@@ -93,16 +93,15 @@ const Option1 = ({ setActivesection }) => {
   };
 
   return (
-    <div className="funds-container max-w-5xl mx-auto p-6 bg-gradient-to-b from-gray-100 to-white rounded-lg shadow-lg overflow-y-auto no-scrollbar">
-      <button onClick={handleBack} className="mb-4 flex items-center text-blue-500 hover:underline">
-        <FaArrowLeft className="mr-2" /> Back
-      </button>
+    <div className=" max-w-5xl mx-4 p-6 bg-white rounded-lg shadow-lg mt-20 ">
+
       {selectedFund ? (
-        <div className="fund-details-container max-w-5xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+        <div className="mx-4 p-4 ">
           <h1 className="text-3xl font-bold mb-4 text-gray-900">{selectedFund.title}</h1>
           <p className="mb-3 text-gray-700"><strong>Purpose:</strong> {selectedFund.details}</p>
           <p className="mb-3 text-gray-700"><strong>Funds Available:</strong> {selectedFund.funds} INR</p>
           <p className="mb-3 text-gray-700"><strong>Amount Raised:</strong> {selectedFund.raised} INR</p>
+          <p className="mb-3 text-gray-700"><strong>Phone Number:</strong> {selectedFund.phone}</p>
           <p className="mb-6 text-gray-700"><strong>Needed before:</strong> {new Date(selectedFund.date).toLocaleDateString()}</p>
           {localStorage.setItem('selectedFundId', selectedFund._id)}
           {selectedFund.isExpired && (
@@ -144,40 +143,47 @@ const Option1 = ({ setActivesection }) => {
         </div>
       ) : (
         <>
+          <button onClick={handleBack} className=" flex items-center text-blue-500 hover:underline">
+            <FaArrowLeft className="mr-2" /> Back
+          </button>
           <h1 className="text-4xl font-bold text-center mb-8 text-gray-900">Education Funds</h1>
-          <ul className="funds-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {funds.length > 0 ? (
-              funds.map((fund, index) => (
-                <li
-                  key={index}
-                  className="fund-card bg-white shadow-md rounded-lg p-6 transition-transform transform hover:-translate-y-2 hover:shadow-2xl hover:bg-blue-50"
-                >
-                  <h2 className="fund-title text-2xl font-semibold mb-3 text-gray-900">{fund.title}</h2>
-                  <p className="mb-2 text-gray-700"><strong>Purpose:</strong> {fund.details}</p>
-                  <p className="mb-2 text-gray-700"><strong>Funds Available:</strong> {fund.funds} INR</p>
-                  <p className="mb-2 text-gray-700"><strong>Amount Raised:</strong> {fund.raised} INR</p>
-                  <p className="mb-6 text-gray-700"><strong>Needed Before:</strong> {new Date(fund.date).toLocaleDateString()}</p>
-                  {isFundEndingSoon(fund.date) && (
-                    <p className="text-yellow-600 font-bold">Fund ending soon!</p>
-                  )}
-                  {fund.isExpired ? (
-                    <p className="text-red-500 font-bold">Expired</p>
-                  ) : (
-                    <button
-                      className="bg-blue-500 text-white py-2 px-4 rounded shadow-lg hover:bg-blue-600 transition-all duration-300 ease-in-out w-full"
-                      onClick={() => clickHandler(fund)}
-                    >
-                      Click here for details
-                    </button>
-                  )}
-                </li>
-              ))
-            ) : (
-              <p className="text-center text-lg text-gray-700 col-span-full">
-                No education funds found
-              </p>
-            )}
-          </ul>
+          <div className='w-full overflow-x-auto h-full'>
+            <ul className="funds-list flex  gap-6 w-[600px]  ">
+              {funds.length > 0 ? (
+                funds.map((fund, index) => (
+                  <li
+                    key={index}
+                    className="fund-card bg-white  p-6 transition-transform transform hover:-translate-y-2 hover:shadow-2xl hover:bg-blue-50"
+                  >
+                    <h2 className="fund-title text-2xl font-semibold mb-3 text-gray-900">{fund.title}</h2>
+                    <p className="mb-2 text-gray-700"><strong>Purpose:</strong> {fund.details}</p>
+                    <p className="mb-2 text-gray-700"><strong>Funds Available:</strong> {fund.funds} INR</p>
+                    <p className="mb-2 text-gray-700"><strong>Amount Raised:</strong> {fund.raised} INR</p>
+                    <p className="mb-6 text-gray-700"><strong>Needed Before:</strong> {new Date(fund.date).toLocaleDateString()}</p>
+                    {isFundEndingSoon(fund.date) && (
+                      // <p className="text-yellow-600 font-bold">Fund ending soon!</p>
+                      null
+                    )}
+                    {fund.isExpired ? (
+                      <p className="text-red-500 font-bold">Expired</p>
+                    ) : (
+                      <button
+                        className="bg-blue-500 text-white py-2 px-4 rounded shadow-lg hover:bg-blue-600 transition-all duration-300 ease-in-out w-full"
+                        onClick={() => clickHandler(fund)}
+                      >
+                        Click here for details
+                      </button>
+                    )}
+                  </li>
+                ))
+              ) : (
+                <p className="text-center text-lg text-gray-700 col-span-full">
+                  No education funds found
+                </p>
+              )}
+            </ul>
+          </div>
+
         </>
       )}
     </div>

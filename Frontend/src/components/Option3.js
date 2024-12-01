@@ -103,6 +103,7 @@ const Option1 = ({ setActivesection }) => {
           <p className="mb-3 text-gray-700"><strong>Purpose:</strong> {selectedFund.details}</p>
           <p className="mb-3 text-gray-700"><strong>Funds Available:</strong> {selectedFund.funds} INR</p>
           <p className="mb-3 text-gray-700"><strong>Amount Raised:</strong> {selectedFund.raised} INR</p>
+          <p className="mb-3 text-gray-700"><strong>Phone Number:</strong> {selectedFund.phone}</p>
           <p className="mb-6 text-gray-700"><strong>Needed before:</strong> {new Date(selectedFund.date).toLocaleDateString()}</p>
           {localStorage.setItem('selectedFundId', selectedFund._id)}
           {selectedFund.isExpired && (

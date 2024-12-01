@@ -7,9 +7,11 @@ import Withdraw from './Withdraw';
 import { MdDelete } from "react-icons/md";
 const MyFunds = () => {
   const [funds, setFunds] = useState([]);
+  const [isdoc, setisdoc] = useState([]);
   const [editInitiativeId, setEditInitiativeId] = useState(null);
   const [myFundSelected, setMyFundSelected] = useState(null);
   const [showWithdraw, setShowWithdraw] = useState(false);
+  const [isDeleted, setIsdeleted] = useState(false);
   const [editData, setEditData] = useState({
     title: '',
     details: '',
@@ -45,6 +47,28 @@ const MyFunds = () => {
       // Update the local funds list after deletion
       setFunds((prevFunds) => prevFunds.filter((fund) => fund._id !== fundId));
       alert("Fund deleted successfully");
+    } catch (error) {
+      console.error("Error deleting fund:", error);
+      alert("Failed to delete the fund. Please try again.");
+    }
+  };
+
+  const handleDeleteDoc = async (fundId) => {
+    if (!window.confirm("Are you sure you want to delete this Document?")) {
+      return;
+    }
+
+    try {
+      await axios.delete(`http://localhost:5000/deleteDoc/${fundId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // Update the local funds list after deletion
+      setisdoc((prevDocs) => prevDocs.filter((fund) => fund._id !== fundId));
+      alert("Fund deleted successfully");
+      setisdoc(true);
     } catch (error) {
       console.error("Error deleting fund:", error);
       alert("Failed to delete the fund. Please try again.");
@@ -169,6 +193,12 @@ const MyFunds = () => {
                     </p>
                     <p className="text-gray-700">{fund.type}</p>
                   </div>
+                  <div className="mb-4">
+                    <p className="text-sm font-medium text-gray-500 mb-1">
+                      <strong>Phone number:</strong>
+                    </p>
+                    <p className="text-gray-700">{fund.phone}</p>
+                  </div>
 
                   <div className="mb-4">
                     <p className="text-sm font-medium text-gray-500 mb-1">
@@ -202,9 +232,14 @@ const MyFunds = () => {
                   >
                     Docs
                   </button>
-                  <button >
-                    <MdDelete />
-                  </button>
+                  {
+                    !isdoc ? (<div><button onClick={() => { handleDeleteDoc(fund._id) }}>
+                      <MdDelete />
+                    </button></div>) : (<div>
+                      <FaArrowLeft />
+
+                    </div>)
+                  }
                   <div>
                     <button
                       onClick={() => setShowWithdraw(true)}
