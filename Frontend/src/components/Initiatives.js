@@ -4,6 +4,13 @@ import axios from 'axios';
 import { FaArrowLeft, FaPlus } from "react-icons/fa";
 import CreateInitiative from './CreateInitiative';
 import JoinInitiative from "./JoinInitiative";
+import im1 from './images/digitalindia.jpeg'
+import im2 from './images/swcchbharat.jpeg';
+import im3 from './images/OIP (1).jpeg'
+import im4 from './images/Niti aygo.jpeg'
+import im5 from './images/pmjdyojna.jpeg'
+import im6 from './images/startupindia.jpeg'
+
 
 const Initiatives = ({ setActivesection }) => {
   const location = useLocation();
@@ -23,8 +30,8 @@ const Initiatives = ({ setActivesection }) => {
 
   const render = () => {
     switch (active) {
-      case 'createInitiative': return (<CreateInitiative />);
-      case 'join': return <JoinInitiative initiativeId={initiativeId} />;
+      case 'createInitiative': return (<CreateInitiative setActive={setActive} />);
+      case 'join': return <JoinInitiative initiativeId={initiativeId} setActive={setActive} />;
       default: return null;
     }
   };
@@ -56,84 +63,85 @@ const Initiatives = ({ setActivesection }) => {
     {
       id: 1,
       title: "Digital India",
-      image: "https://example.com/digital-india.jpg",
-      url: ""
+      image: im1,
+      url: "https://dic.gov.in/"
     },
     {
       id: 2,
       title: "Startup India",
-      image: "https://example.com/startup-india.jpg",
+      image: im6,
       url: ""
     },
     {
       id: 3,
       title: "Swachh Bharat",
-      image: "https://example.com/swachh-bharat.jpg",
+      image: im2,
       url: "https://swachhbharat.mygov.in/"
     },
     {
       id: 4,
       title: "Make in India",
-      image: "https://example.com/swachh-bharat.jpg",
+      image: im3,
       url: "https://swachhbharat.mygov.in/"
     },
     {
       id: 5,
       title: "NITI Aayog: Transforming India’s Development Agenda",
-      image: "https://example.com/swachh-bharat.jpg",
+      image: im4,
       url: "https://swachhbharat.mygov.in/"
     },
     {
       id: 6,
       title: "Pradhan Mantri Jan Dhan Yojana",
-      image: "https://example.com/swachh-bharat.jpg",
+      image: im5,
       url: "https://swachhbharat.mygov.in/"
     },
   ];
 
   return (
-    <div className="relative h-screen w-screen bg-gradient-to-b from-white to-gray-100 py-8 px-6 shadow-xl overflow-y-auto">
-      {/* Top Bar with Back Button and Create Initiative */}
+    <div className="relative h-screen w-screen bg-[#f2f1ed] py-10 px-6 shadow-xl overflow-y-auto">
+      {/* Top Bar */}
       <div className="flex justify-between items-center mb-8">
         <button
           onClick={handleBack}
-          className="flex items-center text-teal-700 hover:text-teal-800 text-xl transition-transform transform hover:scale-110"
+          className="flex items-center text-black  hover:text-[#aa4528] text-xl font-bold transition-transform transform hover:scale-110"
         >
           <FaArrowLeft className="mr-2" />
-          Back
+
         </button>
 
         <button
           onClick={handleButton}
-          className="flex items-center justify-center bg-gradient-to-r from-teal-700 to-teal-600 text-white p-4 rounded-full shadow-md hover:from-teal-800 hover:to-teal-700 focus:outline-none focus:ring-4 focus:ring-teal-300 transition-all duration-300"
+          className="flex items-center justify-center bg-black text-white p-2 rounded-sm  transition-transform duration-300"
           aria-label="Create Initiative"
         >
-          <FaPlus className="text-xl" />
+          <FaPlus className="text-lg" />
         </button>
       </div>
 
-      <h1 className="text-center text-4xl font-extrabold text-teal-700 mb-10">
+      {/* Header */}
+      <h1 className="text-center text-4xl font-extrabold text-black  hover:text-[#aa4528] mb-10 cursor-pointer">
         Most Popular Initiatives in India!
       </h1>
 
       {/* Popular Initiatives Section */}
-      <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
+      <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {links.map((link) => (
           <div
             key={link.id}
-            className="bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 transform hover:-translate-y-2 hover:shadow-xl"
+            className="bg-white shadow-lg rounded-lg overflow-hidden transform transition-transform hover:-translate-y-2 hover:shadow-xl"
           >
             <img
               src={link.image}
               alt={link.title}
-              className="w-full h-40 object-cover"
+              className="w-full h-48 object-cover "
             />
-            <div className="p-5 text-center">
+            <div className="p-5">
               <a
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-lg font-semibold text-teal-700 hover:text-teal-900 transition-colors duration-300"
+                className="text-lg font-semibold text-black hover:text-[#aa4528] transition-colors duration-300 block text-center"
               >
                 {link.title}
               </a>
@@ -143,93 +151,76 @@ const Initiatives = ({ setActivesection }) => {
       </div>
 
       {/* User Initiatives Section */}
-      <div className="funds-container max-w-7xl mx-auto p-8 mt-12 bg-gray-50 rounded-lg shadow-lg">
-        <h2 className="text-4xl font-extrabold text-center mb-10 text-teal-700">
+      <div className="mt-12 p-6 bg-[#faf9f6] rounded-lg shadow-md">
+        <h2 className="text-3xl font-extrabold text-[#aa4528] text-center mb-8">
           Initiatives Created by Users
         </h2>
 
-        <ul className="funds-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {initiatives.length > 0 ? (
             initiatives.map((ini, index) => (
               <li
                 key={index}
-                className="fund-card bg-white shadow-md rounded-lg p-6 border border-gray-200 hover:shadow-xl transition-transform duration-300 transform hover:-translate-y-1"
+                className="bg-white shadow-lg rounded-lg p-6 border border-gray-200 hover:shadow-xl transform transition-transform hover:-translate-y-1"
               >
-                <h3 className="fund-title text-2xl text-center text-teal-700 underline font-semibold mb-3">
+                <h3 className="text-xl font-semibold text-black text-center hover:underline mb-4 hover:transition duration-300">
                   {ini.title}
                 </h3>
+                <div className="mb-3 flex justify-between">
+                  <p className="text-sm font-semibold text-gray-600">Date Created: {new Date(ini.date).toLocaleDateString()}</p>
+
+                  <p className="text-gray-800 font-semibold">Members Joined: {ini.members}</p>
+                </div>
+                <div className="mb-4">
+                  <p className="text-sm font-semibold text-gray-600">Purpose:</p>
+                  <p className="text-gray-800">{ini.purpose.length > 20 ? `${ini.purpose.slice(0, 20)}...` : (ini.purpose)}</p>
+                </div>
 
                 <div className="mb-4">
-                  <p className="text-sm font-medium text-gray-600">
-                    <strong>Purpose:</strong>
-                  </p>
-                  <p className="text-gray-700">{ini.purpose}</p>
+                  <p className="text-sm font-semibold text-gray-600">Description:</p>
+                  <p className="text-gray-800">{ini.desc.length > 20 ? `${ini.desc.slice(0, 20)}...` : (ini.desc)}</p>
                 </div>
 
-                <div className="mb-4">
-                  <p className="text-sm font-medium text-gray-600">
-                    <strong>Description:</strong>
-                  </p>
-                  <p className="text-gray-700">{ini.desc}</p>
-                </div>
-
-                <h6 className="text-xl font-semibold text-gray-800 mt-4 mb-3">
-                  Contact Details
-                </h6>
-
+                <h6 className="text-lg font-semibold text-gray-800 mb-3">Contact Details</h6>
                 <div className="mb-3">
-                  <p className="text-sm font-medium text-gray-600">
-                    <strong>Email:</strong>
-                  </p>
-                  <p className="text-gray-700">{ini.email}</p>
+                  <p className="text-sm font-semibold text-gray-600 ">Email: {ini.email}</p>
                 </div>
 
                 <div className="mb-3">
-                  <p className="text-sm font-medium text-gray-600">
-                    <strong>Phone Number:</strong>
-                  </p>
-                  <p className="text-gray-700">+91 {ini.phone}</p>
+                  <p className="text-sm font-semibold text-gray-600">Phone: +91 {ini.phone}</p>
                 </div>
 
-                <div className="mb-3">
-                  <p className="text-sm font-medium text-gray-600">
-                    <strong>Date Created:</strong>
-                  </p>
-                  <p className="text-gray-700">
-                    {new Date(ini.date).toLocaleDateString()}
-                  </p>
-                  <p className="text-gray-700">
-                    members joined : {ini.members}
-                  </p>
-                </div>
+
+
                 <button
                   onClick={() => {
                     localStorage.setItem('selectedinitiativeId', ini._id);
                     setActive('join');
                   }}
-                  className="bg-teal-700 text-white px-4 py-2 rounded-md hover:bg-teal-800 transition duration-300"
+                  className="bg-black text-white py-2 px-4 rounded-md hover:bg-[#aa4528] transition duration-300 w-full"
                 >
                   Join
                 </button>
               </li>
             ))
           ) : (
-            <p className="text-center text-gray-600 text-lg col-span-full">
+            <p className="text-gray-600 text-lg col-span-full text-center">
               No initiatives found! An error occurred.
             </p>
           )}
         </ul>
       </div>
 
-      {/* Render modal content */}
+      {/* Modal */}
       {active && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex justify-center items-center">
-          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="p-6 w-full max-w-md">
             {render()}
           </div>
         </div>
       )}
     </div>
+
   );
 };
 

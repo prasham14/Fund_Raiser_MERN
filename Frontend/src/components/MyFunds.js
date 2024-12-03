@@ -5,12 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import UserDocuments from './UserDoc';
 import Withdraw from './Withdraw';
 import { MdDelete } from "react-icons/md";
+import { CiEdit } from "react-icons/ci"
+import { toast } from "react-toastify"
 const MyFunds = () => {
   const [funds, setFunds] = useState([]);
   const [isdoc, setisdoc] = useState([]);
   const [editInitiativeId, setEditInitiativeId] = useState(null);
   const [myFundSelected, setMyFundSelected] = useState(null);
-  const [showWithdraw, setShowWithdraw] = useState(false);
+  const [showWithdraw, setShowWithdraw] = useState('');
   const [isDeleted, setIsdeleted] = useState(false);
   const [editData, setEditData] = useState({
     title: '',
@@ -46,10 +48,10 @@ const MyFunds = () => {
 
       // Update the local funds list after deletion
       setFunds((prevFunds) => prevFunds.filter((fund) => fund._id !== fundId));
-      alert("Fund deleted successfully");
+      toast.success("Fund deleted successfully");
     } catch (error) {
       console.error("Error deleting fund:", error);
-      alert("Failed to delete the fund. Please try again.");
+      toast.error("Failed to delete the fund. Please try again.");
     }
   };
 
@@ -67,11 +69,11 @@ const MyFunds = () => {
 
       // Update the local funds list after deletion
       setisdoc((prevDocs) => prevDocs.filter((fund) => fund._id !== fundId));
-      alert("Fund deleted successfully");
+      toast.success("Fund deleted successfully");
       setisdoc(true);
     } catch (error) {
       console.error("Error deleting fund:", error);
-      alert("Failed to delete the fund. Please try again.");
+      toast.error("Failed to delete the fund. Please try again.");
     }
   };
 
@@ -121,7 +123,7 @@ const MyFunds = () => {
         }
       });
       setEditInitiativeId(null); // Close edit form on success
-
+      toast.success("Fund Edited Successfully")
       // Update local funds list with updated fund data
       setFunds((prevFunds) =>
         prevFunds.map((fund) =>
@@ -130,7 +132,8 @@ const MyFunds = () => {
       );
     } catch (err) {
       console.error(err);
-      alert('Edit failed, internal server error');
+      // alert('Edit failed, internal server error');
+      toast.error("Edit Failed, try again Later");
     }
   };
   const [isDocument, setIsDocument] = useState(null);
@@ -147,31 +150,52 @@ const MyFunds = () => {
     }
   };
   return (
-    <div className="min-h-screen py-12 px-6 lg:px-12 overflow-y-auto no-scrollbar">
-      <button onClick={handleBack}><FaArrowLeft /></button>
-      <div className="max-w-7xl mx-auto p-8 rounded-lg shadow-lg">
+    <div className="min-h-screen py-12 px-6 lg:px-12 overflow-y-auto no-scrollbar bg-[#f2f1ed]">
+      <button
+        onClick={handleBack}
+        className="flex items-center text-black hover:text-[#aa4528] text-xl font-bold transition-transform transform hover:scale-110"
+      >
+        <FaArrowLeft />
+      </button>
+      <div className="max-w-7xl mx-auto p-8">
         <div>{renderDoc()}</div>
-        <h2 className="text-4xl font-bold text-center text-blue-600 mb-12">
+        <h2 className="text-center text-4xl font-extrabold text-black hover:text-[#aa4528] mb-10">
           Your Raised Funds
         </h2>
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {funds.length > 0 ? (
             funds.map((fund, index) => (
-              <div>
+              <div key={index}>
+
                 <li
-                  key={index}
                   className="bg-white rounded-lg shadow-lg p-6 border border-gray-200 transform transition duration-300 hover:scale-105 hover:shadow-2xl"
                 >
+
                   <h3 className="text-2xl font-semibold text-gray-800 mb-6">
-                    {fund.title}
+                    {fund.title.length > 20
+                      ? `${fund.title.slice(0, 20)}...`
+                      : fund.title}
                   </h3>
+                  <div className="relative">
+                    <button
+                      onClick={() => handleEditClick(fund)}
+                      className="absolute top-2 right-2 px-4 py-1 text-black bg-gray-200 rounded-lg hover:bg-gray-300 transition duration-300"
+                    >
+                      <CiEdit fontSize="1.45rem" />
+                    </button>
+                  </div>
 
                   <div className="mb-4">
                     <p className="text-sm font-medium text-gray-500 mb-1">
                       <strong>Details:</strong>
                     </p>
-                    <p className="text-gray-700">{fund.details}</p>
+                    <p className="text-gray-700">
+                      {fund.details.length > 30
+                        ? `${fund.details.slice(0, 30)}...`
+                        : fund.details}
+                    </p>
                   </div>
+
 
                   <div className="mb-4">
                     <p className="text-sm font-medium text-gray-500 mb-1">
@@ -193,6 +217,7 @@ const MyFunds = () => {
                     </p>
                     <p className="text-gray-700">{fund.type}</p>
                   </div>
+
                   <div className="mb-4">
                     <p className="text-sm font-medium text-gray-500 mb-1">
                       <strong>Phone number:</strong>
@@ -200,59 +225,55 @@ const MyFunds = () => {
                     <p className="text-gray-700">{fund.phone}</p>
                   </div>
 
-                  <div className="mb-4">
-                    <p className="text-sm font-medium text-gray-500 mb-1">
-                      <strong>Validation Date:</strong>
-                    </p>
-                    <p className="text-gray-700">
-                      {new Date(fund.date).toLocaleDateString()}
-                    </p>
 
+
+                  <div className="flex justify-between items-center space-x-4">
+                    {/* Left Group: Docs and Withdraw */}
+                    <div className="flex space-x-3">
+                      <button
+                        onClick={() => {
+                          localStorage.setItem("selectedFundId", fund._id);
+                          setIsDocument("doc");
+                          setIsUser(true);
+                          setDocKey((prevKey) => prevKey + 1); // Increment key to force remount
+                        }}
+                        className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition duration-300"
+                      >
+                        Docs
+                      </button>
+                      {!isdoc ? (
+                        <button
+                          onClick={() => handleDeleteDoc(fund._id)}
+                          className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition duration-300"
+                        >
+                          <MdDelete />
+                        </button>
+                      ) : null}
+                      <button
+                        onClick={() => { setIsDocument('withdraw') }}
+                        className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300"
+                      >
+                        Withdraw
+                      </button>
+                    </div>
+
+                    {/* Right Group: Edit and Delete */}
+                    <div className="flex space-x-3">
+
+                      <button
+                        onClick={() => handleDeleteClick(fund._id)}
+                        className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300"
+                      >
+                        <MdDelete />
+                      </button>
+                    </div>
                   </div>
 
-                  <button
-                    onClick={() => handleEditClick(fund)}
-                    className="bg-blue-500 text-white px-4 py-2 rounded mt-4 hover:bg-blue-600 transition duration-300"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDeleteClick(fund._id)}
-                    className="bg-red-500 text-white px-4 py-2 rounded mt-4 hover:bg-red-600 transition duration-300"
-                  >
-                    Delete
-                  </button>
-                  <button
-                    onClick={() => {
-                      localStorage.setItem('selectedFundId', fund._id);
-                      setIsDocument('doc');
-                      setIsUser(true);
-                      setDocKey((prevKey) => prevKey + 1); // Increment key to force remount
-                    }}
-                  >
-                    Docs
-                  </button>
-                  {
-                    !isdoc ? (<div><button onClick={() => { handleDeleteDoc(fund._id) }}>
-                      <MdDelete />
-                    </button></div>) : (<div>
-                      <FaArrowLeft />
-
-                    </div>)
-                  }
-                  <div>
-                    <button
-                      onClick={() => setShowWithdraw(true)}
-                      className="bg-green-500 text-white px-4 py-2 rounded-lg"
-                    >
-                      Withdraw
-                    </button>
-                    {showWithdraw && <Withdraw onClose={() => setShowWithdraw(false)} />}
-                  </div>
+                  {/* {showWithdraw && (
+                    <Withdraw onClose={() => setShowWithdraw(false)} />
+                  )} */}
                 </li>
-
               </div>
-
             ))
           ) : (
             <p className="text-center text-gray-600 text-lg col-span-full">
@@ -265,6 +286,7 @@ const MyFunds = () => {
         {editInitiativeId && (
           <div className="fixed inset-0 z-10 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center">
             <div className="bg-white w-full max-w-3xl p-8 rounded-lg shadow-lg">
+
               <h3 className="text-3xl font-bold text-gray-800 mb-6">Edit Fund</h3>
               <input
                 type="text"
@@ -290,14 +312,6 @@ const MyFunds = () => {
                 placeholder="Funds Needed"
                 className="block w-full p-4 mb-4 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
               />
-              {/* <input
-                type="text"
-                name="type"
-                value={editData.type}
-                onChange={handleEditChange}
-                placeholder="Type"
-                className="block w-full p-4 mb-4 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300"
-              /> */}
               <div className="flex justify-end space-x-4">
                 <button
                   onClick={handleEditSubmit}
@@ -315,8 +329,10 @@ const MyFunds = () => {
             </div>
           </div>
         )}
+
       </div>
     </div>
+
   );
 };
 

@@ -76,15 +76,16 @@ const MyDonations = () => {
     return <div className="text-center text-gray-500">Loading...</div>;
   }
 
+
   return (
-    <div className="relative max-w-4xl mx-auto my-8 p-6 bg-white shadow-lg rounded-lg">
+    <div className="relative max-w-4xl mx-auto my-8 p-6  bg-white">
 
       {/* Background Blur Overlay for Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50"></div>
       )}
 
-      <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Donation Details</h1>
+      <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Your Donations </h1>
 
       {donationData.length === 0 ? (
         <p className="text-center text-gray-600">You have not made any donations yet.</p>
@@ -93,12 +94,12 @@ const MyDonations = () => {
           {donationData.map((donation, index) => (
             <div
               key={index}
-              className="bg-gray-50 p-4 rounded-lg shadow-md border border-gray-200"
+              className="bg-[#f2f1ed] p-4 rounded-lg shadow-md border border-gray-200"
             >
 
               <div className="flex justify-between items-center mb-4">
                 <span className="text-lg font-semibold text-gray-700">Amount Donated:</span>
-                <span className="text-lg text-gray-600">${donation.amount}</span>
+                <span className="text-lg text-gray-600">{donation.amount} INR</span>
               </div>
 
               <div className="flex justify-between items-center mb-4">
@@ -112,7 +113,7 @@ const MyDonations = () => {
                 <span className="text-lg font-semibold text-gray-700">Donated To:</span>
                 <button
                   onClick={() => fetchFundDetails(donation.fundId)}  // Fetch fund details on click
-                  className="text-lg text-blue-600 hover:text-blue-800"
+                  className="text-lg text-black hover:text-[#aa4528] hover:underline"
                 >
                   View Fund Details
                 </button>
@@ -146,11 +147,11 @@ const MyDonations = () => {
             </div>
             <div className="mb-4">
               <span className="font-semibold text-gray-700">Target Amount:</span>
-              <span className="text-gray-600">${selectedFund.funds}</span>
+              <span className="text-gray-600"> Rs. {selectedFund.funds}</span>
             </div>
             <div className="mb-4">
               <span className="font-semibold text-gray-700">Raised Amount:</span>
-              <span className="text-gray-600">${selectedFund.raised}</span>
+              <span className="text-gray-600"> Rs. {selectedFund.raised}</span>
             </div>
           </div>
         </div>

@@ -54,7 +54,7 @@ const Home = () => {
       const token = document.cookie
         .split('; ')
         .find(cookie => cookie.startsWith('cookies='));
-      console.log(token);
+      // console.log(token);
       if (!token) {
         setIsLoggedIn(false);
         localStorage.setItem('isLoggedIn', false);
@@ -84,8 +84,8 @@ const Home = () => {
       case 'getini': return (<MyInitiatives setActivesection={setActivesection} />);
       case 'myFunds': return (<MyFunds setActivesection={setActivesection} />);
       case 'seeDetails': return (<SeeDetails setActivesection={setActivesection} />);
-      case 'pay': return (<PaymentPage />)
-      case 'bankdetailsoffund': return (<ShowBankDetails setActivesection={setActivesection} />);
+      // case 'pay': return (<PaymentPage />)
+      // case 'bankdetailsoffund': return (<ShowBankDetails setActivesection={setActivesection} />);
       case 'others': return (<Others setActivesection={setActivesection} />)
       default: return <div><Home /></div>;
     }
@@ -99,7 +99,7 @@ const Home = () => {
   }
   return (
     <div className=" ">
-      <div className=" bg-white flex-grow">
+      <div className=" bg-[#f2f1ed] flex-grow">
         {renderContent()}
       </div>
       <div className="overflow-y-auto no-scrollbar">
@@ -107,24 +107,25 @@ const Home = () => {
           <NavBar setActivesection={setActivesection} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
           {/* <Main setActivesection={setActivesection} /> */}
 
-          <div className=" flex flex-col items-center justify-between min-h-screen bg-[#f2f1ed] pt-28 gap-6 w-[100vw]">
+          <div className="flex  bg-[#f2f1ed] pt-28 gap-6 w-[100vw] ">
             {/* Main Content */}
-            <div className="flex flex-col md:flex-row items-center md:justify-between w-full max-w-7xl mx-auto">
+            <div className="flex flex-col lg:flex-row items-center lg:justify-evenly  w-[90%] mx-auto  ">
               {/* Text Section */}
-              <div className="text-center md:text-left max-w-3xl mb-12 px-4">
-                <h1 className="text-5xl md:text-6xl font-bold text-black mb-4">
+              <div className="text-center md:text-left max-w-3xl px-4">
+                <h1 className=" font-sans text-5xl md:text-6xl font-bold text-black mb-4">
                   Fundraising, Simplified
                 </h1>
 
                 <div>
-                  <p className="text-gray-700 text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-                    Create your fundraiser and rally support for your cause in just a few steps. Empower your community to make a difference.
+                  <p className="text-gray-700 text-lg md:text-xl mb-8 max-w-2xl mx-auto mt-5">
+                    Create your fundraiser and rally support for your cause in just a few steps. Empower your community to make a difference and turn compassion into action. Share your story, connect with donors, and watch how small contributions create a big impact. Whether it’s for education, healthcare, or a personal cause, every effort counts. Start today and inspire others to join your mission for change.
                   </p>
+
                   {
-                    isLoggedIn ? (<button className='bg-[#aa4528] text-white py-3 px-8 rounded-full shadow-lg  transition duration-300 ease-in-out transform hover:scale-105 mb-10' onClick={isLoggedIn ? (handleFormSubmission) : (handleLogin)}>
-                      Start a Fund Raiser Now!
+                    isLoggedIn ? (<button className='bg-[#aa4528] text-white py-3 px-8 rounded-sm transition duration-300 ease-in-out transform hover:scale-105 mb-10' onClick={isLoggedIn ? (handleFormSubmission) : (handleLogin)}>
+                      Start a Fund Raiser Now !
                     </button>) : (
-                      <button onClick={handleLogin} className='bg-[#aa4528] text-white py-3 px-8 rounded-full shadow-lg  transition duration-300 ease-in-out transform hover:scale-105 mb-10'>Login Now for raising Funds at 0 cost</button>
+                      null
                     )
                   }
 
@@ -132,20 +133,20 @@ const Home = () => {
 
                 {isLoggedIn ? (
                   <div className="flex flex-col items-center md:items-start space-y-4">
-                    <p className="text-gray-600 text-lg">
+                    {/* <p className="text-gray-600 text-lg">
                       Make sure to add your personal details so that people can reach you easily.
-                    </p>
-                    <button
+                    </p> */}
+                    {/* <button
                       onClick={handlePersonalDetails}
-                      className="bg-[#aa4528] text-white py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+                      className="bg-[#aa4528] text-white py-3 px-8 rounded-sm transition duration-300 ease-in-out transform hover:scale-105"
                     >
                       Add Personal Details
-                    </button>
+                    </button> */}
                   </div>
                 ) : (
                   <button
                     onClick={handleClick}
-                    className="bg-[#aa4528] text-white py-3 px-10 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+                    className="bg-[#aa4528] text-white py-3 px-10 rounded-sm  transition duration-300 ease-in-out transform hover:scale-105"
                   >
                     Get Started Now
                   </button>
@@ -153,17 +154,17 @@ const Home = () => {
               </div>
 
               {/* Image Section */}
-              <div className="bg-no-repeat mt-0 bg-right-top -top-12 h-[500px] md:h-[600px] max-h-[500px] bg-[length:40%] flex flex-col">
+              <div className="bg-no-repeat mt-7 bg-right-top md:h-[600px] max-h-[500px] bg-[length:40%] flex flex-col">
                 <img
                   src={im}
                   alt="Fundraising"
-                  className="md:h-[70vh] h-[50vh] object-cover rounded-lg shadow-lg"
+                  className="h-[90%] object-cover rounded-lg shadow-lg"
                 />
               </div>
             </div>
 
             {/* Slider Section */}
-            <div className='w-[100vw] bg-[#d5bd8d] mt-20'>
+            {/* <div className='w-[100vw] bg-[#d5bd8d] mt-20'>
               <div className="max-w-5xl overflow-hidden m-6 mx-auto">
                 <div className="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth">
                   {[1, 2, 3, 4].map((index) => (
@@ -180,13 +181,13 @@ const Home = () => {
                   ))}
                 </div>
               </div>
-            </div>
+            </div> */}
 
 
 
           </div>
 
-          <div className="mt-0">
+          <div className="">
             <Working />
             <Highlights />
             <Faqs />

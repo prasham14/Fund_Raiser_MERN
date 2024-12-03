@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaArrowLeft } from "react-icons/fa";
 
-const ShowBankDetails = ({ setActivesection }) => {
+const ShowBankDetails = ({ setActivesection, setIsDoc }) => {
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -32,14 +32,14 @@ const ShowBankDetails = ({ setActivesection }) => {
   }, [userId]);
 
   const handlePay = () => {
-    setActivesection('pay')
+    setIsDoc('pay')
   }
   if (loading) return <p className="text-center text-blue-500">Loading...</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
-      <button onClick={handleBack}><FaArrowLeft /></button>
+    <div className="max-w-md mx-auto mt-10 p-6 ">
+      {/* <button onClick={handleBack}><FaArrowLeft /></button> */}
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">User Details</h2>
       <div className="space-y-4">
         <div className="flex justify-between items-center">
@@ -59,7 +59,7 @@ const ShowBankDetails = ({ setActivesection }) => {
           <span className="font-medium">{userDetails.Upi || "N/A"}</span>
         </div>
       </div>
-      <button onClick={handlePay}>Donate</button>
+      <button className="px-4 py-2 mt-8 flex justify-center w-full border bg-black text-white hover:bg-[#aa4528] rounded-lg transition duration-300 hover:scale-y-125 hover:scale-x-110" onClick={handlePay}>Donate Now</button>
     </div>
   );
 };

@@ -1,77 +1,121 @@
 import React from "react";
 import img1 from "./images/download.jpeg";
+
 function Working() {
-  const steps = [
-    {
-      title: "Step 1: Create Your Fundraiser",
-      description:
-        "Sign up or log in to our platform, then click on 'Start a Fundraiser' to create your campaign. Describe your cause, set a goal, and add any relevant details to share your story with potential supporters.",
-      image: "https://via.placeholder.com/300x200",
-    },
-    {
-      title: "Step 2: Share Your Campaign",
-      description:
-        "Once your fundraiser is live, share it on social media, through email, or with friends and family. The more you share, the more likely you are to reach supporters who care about your cause.",
-      image: "https://via.placeholder.com/300x200",
-    },
-    {
-      title: "Step 3: Receive Donations",
-      description:
-        "Supporters can easily donate to your fundraiser. Each donation helps you get closer to your goal, and donors can track your progress in real-time on the campaign page.",
-    },
-    {
-      title: "Step 4: Withdraw Funds",
-      description:
-        "When you're ready, you can withdraw the funds raised. Our secure transfer process ensures that the donations reach you safely, ready to support your cause.",
-      image: "https://via.placeholder.com/300x200",
-    },
-  ];
-
   return (
-    <section className="bg-[#9d9c98] py-16">
-      <div className="max-w-4xl mx-auto px-4 text-center">
-        <h2 className="text-4xl font-bold text-gray-800 mb-10">
-          How Fundraising Works
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {steps.map((step, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-lg shadow-lg overflow-hidden transform transition hover:scale-105"
-            >
-              <img
-                src={img1}
-                alt={step.title}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-6">
-                <h3 className="text-2xl font-semibold text-teal-600 mb-2">
-                  {step.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {step.description}
-                </p>
-              </div>
-            </div>
-          ))}
+    <div className="max-h-fit bg-[#f2f1ed] flex flex-col items-center pt-10  px-4 md:px-10">
+      {/* Header */}
+      <div className="inline-flex items-center justify-center w-full my-8">
+        <hr className="w-full h-1 bg-[#d5bd8d] border-0" />
+        <div className="flex items-center justify-center space-x-2 mx-4">
+          <span className="w-2 h-2 bg-[#d5bd8d] rounded-full"></span>
+          <span className="w-4 h-4 bg-[#d5bd8d] rounded-full"></span>
+          <span className="w-2 h-2 bg-[#d5bd8d] rounded-full"></span>
         </div>
-        <div className="inline-flex items-center justify-center w-full my-8">
-          {/* Left Line */}
-          <hr className="w-64 h-px bg-gray-200 border-0 dark:bg-gray-700" />
-
-          {/* Dots */}
-          <div className="flex items-center justify-center space-x-2 mx-4">
-            <span className="w-2 h-2 bg-gray-600 rounded-full"></span>
-            <span className="w-2 h-2 bg-gray-600 rounded-full"></span>
-            <span className="w-2 h-2 bg-gray-600 rounded-full"></span>
-          </div>
-          {/* Right Line */}
-          <hr className="w-64 h-px bg-gray-200 border-0 dark:bg-gray-700" />
-        </div>
+        <hr className="w-full h-1 bg-[#d5bd8d] border-0" />
       </div>
 
-    </section>
+      <header className="text-center mb-10">
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 leading-tight">
+          Start Your Fundraiser Today
+        </h1>
+        <p className="text-gray-600 mt-4 text-lg md:text-xl">
+          Follow these simple steps to create a successful campaign.
+        </p>
+      </header>
+
+      {/* Main Content */}
+      <div className="flex flex-col lg:flex-row items-center lg:items-start lg:justify-between max-w-7xl w-full space-y-8 lg:space-y-0">
+        {/* Left Images
+        <div className="hidden lg:flex flex-col space-y-6 w-1/5">
+          <img
+            src="https://via.placeholder.com/150"
+            alt="Fundraising example"
+            className="rounded-lg shadow-lg"
+          />
+          <img
+            src="https://via.placeholder.com/150"
+            alt="Happy donors"
+            className="rounded-lg shadow-lg"
+          />
+        </div> */}
+
+        {/* Steps Section */}
+        <div className="flex-1 flex flex-col items-center lg:mx-8 ">
+          <div className="w-full max-w-3xl grid grid-cols-1 md:grid-cols-2 gap-6  ">
+            {/* Step 1 */}
+            <div className="p-6 bg-white rounded-lg shadow-md text-center">
+              <div className="w-16 h-16 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                1
+              </div>
+              <h3 className="text-lg font-semibold text-gray-800">Create Your FundRaiser</h3>
+              <p className="text-gray-600 mt-2">
+                Fill in the details about your fundraiser including title, description,
+                and goal amount by clicking Start Fundraiser button.
+              </p>
+            </div>
+
+            {/* Step 2 */}
+            <div className="p-6 bg-white rounded-lg shadow-md text-center">
+              <div className="w-16 h-16 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                2
+              </div>
+              <h3 className="text-lg font-semibold text-gray-800">Documents for verifications</h3>
+              <p className="text-gray-600 mt-2">
+                Always keep documents for verifications so that prople can trust you .
+              </p>
+            </div>
+
+            {/* Step 3 */}
+            <div className="p-6 bg-white rounded-lg shadow-md text-center">
+              <div className="w-16 h-16 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                3
+              </div>
+              <h3 className="text-lg font-semibold text-gray-800">Receive Donations</h3>
+              <p className="text-gray-600 mt-2">
+                Track your progress and manage donations directly from your
+                the Profile section.
+              </p>
+            </div>
+
+            {/* Step 4 */}
+            <div className="p-6 bg-white rounded-lg shadow-md text-center">
+              <div className="w-16 h-16 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                4
+              </div>
+              <h3 className="text-lg font-semibold text-gray-800">Withdraw Anytime</h3>
+              <p className="text-gray-600 mt-2">
+                You can Withdraw the raised money anytime and it will be transferred in you bank account in 1 hour.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Images
+        <div className="hidden lg:flex flex-col space-y-6 w-1/5">
+          <img
+            src="https://via.placeholder.com/150"
+            alt="Successful campaign"
+            className="rounded-lg shadow-lg"
+          />
+          <img
+            src="https://via.placeholder.com/150"
+            alt="Fundraising goal"
+            className="rounded-lg shadow-lg"
+          />
+        </div> */}
+      </div>
+      <div className="inline-flex items-center justify-center w-full my-8">
+        <hr className="w-full h-1 bg-[#d5bd8d] border-0" />
+        <div className="flex items-center justify-center space-x-2 mx-4">
+          <span className="w-2 h-2 bg-[#d5bd8d] rounded-full"></span>
+          <span className="w-4 h-4 bg-[#d5bd8d] rounded-full"></span>
+          <span className="w-2 h-2 bg-[#d5bd8d] rounded-full"></span>
+        </div>
+        <hr className="w-full h-1 bg-[#d5bd8d] border-0" />
+      </div>
+
+    </div>
   );
 }
 

@@ -104,9 +104,13 @@ async function membersJoin(req, res) {
   try {
     // Find the initiative by ID
     const initiative = await Initiative.findById(initiativeId);
-    console.log(initiative)
     if (!initiative) {
       return res.status(404).json({ error: 'Initiative not found.' });
+    }
+
+    // Check if the user is already a member of this specific initiative
+    if (initiative.memberPhone.includes(phone)) {
+      return res.status(400).json({ error: 'You are already a member of this initiative.' });
     }
 
     // Update the initiative: increment members count, add name and phone
@@ -123,6 +127,8 @@ async function membersJoin(req, res) {
     res.status(500).json({ error: 'Server error.' });
   }
 }
+
+
 
 module.exports = {
   createInitiative, getInitiatives, getInitiativesByEmail, editInitiatives, deleteInitiative, membersJoin

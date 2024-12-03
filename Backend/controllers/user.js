@@ -4,19 +4,29 @@ const { generateToken } = require("./../jwt");
 
 async function signup(req, res) {
   try {
-    const data = req.body;
-    const newUser = new User(data);
-    const response = await newUser.save();
-    console.log("data saved");
-    const payload = { id: response.id };
-    console.log(JSON.stringify(payload));
+    const { username, email, password } = req.body;
+
+    // Check for existing user
+    const existingUser = await User.findOne({ $or: [{ username }, { email }] });
+    if (existingUser) {
+      return res.status(400).json({ error: "User already exists with this username or email" });
+    }
+
+    // Create and save the new user
+    const newUser = new User({ username, email, password });
+    const savedUser = await newUser.save();
+
+    // Generate JWT token
+    const payload = { id: savedUser.id };
     const token = generateToken(payload);
-    return res.status(200).json({ response: response, token: token });
+
+    return res.status(201).json({ user: savedUser, token });
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Internal server error" });
+    console.error(err);
+    return res.status(500).json({ error: "Internal server error" });
   }
 }
+
 async function login(req, res) {
   try {
     const { email, password } = req.body;

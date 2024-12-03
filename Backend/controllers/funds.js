@@ -11,7 +11,7 @@ cron.schedule('0 0 * * *', async () => {
   }
 });
 async function raiseFund(req, res) {
-  const { title, details, funds, raised, type, date, phone, user_id } = req.body;
+  const { title, details, funds, raised, type, phone, user_id } = req.body;
   // const user_id = req.params.id;
   try {
     const user = await User.findById(user_id);
@@ -25,7 +25,6 @@ async function raiseFund(req, res) {
       details,
       funds,
       raised,
-      date,
       type,
       phone,
       userId: user_id

@@ -28,7 +28,7 @@ function App({ activeSection, setActivesection }) {
         Authorization: `Bearer ${token}`
       }
     });
-    console.log(result.data.data);
+    // console.log(result.data.data);
     setAllImage(result.data.data);
   };
 
@@ -42,7 +42,7 @@ function App({ activeSection, setActivesection }) {
   const submitImage = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("title", title);
+    // formData.append("title", title);
     formData.append("file", file);
     formData.append('userId', userId);
     formData.append('fundId', fundId);

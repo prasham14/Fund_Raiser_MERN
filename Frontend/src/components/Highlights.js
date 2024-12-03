@@ -37,11 +37,11 @@ const items = [
 
 export default function Highlights() {
   return (
-    <div id="highlights" className="bg-[#f2f1ed] text-gray-800 py-8 sm:py-16">
+    <div id="highlights" className="bg-[#f2f1ed] text-gray-800 pb-8 sm:pb-16">
       <div className="container mx-auto flex flex-col items-center gap-6 sm:gap-12">
         <div className="w-full sm:w-4/5 md:w-3/5 text-center sm:text-left">
-          <h2 className="text-3xl font-bold text-teal-600 mb-4 flex justify-center sm:justify-start items-center">
-            Why Choose Us? Below are some Highlights of this platform
+          <h2 className="text-3xl font-bold text-black mb-4 flex  text-center justify-center sm:justify-start items-center">
+            Why Choose Us?
           </h2>
           <p className="text-gray-600 text-center sm:text-left">
             Discover how our platform empowers fundraisers with visibility, engagement, and user-friendly tools designed to help you reach your goals.
@@ -54,25 +54,13 @@ export default function Highlights() {
               className="bg-white p-6 rounded-lg shadow-lg border border-gray-300 flex flex-col items-start max-w-[400px] hover:shadow-xl transition-shadow duration-300"
             >
               {/* <div className="mb-4">{item.icon}</div> */}
-              <h3 className="text-lg font-medium text-black mb-2">{item.title}</h3>
+              <h3 className="text-lg font-medium text-[#aa4528] mb-2">{item.title}</h3>
               <p className="text-gray-500 text-sm">{item.description}</p>
             </div>
           ))}
         </div>
       </div>
-      <div className="inline-flex items-center justify-center w-full my-8">
-        {/* Left Line */}
-        <hr className="w-64 h-px bg-gray-200 border-0 dark:bg-gray-700" />
 
-        {/* Dots */}
-        <div className="flex items-center justify-center space-x-2 mx-4">
-          <span className="w-2 h-2 bg-gray-600 rounded-full"></span>
-          <span className="w-2 h-2 bg-gray-600 rounded-full"></span>
-          <span className="w-2 h-2 bg-gray-600 rounded-full"></span>
-        </div>
-        {/* Right Line */}
-        <hr className="w-64 h-px bg-gray-200 border-0 dark:bg-gray-700" />
-      </div>
     </div>
 
   );

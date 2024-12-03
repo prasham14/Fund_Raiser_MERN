@@ -52,7 +52,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-[#f2f1ed]">
       {
         isLoading ? (null) : (
           <div className="bg-white shadow-lg rounded-lg p-8 md:w-1/3 w-full">
@@ -63,32 +63,32 @@ const Login = () => {
                 placeholder="Type Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full p-2 mb-4 border border-gray-300 rounded-md "
               />
               <input
                 type="password"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full p-2 mb-4 border border-gray-300 rounded-md "
               />
 
-              {error && <div className="text-red-500 text-center">{error}</div>} {/* Display error here */}
+              {error && <div className="text-red-500 text-center mb-2">{error}</div>} {/* Display error here */}
 
               <button
                 type="submit"
-                className="w-full bg-teal-600 text-white py-2 rounded-md hover:bg-teal-700 transition duration-200"
+                className="w-full bg-black text-white py-2 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
               >
                 Login
               </button>
 
-              <p className="mt-4 text-center text-gray-600">Don't have an account? Sign-up here!</p>
+              <p className="mt-4 text-center text-black">Don't have an Account ? </p>
               <button
                 type="button"
                 onClick={handleSignUp}
-                className="mt-2 w-full hover:underline focus:outline-none"
+                className="mt-2 w-full hover:underline hover:text-blue-500 focus:outline-none"
               >
-                SignUp
+                Sign Up
               </button>
             </form>
           </div>

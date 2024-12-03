@@ -16,9 +16,9 @@ const Footer = () => {
               name='email'
               type="email"
               placeholder="Enter your email"
-              className="w-full md:w-64 px-4 py-2 rounded-l-md text-black focus:outline-none"
+              className="w-full md:w-64 px-4 py-2 rounded-md text-black focus:outline-none"
             />
-            <button onClick={handleButton} className="bg-[#aa4528] px-4 py-2 rounded-r-md transition ml-2">
+            <button onClick={handleButton} className="bg-[#aa4528] px-4 py-2 rounded-md transition ml-2">
               Join
             </button>
           </div>
@@ -50,7 +50,7 @@ const Footer = () => {
           <div>
             <h3 className="text-2xl font-bold mb-4">Contact Us</h3>
             <p className="text-gray-400">Email: <a href="mailto:jprasham3@gmail.com" className="text-[#aa4528] hover:underline">jprasham3@gmail.com</a></p>
-            <p className="text-gray-400">Phone: <span className="text-[#aa4528]">+91 8209871857</span></p>
+            {/* <p className="text-gray-400">Phone: <span className="text-[#aa4528]">+91 8209871857</span></p> */}
             <p className="text-gray-400">Rajasthan, India</p>
           </div>
         </div>

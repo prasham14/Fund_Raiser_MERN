@@ -11,7 +11,8 @@ const Withdraw = ({ onClose }) => {
           Withdrawal Confirmation
         </h2>
         <p className="text-gray-600 text-center mb-6">
-          Your amount will be sent to your account within one hour. Thank you for your patience.
+          Your request has been sent .
+          The raised amount will be sent to your account within one hour. Thank you for your patience.
         </p>
 
         <div className="flex justify-center space-x-4">
@@ -21,12 +22,7 @@ const Withdraw = ({ onClose }) => {
           >
             Go to Home
           </button>
-          <button
-            onClick={onClose}
-            className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition duration-300"
-          >
-            Close
-          </button>
+
         </div>
       </div>
     </div>

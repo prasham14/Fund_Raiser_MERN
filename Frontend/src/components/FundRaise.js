@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ImCross } from "react-icons/im";
 import { pdfjs } from "react-pdf";
-
+import { toast } from "react-toastify";
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
   import.meta.url,
@@ -15,7 +15,6 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
     details: '',
     funds: '',
     raised: 0,
-    date: '',
     type: 'Medicine',
     phone: '',
     user_id: ''
@@ -48,13 +47,13 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const currentDate = new Date();
-    const selectedDate = new Date(formData.date);
+    // const currentDate = new Date();
+    // const selectedDate = new Date(formData.date);
 
-    if (selectedDate < currentDate) {
-      alert("The end date cannot be in the past. Please select a valid future date.");
-      return;
-    }
+    // if (selectedDate < currentDate) {
+    //   alert("The end date cannot be in the past. Please select a valid future date.");
+    //   return;
+    // }
 
     try {
       const token = localStorage.getItem('token');
@@ -71,7 +70,7 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
       // If a document file is selected, upload it
       if (file) {
         const documentData = new FormData();
-        documentData.append("title", title);
+        // documentData.append("title", title);
         documentData.append("file", file);
         documentData.append('userId', formData.user_id);
         documentData.append('fundId', fundId);
@@ -89,12 +88,14 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
         );
 
         if (docResponse.data.status === "ok") {
-          alert("Fundraiser and document uploaded successfully!");
+          // alert("Fundraiser and document uploaded successfully!");
+          toast.success("Fund Raised Successfully")
         } else {
-          alert("Fundraiser created, but document upload failed.");
+          // alert("Fundraiser created, but document upload failed.");
+          toast.error('Document Not Uploaded')
         }
       } else {
-        alert("Fundraiser created successfully!");
+        // alert("Fundraiser created successfully!");
       }
 
       // Reset form data
@@ -103,52 +104,51 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
         details: '',
         funds: '',
         raised: 0,
-        date: '',
         type: 'Medicine',
         phone: '',
         user_id: localStorage.getItem('userId')
       });
       setTitle("");
       setFile(null);
-      alert("Fund Raised Successfully")
+      // alert("Fund Raised Successfully")
       setActivesection('');
     } catch (error) {
-      console.error('Error during submission:', error);
-      alert(error.response?.data?.msg || 'Submission failed. Please try again.');
+      toast.error('Fund Raise Failed , try again later')
+      // console.error('Error during submission:', error);
+      // alert(error.response?.data?.msg || 'Submission failed. Please try again.');
     }
   };
 
   return (
     <div
-      className="form-container max-w-3xl mx-auto bg-white p-6 shadow-lg shadow-teal-400 mt-12 overflow-y-auto no-scrollbar rounded-lg border border-teal-300"
-      style={{ maxHeight: '80vh' }}
+      className="form-container max-w-2xl mx-auto bg-[#f2f1ed] shadow-md p-6 mt-12 mr-6 ml-6 overflow-y-auto no-scrollbar rounded-lg border border-gray-200"
+      style={{ maxHeight: "80vh" }}
     >
-      {/* Top Bar */}
-      <div className="relative mb-3">
+
+      <div className="relative mb-6">
         <button
           onClick={handleBack}
-          className="absolute right-0 top-0 text-teal-500 hover:text-teal-700 transition duration-150 flex items-center space-x-2"
+          className="absolute right-0 top-0 text-black hover:text-[#aa4528] transition duration-150 flex items-center ml-4"
         >
-          <ImCross size={20} />
+          <ImCross size={15} />
         </button>
-        <h2 className="text-3xl font-semibold text-gray-700 text-center">
+        <h2 className="text-3xl font-extrabold text-gray-800 text-center pt-2">
           Start a Fundraiser
         </h2>
       </div>
 
-      <p className="text-gray-500 text-base mb-3 text-center">
+      <p className="text-gray-500 text-base mb-5 text-center">
         Complete the form below to share your cause and start raising funds.
       </p>
 
       {/* Form */}
-      <form onSubmit={handleSubmit} className="space-y-6">
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <form onSubmit={handleSubmit} className="space-y-8 ">
+        {/* Grid Layout for Input Fields */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 ">
+          {/* Left Column */}
           <div>
-
-
-            <div className="form-group col-span-1 sm:col-span-2">
-              <label className="block text-gray-600 font-medium mb-1">
+            <div className="form-group mb-4">
+              <label className="block text-gray-600 font-medium mb-2">
                 Fundraiser Title
               </label>
               <input
@@ -157,13 +157,12 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
                 value={formData.title}
                 onChange={handleChange}
                 required
-                className="w-full p-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200"
+                className="w-full p-3 bg-[#faf9f6] border border-gray-300 rounded-md  transition duration-200"
                 placeholder="Enter title for your fundraiser"
               />
             </div>
-
-            <div className="form-group col-span-1 sm:col-span-2">
-              <label className="block text-gray-600 font-medium mb-1">
+            <div className="form-group">
+              <label className="block text-gray-600 font-medium mb-2">
                 Phone Number
               </label>
               <input
@@ -172,113 +171,90 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
                 value={formData.phone}
                 onChange={handleChange}
                 required
-                className="w-full p-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200"
-                placeholder="Enter phone number of the fundRaiser"
+                className="w-full p-3 bg-[#faf9f6] border border-gray-300 rounded-md  transition duration-200"
+                placeholder="Enter phone number of the fundraiser"
               />
             </div>
-
-
           </div>
 
-          <div >
-            <div className='flex gap-6'>
-              <div className="form-group">
-                <label className="block text-gray-600 font-medium mb-1">Category</label>
-                <select
-                  name="type"
-                  value={formData.type}
-                  onChange={handleChange}
-                  className="w-full p-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200"
-                >
-                  <option value="Medicine">Medicine</option>
-                  <option value="Education">Education</option>
-                  <option value="Relief Fund">Relief Fund</option>
-                  <option value="Others">Others</option>
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label className="block text-gray-600 font-medium mb-1">
-                  Goal Amount (₹)
-                </label>
-                <input
-                  name="funds"
-                  type="number"
-                  value={formData.funds}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200"
-                  placeholder="Set a target amount"
-                />
-              </div>
+          {/* Right Column */}
+          <div>
+            <div className="form-group mb-4">
+              <label className="block text-gray-600 font-medium mb-2">
+                Goal Amount (₹)
+              </label>
+              <input
+                name="funds"
+                type="number"
+                value={formData.funds}
+                onChange={handleChange}
+                required
+                className="w-full p-3 bg-[#faf9f6] border border-gray-300 rounded-md  transition duration-200"
+                placeholder="Set a target amount"
+              />
             </div>
-
-            <div className="flex justify-between items-center col-span-1 sm:col-span-2">
-              <div className="w-2/3">
-                <label className="block text-gray-600 font-medium mb-1">
-                  Fundraiser End Date
-                </label>
-                <input
-                  name="date"
-                  type="date"
-                  value={formData.date}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200"
-                />
-                <p className="text-gray-400 text-xs mt-2">
-                  Your fundraiser will close on this date.
-                </p>
-              </div>
+            <div className="form-group">
+              <label className="block text-gray-600 font-medium mb-2">Category</label>
+              <select
+                name="type"
+                value={formData.type}
+                onChange={handleChange}
+                className="w-full bg-[#faf9f6] border border-gray-300 rounded-md p-3  transition duration-200"
+              >
+                <option value="Medicine">Medicine</option>
+                <option value="Education">Education</option>
+                <option value="Relief Fund">Relief Fund</option>
+                <option value="Others">Others</option>
+              </select>
             </div>
-
           </div>
-
-
-          <div className="form-group col-span-1 sm:col-span-2">
-            <label className="block text-gray-600 font-medium mb-1">Details</label>
-            <textarea
-              name="details"
-              value={formData.details}
-              onChange={handleChange}
-              required
-              className="w-full p-3 bg-gray-50 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 transition duration-200"
-              placeholder="Provide a brief description of the fundraiser and why support is needed."
-              rows="4"
-            />
-          </div>
-
-
         </div>
 
-        {/* Document Title */}
-        <input
-          type="text"
-          className="form-control w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mt-5"
-          placeholder="Document Title (e.g., Medical Certificate)"
-          required
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
+        {/* Document Upload */}
+        <div className="space-y-4">
+          <div className="flex flex-col sm:flex-row sm:space-x-4 items-center">
+            <input
+              type="text"
+              className="form-control sm:w-1/2 w-full p-3 border bg-[#faf9f6] rounded-lg "
+              placeholder="Document Title (e.g., Medical Certificate)"
+              required
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <input
+              type="file"
+              className="form-control sm:w-1/2 w-full mt-4 sm:mt-0 p-3 border bg-[#faf9f6] rounded-lg "
+              accept="application/pdf"
+              required
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+          </div>
+        </div>
 
-        {/* File Upload */}
-        <input
-          type="file"
-          className="form-control w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mt-5 mb-5"
-          accept="application/pdf"
-          required
-          onChange={(e) => setFile(e.target.files[0])}
-        />
+        {/* Details Section */}
+        <div>
+          <label className="block text-gray-600 font-medium mb-2">Details</label>
+          <textarea
+            name="details"
+            value={formData.details}
+            onChange={handleChange}
+            required
+            className="w-full p-3 bg-[#faf9f6] border rounded-md transition duration-200"
+            placeholder="Provide a brief description of the fundraiser and why support is needed."
+            rows="4"
+          />
+        </div>
 
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full py-3 bg-teal-500 text-white font-medium rounded-lg hover:bg-teal-600 transition duration-200 ease-in-out transform hover:scale-105 mt-4 focus:outline-none focus:ring-2 focus:ring-teal-400"
+          className="w-full py-3 bg-black text-white font-semibold rounded-lg hover:bg-[#aa4528] transition duration-200 ease-in-out transform hover:scale-105 "
         >
           Submit Fundraiser
         </button>
       </form>
     </div>
+
   );
 };
 

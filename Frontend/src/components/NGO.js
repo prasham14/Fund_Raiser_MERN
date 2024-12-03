@@ -1,6 +1,17 @@
 import React from 'react';
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
+import im1 from "./images/smilefoundaiton.jpeg"
+import im2 from "./images/cry.jpeg"
+import im3 from "./images/OIP (2).jpeg"
+import im4 from "./images/goonj.jpeg"
+import im5 from "./images/nanhikali.jpeg"
+import im6 from "./images/care.jpeg"
+import im7 from "./images/helpage.jpeg"
+import im8 from "./images/pratham.jpeg"
+import im9 from "./images/akp.jpeg"
+import im10 from "./images/stc.jpeg"
+
 const NGO = ({ setActivesection }) => {
   const navigate = useNavigate();
   const handleBack = () => {
@@ -9,63 +20,64 @@ const NGO = ({ setActivesection }) => {
 
   const links = [
     {
-      id: 1,
-      title: "Smile Foundaton",
-      image: "https://images.app.goo.gl/hfzieoQc7jVQBsV77",
-      url: "https://www.smilefoundationindia.org/"
-    },
-    {
-      id: 2,
-      title: "CRY (Child Rights and You)",
-      image: "https://example.com/startup-india.jpg",
-      url: "https://www.cry.org/"
-    },
-    {
-      id: 3,
-      title: "Give India Foundation  ",
-      image: "https://example.com/swachh-bharat.jpg",
-      url: "https://www.giveindia.org/"
-    },
-    {
-      id: 4,
-      title: "Goonj",
-      image: "https://example.com/swachh-bharat.jpg",
-      url: "https://goonj.org/"
-    },
-    {
-      id: 5,
-      title: "Nanhi Kali ",
-      image: "https://example.com/swachh-bharat.jpg",
-      url: "https://www.nanhikali.org/"
-    },
-    {
-      id: 6,
-      title: "Care India",
-      image: "https://example.com/swachh-bharat.jpg",
-      url: "https://careifoundation.org/"
-    },
-    {
       id: 7,
       title: "Helpage India",
-      image: "https://example.com/swachh-bharat.jpg",
+      image: im7,
       url: "https://www.helpageindia.org/"
     },
     {
       id: 8,
       title: "Pratham",
-      image: "https://example.com/swachh-bharat.jpg",
+      image: im8,
       url: "https://www.pratham.org/"
     },
     {
       id: 9,
       title: "Akshaya Patra Foundation",
-      image: "https://example.com/swachh-bharat.jpg",
+      image: im9,
       url: "https://www.akshayapatra.org/"
     },
     {
+      id: 1,
+      title: "Smile Foundaton",
+      image: im1,
+      url: "https://www.smilefoundationindia.org/"
+    },
+    {
+      id: 2,
+      title: "CRY (Child Rights and You)",
+      image: im2,
+      url: "https://www.cry.org/"
+    },
+    {
+      id: 3,
+      title: "Give India Foundation  ",
+      image: im3,
+      url: "https://www.giveindia.org/"
+    },
+    {
+      id: 4,
+      title: "Goonj",
+      image: im4,
+      url: "https://goonj.org/"
+    },
+    {
+      id: 5,
+      title: "Nanhi Kali ",
+      image: im5,
+      url: "https://www.nanhikali.org/"
+    },
+    {
+      id: 6,
+      title: "Care India",
+      image: im6,
+      url: "https://careifoundation.org/"
+    },
+
+    {
       id: 10,
       title: "	Save the Children India",
-      image: "https://example.com/swachh-bharat.jpg",
+      image: im10,
       url: "https://balrakshabharat.org/"
     },
     // Add more initiatives as needed
@@ -73,38 +85,42 @@ const NGO = ({ setActivesection }) => {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-[#cbeee9] to-[#f0f8f8] py-12 px-6 lg:px-16">
+    <div className="min-h-screen bg-[#f2f1ed] py-12 px-6 lg:px-16 ">
       {/* Title */}
-      <button onClick={handleBack}><FaArrowLeft /></button>
-      <h1 className="text-center text-4xl font-bold text-teal-700 mb-12">
+      <button onClick={handleBack} className='
+      flex items-center text-black  hover:text-[#aa4528] text-xl font-bold transition-transform transform hover:scale-110'><FaArrowLeft /></button>
+      <h1 className="text-center text-4xl font-bold text-black mb-12">
         Here are the Most Popular NGOs and Foundations in India!
       </h1>
 
       {/* Grid Container */}
-      <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 px-4">
+      <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 px-4 ">
         {links.map((link) => (
           <div
             key={link.id}
             className="relative group bg-white shadow-lg rounded-lg overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-2"
           >
-            <img
-              src={link.image}
-              alt={link.title}
-              className="w-full h-52 object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-            <div className="p-6 text-center">
-              <a
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xl font-semibold text-blue-600 hover:text-blue-800 transition-colors duration-300"
-              >
-                {link.title}
-              </a>
-            </div>
-            {/* Overlay Effect */}
-            <div className="absolute inset-0 bg-gradient-to-t from-blue-800 via-transparent to-transparent opacity-0 group-hover:opacity-70 transition-opacity duration-300"></div>
+            <a
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block"
+            >
+              <img
+                src={link.image}
+                alt={link.title}
+                className="w-full  h-52 object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+              <div className="p-6 text-center">
+                <span
+                  className="text-xl font-semibold text-black hover:text-[#aa4528] transition-colors duration-300"
+                >
+                  {link.title}
+                </span>
+              </div>
+            </a>
           </div>
+
         ))}
       </div>
     </div>

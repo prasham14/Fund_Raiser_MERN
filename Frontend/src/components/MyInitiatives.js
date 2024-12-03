@@ -100,36 +100,62 @@ const MyInitiatives = ({ setActivesection }) => {
   };
 
   return (
-    <div className="min-h-screen py-6 px-4 lg:px-8 overflow-y-auto no-scrollbar">
+    <div className="relative h-screen w-screen bg-[#f2f1ed] py-10 px-6 shadow-xl overflow-y-auto">
       <button
         onClick={handleBack}
-        className="text-teal-700 text-2xl hover:text-teal-500 transition duration-300 mb-4"
+        className="flex items-center text-black hover:text-[#aa4528] text-xl font-bold transition-transform transform hover:scale-110"
       >
         <FaArrowLeft />
       </button>
-
-      <div className="relative max-w-6xl mx-auto bg-white p-4 rounded-lg shadow-lg overflow-y-auto no-scrollbar h-[70vh]">
-        <h2 className="text-3xl font-bold text-center text-teal-700 mb-6">Your Initiatives</h2>
-
+      <div className="absolute top-4 right-4">
+        <button
+          onClick={() => setActive("createInitiative")}
+          className="flex items-center justify-center bg-black text-white p-2 rounded-sm  transition-transform duration-300 "
+          aria-label="Create Initiative"
+        >
+          <FaPlus />
+        </button>
+      </div>
+      <h2 className="text-center text-4xl font-extrabold text-[#aa4528] mb-10">
+        Your Initiatives
+      </h2>
+      <div className="relative max-w-6xl mx-auto bg-[#faf9f6] p-6 rounded-lg shadow-lg overflow-y-auto no-scrollbar h-[70vh] ">
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {initiatives.length > 0 ? (
             initiatives.map((initiative, index) => (
               <li
                 key={index}
-                className="bg-white rounded-lg shadow-md p-4 border border-gray-200 transform transition duration-300 hover:scale-105 hover:shadow-lg"
+                className="bg-white rounded-lg shadow-md p-6 border border-gray-200 transform transition duration-300 hover:scale-105 hover:shadow-lg"
               >
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">{initiative.title}</h3>
-                <p className="text-sm text-gray-600 mb-2"><strong>Purpose:</strong> {initiative.purpose}</p>
-                <p className="text-sm text-gray-600 mb-2"><strong>Description:</strong> {initiative.desc}</p>
-                <p className="text-sm text-gray-600 mb-2"><strong>Phone:</strong> +91 {initiative.phone}</p>
-                <p className="text-sm text-gray-600"><strong>Date:</strong> {new Date(initiative.date).toLocaleDateString()}</p>
-                <p className="text-sm text-gray-600 mb-2"><strong>Memebers joined:</strong> {initiative.members}</p>
-                <button onClick={() => {
-                  setmemberDetails(true);
-                }} className="text-sm text-gray-600 mb-2">Memebers</button>
+                <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                  {initiative.title}
+                </h3>
+                <p className="text-sm text-gray-600 mb-2">
+                  <strong>Purpose:</strong> {initiative.purpose}
+                </p>
+                <p className="text-sm text-gray-600 mb-2">
+                  <strong>Description:</strong> {initiative.desc}
+                </p>
+                <p className="text-sm text-gray-600 mb-2">
+                  <strong>Phone:</strong> +91 {initiative.phone}
+                </p>
+                <p className="text-sm text-gray-600 mb-2">
+                  <strong>Date:</strong> {new Date(initiative.date).toLocaleDateString()}
+                </p>
+                <p className="text-sm text-gray-600 mb-4">
+                  <strong>Members joined:</strong> {initiative.members}
+                </p>
+                <button
+                  onClick={() => setmemberDetails(true)}
+                  className="text-sm text-teal-600 hover:text-teal-700 mb-4 transition"
+                >
+                  Members
+                </button>
                 {memberDetails && initiative.memberNames.length > 0 ? (
                   <div className="mt-4">
-                    <h4 className="text-lg font-bold text-teal-700 mb-2">Members Details</h4>
+                    <h4 className="text-lg font-bold text-teal-700 mb-2">
+                      Members Details
+                    </h4>
                     <div className="overflow-auto bg-gray-50 rounded-lg shadow-md p-4 border border-gray-200">
                       <table className="w-full text-sm text-left text-gray-600">
                         <thead>
@@ -141,8 +167,13 @@ const MyInitiatives = ({ setActivesection }) => {
                         </thead>
                         <tbody>
                           {initiative.memberNames.map((name, index) => (
-                            <tr key={index} className="bg-white border-b hover:bg-gray-100">
-                              <td className="px-4 py-2 font-medium text-teal-700">{index + 1}</td>
+                            <tr
+                              key={index}
+                              className="bg-white border-b hover:bg-gray-100"
+                            >
+                              <td className="px-4 py-2 font-medium text-teal-700">
+                                {index + 1}
+                              </td>
                               <td className="px-4 py-2">{name}</td>
                               <td className="px-4 py-2">{initiative.memberPhone[index]}</td>
                             </tr>
@@ -152,7 +183,9 @@ const MyInitiatives = ({ setActivesection }) => {
                     </div>
                   </div>
                 ) : (
-                  <p className="text-sm text-gray-500 mt-2">No members have joined yet.</p>
+                  <p className="text-sm text-gray-500 mt-2">
+                    No members have joined yet.
+                  </p>
                 )}
 
                 <div className="mt-4 flex justify-between">
@@ -172,24 +205,21 @@ const MyInitiatives = ({ setActivesection }) => {
               </li>
             ))
           ) : (
-            <p className="text-center text-gray-600 text-lg col-span-full">No initiatives found!</p>
+            <p className="text-center text-gray-600 text-lg col-span-full">
+              No initiatives found!
+            </p>
           )}
         </ul>
 
-        <div className="absolute top-4 right-4">
-          <button
-            onClick={() => setActive('createInitiative')}
-            className="bg-teal-600 text-white px-6 py-3 rounded-full hover:bg-teal-700 transition-all duration-300"
-          >
-            <FaPlus />
-          </button>
-        </div>
+
       </div>
 
       {editInitiativeId && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg">
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">Edit Initiative</h3>
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">
+              Edit Initiative
+            </h3>
             <input
               type="text"
               name="title"
@@ -239,12 +269,16 @@ const MyInitiatives = ({ setActivesection }) => {
         </div>
       )}
 
-      <div className={`fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center ${active === 'createInitiative' ? 'block' : 'hidden'}`}>
+      <div
+        className={`fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center ${active === "createInitiative" ? "block" : "hidden"
+          }`}
+      >
         <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
           {render()}
         </div>
       </div>
     </div>
+
   );
 };
 

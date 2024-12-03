@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaDownload, FaEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { FaArrowLeft } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+
 function UserDocuments({ isUser }) {
   const [documents, setDocuments] = useState([]);
   const [viewPdf, setViewPdf] = useState(null);
@@ -19,12 +22,16 @@ function UserDocuments({ isUser }) {
         }
 
       });
-      console.log(response);
+      // console.log(response);
       setDocuments(response.data.data);
     } catch (error) {
       console.error("Error fetching user documents:", error);
     }
   };
+  const navigate = useNavigate();
+  const handleBack = () => {
+    navigate('/')
+  }
   // const handleDeleteDoc = async () => {
   //   try {
   //     await axios.delete(`http://localhost:5000/delete/${pdfId}`, {
@@ -85,7 +92,8 @@ function UserDocuments({ isUser }) {
   // };
 
   return (
-    <div className="documents-container max-w-lg mx-auto bg-white p-8 shadow-lg mt-12 rounded-lg border border-gray-200">
+
+    <div className="documents-container max-w-lg mx-auto p-8  mt-12 rounded-lg  ">
       <h2 className="text-2xl font-bold text-gray-700 mb-6 text-center">
         Your Uploaded Documents
       </h2>
@@ -113,13 +121,13 @@ function UserDocuments({ isUser }) {
                   </button>
                   <button
                     onClick={() => downloadDocument(doc.pdf)}
-                    className="btn btn-download text-green-500 hover:text-green-700 transition"
+                    className="btn btn-download text-black hover:text-[#aa4528] transition"
                   >
                     <FaDownload size={20} />
                   </button>
                   {/* <button onClick={handleDeleteDoc}>
-                    <MdDelete />
-                  </button> */}
+                  <MdDelete />
+                </button> */}
 
                 </div>
               </li>
@@ -145,6 +153,7 @@ function UserDocuments({ isUser }) {
         </div>
       )}
     </div>
+
   );
 }
 

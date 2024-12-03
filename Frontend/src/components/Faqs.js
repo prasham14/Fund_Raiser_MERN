@@ -42,36 +42,7 @@ const questions = [
     answer:
       "Creating an initiative is easy. Log in, go to the 'Initiatives' section, and click 'Create Initiative.' Fill out details about the cause, set goals, and publish it. You can then invite others to join and support the initiative.",
   },
-  {
-    question: "Can I participate in other initiatives?",
-    answer:
-      "Yes, you can join existing initiatives on our platform. Browse through the initiatives, choose one that aligns with your interests, and click 'Participate' to contribute your support or resources.",
-  },
-  {
-    question: "Can I manage both fundraisers and initiatives simultaneously?",
-    answer:
-      "Absolutely. Our platform is designed to allow users to manage both personal fundraisers and initiatives at the same time. Each will have its own dashboard, so you can easily track progress and updates for both types of campaigns.",
-  },
-  {
-    question: "Are there guidelines for creating an initiative?",
-    answer:
-      "Yes, we provide guidelines to ensure initiatives are well-structured, achievable, and align with our community standards. These guidelines help ensure each initiative has a clear mission, transparency, and a positive impact.",
-  },
-  {
-    question: "How do I invite others to join my initiative?",
-    answer:
-      "Once you've created an initiative, you can share it through social media, email, or direct links. The platform also provides built-in tools to help you invite friends, family, and supporters to participate.",
-  },
-  {
-    question: "Can I track the progress of an initiative?",
-    answer:
-      "Yes, each initiative has a dedicated progress page where you can view updates, milestones, and participant contributions. This helps keep everyone informed and motivated towards reaching the goal.",
-  },
-  {
-    question: "What types of initiatives can be created on the platform?",
-    answer:
-      "You can create initiatives for various causes, including community improvement, environmental efforts, educational projects, and health campaigns. We encourage any initiative that promotes positive social impact.",
-  },
+
   {
     question: "Is there a limit to the number of participants in an initiative?",
     answer:

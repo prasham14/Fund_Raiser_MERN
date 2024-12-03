@@ -10,7 +10,7 @@ const NavBar = ({ setActivesection, isLoggedIn, setIsLoggedIn }) => {
   // const [isLoggedIn, setIsLoggedIn] = useState(() => {
   //   return localStorage.getItem('isLoggedIn') === 'true';
   // });
-  console.log(isLoggedIn);
+  // console.log(isLoggedIn);
   const navigate = useNavigate();
   function handleViewFundRaiser() {
     isLoggedIn ? (setActivesection('viewFundRaiser')) : (navigate('/login'))
@@ -87,7 +87,7 @@ const NavBar = ({ setActivesection, isLoggedIn, setIsLoggedIn }) => {
       const token = document.cookie
         .split('; ')
         .find(cookie => cookie.startsWith('cookies='));
-      console.log(token);
+      // console.log(token);
       if (!token) {
         setIsLoggedIn(false);
         localStorage.setItem('isLoggedIn', false);
@@ -109,16 +109,16 @@ const NavBar = ({ setActivesection, isLoggedIn, setIsLoggedIn }) => {
       <div className="navbar w-full bg-[#f2f1ed] fixed top-0 z-50 flex justify-between items-center px-8 py-4 ">
         <nav className="navbar-nav flex items-center justify-between w-full">
           {/* Logo and Title Section */}
-          <div className='flex gap-6 justify-evenly items-center mx-20'>
+          <div className='flex gap-6 sm:justify-evenly  items-center sm:mx-20 mx-auto '>
 
-            <div className="flex items-center space-x-4 ">
-              <h1 className="text-xl items-center font-bold text-black hover:text-gray-700 transition duration-300 cursor-pointer pr-8">
+            <div className="flex space-x-4 ">
+              <h1 className="text-xl  font-bold text-black hover:text-gray-700 transition duration-300 cursor-pointer pr-8">
                 FundRaiser
               </h1>
             </div>
 
             <button
-              className="inline-flex items-center justify-center hover:underline text-black leading-[1.75] h-10 px-2 py-2 transition-all duration-300"
+              className="hidden md:block items-center justify-center hover:underline text-black leading-[1.75] h-10 px-2 py-2 transition-all duration-300"
               onClick={handleHome}
             >
               Home
@@ -126,7 +126,7 @@ const NavBar = ({ setActivesection, isLoggedIn, setIsLoggedIn }) => {
             {/* Start Fundraiser Button */}
             {isLoggedIn && (
               <button
-                className="inline-flex items-center justify-center  text-black hover:underline leading-[1.75] h-10 px-2 py-2  transition-all duration-300"
+                className="hidden md:block items-center justify-center  text-black hover:underline leading-[1.75] h-10 px-2 py-2  transition-all duration-300"
                 onClick={handleFormSubmission}
               >
                 Start a Fundraiser
@@ -136,7 +136,7 @@ const NavBar = ({ setActivesection, isLoggedIn, setIsLoggedIn }) => {
             {/* Help Button */}
             <button
               onClick={handleContactSupport}
-              className="inline-flex items-center justify-cente text-black hover:underline leading-[1.75] h-10 px-2 py-2  transition-all duration-300"
+              className="hidden md:block items-center justify-cente text-black hover:underline leading-[1.75] h-10 px-2 py-2  transition-all duration-300"
             >
               Help
             </button>
@@ -196,12 +196,21 @@ const NavBar = ({ setActivesection, isLoggedIn, setIsLoggedIn }) => {
               >
                 <CgMenuRightAlt fontSize="1.45rem" />
               </button>
+
               {isMenuOpen && (
-                <ul className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 shadow-lg rounded-lg p-2 text-gray-700 space-y-2">
+                <ul className="absolute right-0 mt-2 w-48 bg-[#faf9f6]  border border-gray-200 shadow-lg rounded-lg p-2 text-gray-700 space-y-2">
+                  <li>
+                    <button
+                      className="  block md:hidden w-full text-left hover:bg-white py-2 px-4 rounded-lg transition duration-200"
+                      onClick={handleHome}
+                    >
+                      Home
+                    </button>
+                  </li>
                   <li>
                     <button
                       onClick={handleViewFundRaiser}
-                      className="w-full text-left hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200"
+                      className="w-full text-left hover:bg-white py-2 px-4 rounded-lg transition duration-200"
                     >
                       View Fundraisers
                     </button>
@@ -209,7 +218,7 @@ const NavBar = ({ setActivesection, isLoggedIn, setIsLoggedIn }) => {
                   <li>
                     <button
                       onClick={handleInitiatives}
-                      className="w-full text-left hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200"
+                      className="w-full text-left hover:bg-white py-2 px-4 rounded-lg transition duration-200"
                     >
                       Initiatives
                     </button>
@@ -217,9 +226,30 @@ const NavBar = ({ setActivesection, isLoggedIn, setIsLoggedIn }) => {
                   <li>
                     <button
                       onClick={handleNgo}
-                      className="w-full text-left hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200"
+                      className="w-full text-left hover:bg-white py-2 px-4 rounded-lg transition duration-200"
                     >
                       NGO's
+                    </button>
+                  </li>
+
+
+                  <li>
+                    {isLoggedIn && (
+                      <button
+                        className=" block md:hidden w-full text-left hover:bg-white py-2 px-4 rounded-lg transition duration-200"
+                        onClick={handleFormSubmission}
+                      >
+                        Start a Fundraiser
+                      </button>
+                    )}
+                  </li>
+
+                  <li>
+                    <button
+                      onClick={handleContactSupport}
+                      className=" block md:hidden w-full text-left hover:bg-white py-2 px-4 rounded-lg transition duration-200"
+                    >
+                      Help
                     </button>
                   </li>
                 </ul>

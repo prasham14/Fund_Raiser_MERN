@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { ImCross } from "react-icons/im";
-
+import { toast } from 'react-toastify'
 const FormSubmission = ({ setActive }) => {
   const [formData, setFormData] = useState({
     title: '',
@@ -32,24 +32,25 @@ const FormSubmission = ({ setActive }) => {
     }));
   };
   const handleBack = () => {
-    navigate('/')
+    setActive('')
     // setActivesection('');
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(formData);
+      // console.log(formData);
 
       const token = localStorage.getItem('token');
-      console.log(token);
+      // console.log(token);
       const response = await axios.post(`http://localhost:5000/createInitiative/${emailId}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
       // localStorage.setItem('initiativeId', response._id);
-      console.log('Data submitted successfully:', response.data);
-      alert('Initiative Created!')
+      // console.log('Data submitted successfully:', response.data);
+      toast.success('Initiative Created!')
+      setActive('');
       setFormData({
         title: '',
         purpose: '',
@@ -59,7 +60,7 @@ const FormSubmission = ({ setActive }) => {
         email: localStorage.getItem('email')
       });
 
-      navigate('/')
+      // navigate('/')
     } catch (error) {
       console.error('Error submitting form:', error);
       alert(error.response?.data?.msg || 'Form submission failed. Please try again.');
@@ -67,11 +68,11 @@ const FormSubmission = ({ setActive }) => {
   };
 
   return (
-    <div className=" p-3 rounded-lg shadow-md mt-5">
+    <div className=" p-3 rounded-lg shadow-md mt-5 bg-[#faf9f6]">
       <div className="relative mb-3">
         <button
           onClick={handleBack}
-          className="absolute right-0 top-0 text-teal-500 hover:text-teal-700 transition duration-150 flex items-center space-x-2"
+          className="absolute right-0 top-0 text-black  hover:text-[#aa4528] transition duration-150 flex items-center space-x-2"
         >
           <ImCross size={20} />
         </button>
@@ -88,7 +89,7 @@ const FormSubmission = ({ setActive }) => {
             value={formData.title}
             onChange={handleChange}
             required
-            className="form-input w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="form-input w-full p-2 border border-gray-300 rounded-lg "
           />
         </div>
         <div className="form-group">
@@ -98,7 +99,7 @@ const FormSubmission = ({ setActive }) => {
             value={formData.purpose}
             onChange={handleChange}
             required
-            className="form-input w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="form-input w-full p-2 border border-gray-300 rounded-lg "
           />
         </div>
         <div className="form-group">
@@ -108,7 +109,7 @@ const FormSubmission = ({ setActive }) => {
             value={formData.desc}
             onChange={handleChange}
             required
-            className="form-input w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="form-input w-full p-2 border border-gray-300 rounded-lg "
           />
         </div>
         <div className="form-group">
@@ -119,10 +120,10 @@ const FormSubmission = ({ setActive }) => {
             value={formData.phone}
             onChange={handleChange}
             required
-            className="form-input w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="form-input w-full p-2 border border-gray-300 rounded-lg "
           />
         </div>
-        <button type="submit" className="form-button w-full bg-teal-500 text-white py-2 rounded-lg hover:bg-teal-600 transition duration-200">
+        <button type="submit" className="form-button w-full bg-black text-white py-2 rounded-lg hover:bg-[#aa4528] transition duration-200">
           Submit
         </button>
       </form>

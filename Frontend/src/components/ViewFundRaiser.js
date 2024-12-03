@@ -2,6 +2,7 @@ import React from 'react';
 import med from "./images/medicines.jpeg";
 import rf from "./images/relief.png";
 import ed from "./images/education.jpg";
+import others from './images/other.jpeg'
 import { FaArrowLeft, FaCross } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 const ViewFundRaiser = ({ setActivesection }) => {
@@ -13,7 +14,7 @@ const ViewFundRaiser = ({ setActivesection }) => {
   };
 
   return (
-    <div className="donate-container max-w-6xl mx-10  mt-20 p-8 bg-gradient-to-b from-blue-50 to-white rounded-xl shadow-lg relative 
+    <div className="donate-container max-w-6xl mx-10  mt-20 p-8 bg-[#f2f1ed] rounded-xl shadow-lg relative 
       h-[500px] overflow-y-auto ">
 
       {/* <button onClick={handleBack} className="mb-4 p-2 text-blue-600 hover:text-blue-800 transition-all absolute right-6 top-2 ">
@@ -29,7 +30,7 @@ const ViewFundRaiser = ({ setActivesection }) => {
       {/* Categories */}
       <ul className="donate-options grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-center">
         <li
-          className="donate-option bg-white shadow-lg rounded-lg transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
+          className="donate-option bg-[#faf9f6] shadow-lg rounded-lg transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
           onClick={() => handleCategoryClick('option1')}
         >
           <div className="donate-link block p-8 text-center cursor-pointer">
@@ -46,7 +47,7 @@ const ViewFundRaiser = ({ setActivesection }) => {
         </li>
 
         <li
-          className="donate-option bg-white shadow-lg rounded-lg transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
+          className="donate-option bg-[#faf9f6] shadow-lg rounded-lg transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
           onClick={() => handleCategoryClick('option2')}
         >
           <div className="donate-link block p-8 text-center cursor-pointer">
@@ -63,7 +64,7 @@ const ViewFundRaiser = ({ setActivesection }) => {
         </li>
 
         <li
-          className="donate-option bg-white shadow-lg rounded-lg transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
+          className="donate-option bg-[#faf9f6] shadow-lg rounded-lg transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
           onClick={() => handleCategoryClick('option3')}
         >
           <div className="donate-link block p-8 text-center cursor-pointer">
@@ -80,14 +81,14 @@ const ViewFundRaiser = ({ setActivesection }) => {
         </li>
 
         <li
-          className="donate-option bg-white shadow-lg rounded-lg transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
+          className="donate-option bg-[#faf9f6] shadow-lg rounded-lg transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
           onClick={() => handleCategoryClick('others')}
         >
           <div className="donate-link block p-8 text-center cursor-pointer">
             <img
-              src={med}
+              src={others}
               alt="Others"
-              className="option-image w-24 h-24 mx-auto mb-6 rounded-full border-4 border-blue-100 hover:border-blue-200 transition-all duration-200"
+              className="option-image w-24 h-24 mx-auto mb-6 rounded-full border-4 border-black transition-all duration-200"
             />
             <span className="option-text text-2xl font-semibold text-gray-800">
               Others

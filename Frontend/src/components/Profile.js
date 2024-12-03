@@ -5,6 +5,7 @@ import { CiLogout } from "react-icons/ci";
 // import editimg from './images/edit.png'
 import { CiEdit } from "react-icons/ci"
 import SeeDetails from './SeeDetails';
+import { toast } from "react-toastify"
 import { useNavigate } from 'react-router-dom';
 function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
   const [username, setName] = useState(null);
@@ -19,10 +20,10 @@ function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
     email: '',
     image: ''
   });
-  console.log('profie', isLoggedIn);
+  // console.log('profie', isLoggedIn);
   const [isEmailChange, setIsEmailChange] = useState(false);
   const id = localStorage.getItem('email');
-  console.log(id);
+  // console.log(id);
   const handleMyDonations = () => {
     navigate('/myDonations')
   }
@@ -35,7 +36,7 @@ function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
     axios.get(`http://localhost:5000/getUser/${id}`, { withCredentials: true })
       .then((response) => {
         const userData = response.data.response;
-        console.log(userData);
+        // console.log(userData);
         if (userData) {
           setName(userData.username);
           setEmail(userData.email);
@@ -59,13 +60,15 @@ function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
 
     try {
       const res = await axios.put(`http://localhost:5000/UpdateName/${userId}`, { username: newData.username }, { withCredentials: true });
-      console.log(res);
-      console.log(newData.username);
+      // console.log(res);
+      // console.log(newData.username);
       setName(newData.username);
       setIsChange(false);
+      toast.success("Username Updated")
     }
 
     catch (error) {
+      toast.error("Username already Exists")
       console.error("Error updating name:", error)
     };
   };
@@ -94,14 +97,14 @@ function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
     const otpValue = e.target[0].value;
     const storedOtp = localStorage.getItem('otp');
     if (otpValue === storedOtp) {
-      alert("OTP Verified Successfully!");
+      toast.success("Email Verified Successfully!");
       setIsEmailChange(false);
       axios.patch(`http://localhost:5000/user/editEmail/${email}`, { email: newData.email }, { withCredentials: true }).then(() => {
-        console.log("Email updated successfully.");
+        // console.log("Email updated successfully.");
         setEmail(newData.email);
       });
     } else {
-      alert("Incorrect OTP. Try again.");
+      toast.error("Incorrect OTP. Try again.");
     }
   };
   const handleLogout = () => {
@@ -122,18 +125,18 @@ function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
   }
 
   return (
-    <div className="w-full p-6 bg-gradient-to-br from-black via-gray-900 to-black shadow-lg rounded-xl border border-gray-700 relative">
+    <div className="w-full p-6 bg-[#f2f1ed] shadow-lg rounded-xl border border-gray-700 relative">
       {/* Logout Icon */}
-      <div className="absolute top-6 left-4 flex items-center space-x-4 text-white ">
+      <div className="absolute top-6 left-4 flex items-center space-x-4 text-black ">
         <button
           onClick={handleLogout}
-          className="p-2 bg-gray-800 rounded-full hover:bg-gray-700 transition shadow-md"
+          className="p-2 bg-white rounded-full hover:bg-gray-500 transition shadow-md"
         >
           <CiLogout className="text-lg" />
         </button>
       </div>
       <div>
-        <h1 className="text-3xl font-bold text-white text-center items-center">Profile</h1>
+        <h1 className="text-3xl font-semibold text-black text-center items-center">Profile</h1>
       </div>
 
 
@@ -156,7 +159,7 @@ function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
       <div className="pt-3 space-y-6 mt-2">
         {/* Name Section */}
         <div>
-          <h2 className="text-md font-semibold text-white">Name:</h2>
+          <h2 className="text-md font-semibold text-black">Name:</h2>
           <div className="flex items-center">
             {isChange ? (
               <input
@@ -164,22 +167,22 @@ function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
                 name="username"
                 value={newData.username}
                 onChange={onChangeHandler}
-                className="flex-grow text-white bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 transition"
+                className=" text-black bg-[#faf9f6] border border-gray-600 rounded-lg px-3 py-2 transition w-36"
               />
             ) : (
-              <p className="text-gray-300 text-md flex-grow">{username || 'Loading...'}</p>
+              <p className="text-black text-md flex-grow">{username || 'Loading...'}</p>
             )}
             {isChange ? (
               <button
                 onClick={changeNameHandler}
-                className="ml-4 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition shadow-md"
+                className="ml-4 px-4 py-2 bg-black text-white rounded-lg hover:bg-[#aa4528] transition shadow-md"
               >
                 Save
               </button>
             ) : (
               <button
                 onClick={() => setIsChange(true)}
-                className="ml-4 px-4 py-2  text-white "
+                className="ml-4 px-4 py-2  text-black "
               >
                 <CiEdit fontSize="1.45rem" />
               </button>
@@ -189,7 +192,7 @@ function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
 
         {/* Email Section */}
         <div>
-          <h2 className="text-md font-semibold text-white ">Email:</h2>
+          <h2 className="text-md font-semibold text-black ">Email:</h2>
           <div className="flex items-center justify-between">
             {isChangeEmail ? (
               <input
@@ -197,24 +200,24 @@ function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
                 name="email"
                 value={newData.email}
                 onChange={onChangeHandler}
-                className="flex-grow text-white bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 transition"
+                className="flex-grow text-black bg-[#faf9f6] border border-gray-600 rounded-lg px-3 py-2 w-36 transition"
               />
             ) : (
-              <p className="text-gray-300 flex-grow text-md truncate" style={{ maxWidth: 'calc(100% - 6rem)' }}>
+              <p className="text-black flex-grow text-md truncate" style={{ maxWidth: 'calc(100% - 6rem)' }}>
                 {email || 'Loading...'}
               </p>
             )}
             {isChangeEmail ? (
               <button
                 onClick={changeEmailHandler}
-                className="ml-4 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition shadow-md"
+                className="ml-4 px-4 py-2 bg-black text-white rounded-lg hover:bg-[#aa4528] transition shadow-md"
               >
                 Save
               </button>
             ) : (
               <button
                 onClick={() => setIsChangeEmail(true)}
-                className="ml-4 px-4 py-2 text-white rounded-lg "
+                className="ml-4 px-4 py-2 text-black rounded-lg "
               >
                 <CiEdit fontSize="1.45rem" />
               </button>
@@ -225,16 +228,16 @@ function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
         {/* Email Verification Section */}
         {isEmailChange && (
           <div>
-            <h2 className="text-lg font-semibold text-white mb-2">Verify Email:</h2>
+            <h2 className="text-lg font-semibold text-black mb-2">Verify Email:</h2>
             <form onSubmit={OTPHandler} className="flex space-x-4">
               <input
                 type="text"
                 placeholder="Enter OTP"
-                className="flex-grow text-white bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 transition"
+                className="flex-grow text-black bg-[#faf9f6] border border-gray-600 rounded-lg px-3 py-2 w-36 transition"
               />
               <button
                 type="submit"
-                className="px-6 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition shadow-md"
+                className="ml-4 px-4 py-2 bg-black text-white rounded-lg hover:bg-[#aa4528] transition shadow-md"
               >
                 Verify
               </button>
@@ -247,7 +250,7 @@ function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
           {!isDetailsAdded ? (
             <button
               onClick={handleSeeDetails}
-              className="text-teal-400 underline hover:text-teal-500 transition"
+              className="text-black underline hover:text-[#aa4528] transition text-center ml-7"
             >
               Add personal details
             </button>
@@ -260,19 +263,19 @@ function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
         <div className="space-y-4">
           <button
             onClick={handleMyInitiatives}
-            className="w-full text-left px-4 py-2 text-white bg-gray-700 rounded-lg hover:bg-gray-600 transition"
+            className="w-full text-left px-4 py-2 text-white bg-black rounded-lg hover:bg-[#aa4528]  transition"
           >
             My Initiatives
           </button>
           <button
             onClick={handleMyFunds}
-            className="w-full text-left px-4 py-2 text-white bg-gray-700 rounded-lg hover:bg-gray-600 transition"
+            className="w-full text-left px-4 py-2 text-white bg-black rounded-lg hover:bg-[#aa4528]  transition"
           >
             My Funds
           </button>
           <button
             onClick={handleMyDonations}
-            className="w-full text-left px-4 py-2 text-white bg-gray-700 rounded-lg hover:bg-gray-600 transition"
+            className="w-full text-left px-4 py-2 text-white bg-black rounded-lg hover:bg-[#aa4528]  transition"
           >
             My Donations
           </button>

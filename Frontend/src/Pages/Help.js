@@ -8,13 +8,13 @@ const Help = () => {
     navigate('/')
   }
   return (
-    <div className=" bg-white shadow-lg rounded-lg p-10 md:p-14 py-16">
-      <button onClick={handleBack} className="text-teal-500 hover:text-black transition duration-200">
+    <div className=" bg-[#f2f1ed] shadow-lg rounded-lg p-10 md:p-14 py-16">
+      <button onClick={handleBack} className="flex items-center text-black  hover:text-[#aa4528] text-xl font-bold transition-transform transform hover:scale-110">
         <FaArrowLeft />
       </button>
 
       <header className="text-center mb-12">
-        <h1 className="text-4xl font-extrabold text-teal-500">Welcome to Our Fundraising Platform</h1>
+        <h1 className="text-4xl font-extrabold text-black">Welcome to Our Fundraising Platform</h1>
         <p className="mt-4 text-lg text-black leading-relaxed">
           Empowering Positive Change, One Fundraiser at a Time
         </p>
@@ -22,7 +22,7 @@ const Help = () => {
 
 
       <section className="description mb-10">
-        <h2 className="text-3xl font-semibold text-teal-500 mb-6">About Us</h2>
+        <h2 className="text-3xl font-semibold text-black mb-6">About Us</h2>
         <p className="text-black mb-4 leading-relaxed">
           Our platform is dedicated to helping individuals, charities, and organizations raise funds for impactful causes.
           Whether you're funding medical treatment, education, community initiatives, or disaster relief, our platform offers a secure and
@@ -36,7 +36,7 @@ const Help = () => {
 
       {/* Features Section */}
       <section className="features mb-12">
-        <h2 className="text-3xl font-semibold text-teal-500 mb-6">Why Choose Us?</h2>
+        <h2 className="text-3xl font-semibold text-black mb-6">Why Choose Us?</h2>
         <ul className="list-disc list-inside text-black space-y-3 pl-4">
           <li className="flex items-center">
             <span className="mr-2">✔️</span> Secure and reliable payment processing for donations
@@ -55,24 +55,22 @@ const Help = () => {
 
 
       <footer className="footer text-center mt-10">
-        <h2 className="text-3xl font-semibold text-teal-500 mb-6">Contact Us</h2>
+        <h2 className="text-3xl font-semibold text-black mb-6">Contact Us</h2>
         <p className="text-black mb-2">
-          Email: <a href="mailto:jprasham3@gmail.com" className="text-teal-600 hover:underline">jprasham3@gmail.com</a>
+          Email: <a href="mailto:jprasham3@gmail.com" className="text-black hover:underline">jprasham3@gmail.com</a>
         </p>
-        <p className="text-black mb-2">
-          Phone: <span className="text-teal-600">+91 8209871857</span>
-        </p>
+
         <p className="text-black mb-2">Rajasthan, India</p>
         <p className="text-black mt-6">Follow us on:</p>
 
         <div className="flex justify-center space-x-8 mt-4">
-          <a href="#" target="_blank" className="text-teal-600 hover:text-teal-800 transition duration-200 flex items-center space-x-2">
+          <a href="#" target="_blank" className="text-black hover:text-[#aa4528] transition duration-200 flex items-center space-x-2">
             <FaFacebook /><span>Facebook</span>
           </a>
-          <a href="#" target="_blank" className="text-teal-600 hover:text-teal-800 transition duration-200 flex items-center space-x-2">
+          <a href="#" target="_blank" className="text-black hover:text-[#aa4528] transition duration-200 flex items-center space-x-2">
             <FaInstagram /><span>Instagram</span>
           </a>
-          <a href="#" target="_blank" className="text-teal-600 hover:text-teal-800 transition duration-200 flex items-center space-x-2">
+          <a href="#" target="_blank" className="text-black hover:text-[#aa4528] transition duration-200 flex items-center space-x-2">
             <FaTwitter /><span>Twitter</span>
           </a>
         </div>
