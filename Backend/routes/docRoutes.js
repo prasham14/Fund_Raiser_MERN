@@ -6,7 +6,7 @@ const path = require('path');
 const PdfDetailsSchema = require('../models/doc')
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./files");
+    cb(null, "./");
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now();
@@ -20,7 +20,6 @@ const upload = multer({ storage: storage });
 
 router.post("/upload-files/:userId", upload.single("file"), async (req, res) => {
   try {
-    console.log(req.file); // Log the uploaded file for debugging
     const { title, fundId } = req.body; // Extract title from the request body
     const fileName = req.file.filename; // Extract filename from uploaded file
     const userId = req.params.userId; // Extract userId from the route parameters

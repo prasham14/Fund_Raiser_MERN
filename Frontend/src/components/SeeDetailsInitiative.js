@@ -18,7 +18,7 @@ const SeeDetailsInitiative = ({ setActive }) => {
     const fetchInitiativeDetails = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`http://localhost:5000/getinit/${initiativeId}`, {
+        const response = await axios.get(`http://localhost:5000/initiative/getinit/${initiativeId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

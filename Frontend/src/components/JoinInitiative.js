@@ -16,7 +16,7 @@ const JoinInitiative = ({ initiativeId, setActive }) => {
       }
 
       const response = await axios.post(
-        `http://localhost:5000/join/${initiativeId}`,
+        `http://localhost:5000/initiative/join/${initiativeId}`,
         { name, phone },
         {
           headers: {

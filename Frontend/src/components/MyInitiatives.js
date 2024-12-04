@@ -65,7 +65,7 @@ const MyInitiatives = () => {
 
   const handleEditSubmit = async () => {
     try {
-      await axios.put(`http://localhost:5000/editInitiative/${editInitiativeId}`, editData, {
+      await axios.put(`http://localhost:5000/initiative/editInitiative/${editInitiativeId}`, editData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -88,7 +88,7 @@ const MyInitiatives = () => {
     if (!window.confirm('Are you sure you want to delete this initiative?')) return;
 
     try {
-      await axios.delete(`http://localhost:5000/deleteInitiative/${initiativeId}`, {
+      await axios.delete(`http://localhost:5000/initiative/deleteInitiative/${initiativeId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

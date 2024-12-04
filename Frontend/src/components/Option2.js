@@ -14,7 +14,7 @@ const Option1 = ({ setActivesection }) => {
   useEffect(() => {
     const fetchFunds = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/option2', {
+        const response = await axios.get('http://localhost:5000/options/option2', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -46,7 +46,7 @@ const Initiatives = () => {
 
     const fetchFunds = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/getinitiatives', {
+        const response = await axios.get('http://localhost:5000/initiative/getinitiatives', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

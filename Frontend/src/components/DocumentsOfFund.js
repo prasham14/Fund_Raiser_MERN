@@ -14,7 +14,7 @@ function DocOfFunds({ setIsDocument }) {
   const fundId = localStorage.getItem('selectedFundId')
   const fetchUserDocuments = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/get-user-files/${fundId}`, {
+      const response = await axios.get(`http://localhost:5000/doc/get-user-files/${fundId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -32,7 +32,7 @@ function DocOfFunds({ setIsDocument }) {
 
   const downloadDocument = async (fileName) => {
     try {
-      const response = await axios.get(`http://localhost:5000/download/${fileName}`, {
+      const response = await axios.get(`http://localhost:5000/doc/download/${fileName}`, {
         headers: {
           Authorization: `Bearer ${token}`
         },

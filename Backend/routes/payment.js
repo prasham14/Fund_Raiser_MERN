@@ -29,8 +29,7 @@ router.post('/order', (req, res) => {
         return res.status(500).json({ message: "Something Went Wrong!" });
       }
       res.status(200).json({ data: order });
-      console.log(order);
-      console.log(options)
+
     });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error!" });
@@ -46,15 +45,15 @@ router.post('/verify', async (req, res) => {
     const fundraiser = await Raise.findById(fundId);
     // Create Sign
     const sign = razorpay_order_id + "|" + razorpay_payment_id;
-    console.log(sign)
+
 
     const expectedSign = crypto.createHmac("sha256", process.env.RAZORPAY_SECRET)
       .update(sign.toString())
       .digest("hex");
-    console.log(expectedSign);
+
     const isAuthentic = expectedSign === razorpay_signature;
 
-    console.log(isAuthentic)
+
     if (isAuthentic) {
       const transaction = new Transaction({
         razorpay_order_id,
@@ -64,11 +63,11 @@ router.post('/verify', async (req, res) => {
         fundId: fundId,
         userId: userId
       });
-      console.log(transaction);
+
       await transaction.save();
       const transactionAmount = Number(amount);
       fundraiser.raised += transactionAmount;
-      console.log(fundraiser.raised)
+
       await fundraiser.save();
       res.json({
         message: "Payment Successfully Verified"

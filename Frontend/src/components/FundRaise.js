@@ -53,7 +53,7 @@ const FormSubmission = ({ setActivesection }) => {
 
     try {
       const token = localStorage.getItem('token');
-      const fundResponse = await axios.post('http://localhost:5000/raise', formData, {
+      const fundResponse = await axios.post('http://localhost:5000/fund/raise', formData, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -70,7 +70,7 @@ const FormSubmission = ({ setActivesection }) => {
 
 
         const docResponse = await axios.post(
-          `http://localhost:5000/upload-files/${formData.user_id}`,
+          `http://localhost:5000/doc/upload-files/${formData.user_id}`,
           documentData,
           {
             headers: {

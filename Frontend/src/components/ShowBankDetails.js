@@ -12,7 +12,7 @@ const ShowBankDetails = ({ setIsDoc }) => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/user-details/${userId}`, {
+        const response = await axios.get(`http://localhost:5000/userDetails/user-details/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

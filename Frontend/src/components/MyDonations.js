@@ -23,7 +23,7 @@ const MyDonations = () => {
 
   const fetchFundDetails = async (fundId) => {
     try {
-      const response = await axios.get(`http://localhost:5000/getFund/${fundId}`, {
+      const response = await axios.get(`http://localhost:5000/fund/getFund/${fundId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -39,7 +39,7 @@ const MyDonations = () => {
     if (id && token) {
       const fetchDonations = async () => {
         try {
-          const response = await axios.get(`http://localhost:5000/getDonations/${id}`, {
+          const response = await axios.get(`http://localhost:5000/payment/getDonations/${id}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

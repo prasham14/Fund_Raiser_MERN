@@ -16,7 +16,7 @@ const UserDetailsForm = ({ setActivesection }) => {
   const userId = localStorage.getItem("userId");
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/user-details/${userId}`, {
+      .get(`http://localhost:5000/userDetails/user-details/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -45,7 +45,7 @@ const UserDetailsForm = ({ setActivesection }) => {
 
     axios
       .post(
-        "http://localhost:5000/user-details",
+        "http://localhost:5000/userDetails/user-details",
         { userId, ...userDetails },
         {
           headers: {

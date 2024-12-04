@@ -37,7 +37,7 @@ const MyFunds = () => {
     }
 
     try {
-      await axios.delete(`http://localhost:5000/deleteFund/${fundId}`, {
+      await axios.delete(`http://localhost:5000/fund/deleteFund/${fundId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -56,7 +56,7 @@ const MyFunds = () => {
     }
 
     try {
-      await axios.delete(`http://localhost:5000/deleteDoc/${fundId}`, {
+      await axios.delete(`http://localhost:5000/fund/deleteDoc/${fundId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -74,7 +74,7 @@ const MyFunds = () => {
   useEffect(() => {
     const fetchFunds = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/getFunds/${userId}`, {
+        const response = await axios.get(`http://localhost:5000/fund/getFunds/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -111,7 +111,7 @@ const MyFunds = () => {
 
   const handleEditSubmit = async () => {
     try {
-      await axios.put(`http://localhost:5000/editFund/${editInitiativeId}`, editData, {
+      await axios.put(`http://localhost:5000/fund/editFund/${editInitiativeId}`, editData, {
         headers: {
           Authorization: `Bearer ${token}`
         }

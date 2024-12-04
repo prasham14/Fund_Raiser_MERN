@@ -11,7 +11,7 @@ const PaymentComponent = ({ setIsDoc }) => {
 
     try {
       const { data } = await axios.post(
-        'http://localhost:5000/order',
+        'http://localhost:5000/payment/order',
         { amount },
         {
           headers: {
@@ -35,7 +35,7 @@ const PaymentComponent = ({ setIsDoc }) => {
             try {
 
               const verifyResponse = await axios.post(
-                'http://localhost:5000/verify',
+                'http://localhost:5000/payment/verify',
                 {
                   razorpay_order_id,
                   razorpay_payment_id,
