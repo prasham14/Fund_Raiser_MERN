@@ -1,35 +1,30 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify"
-const PaymentComponent = () => {
+const PaymentComponent = ({ setIsDoc }) => {
   const [amount, setAmount] = useState('');
   const [paymentStatus, setPaymentStatus] = useState(null);
   const [loading, setLoading] = useState(false);
-  const token = localStorage.getItem('token'); // Get token from localStorage
-
-  // Handle Payment Order Creation
+  const token = localStorage.getItem('token');
   const handlePayment = async () => {
     setLoading(true);
 
     try {
-      // Step 1: Request order creation from the server
       const { data } = await axios.post(
-        'http://localhost:5000/order', // Update with correct endpoint
-        { amount }, // Send amount as part of the body
+        'http://localhost:5000/order',
+        { amount },
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Pass token in Authorization header
+            Authorization: `Bearer ${token}`,
           },
         }
       );
 
       if (data.data) {
-        const { id: order_id } = data.data; // Razorpay Order ID
-        // console.log(data);
-        // Step 2: Initialize Razorpay Checkout
+        const { id: order_id } = data.data;
         const options = {
-          key: process.env.REACT_APP_RAZORPAY_KEY_ID, // Your Razorpay Key ID
-          amount: amount * 100, // Amount in paise
+          key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+          amount: amount * 100,
           currency: "INR",
           name: "Fund Raiser",
           description: "Payment for Fundraiser",
@@ -40,25 +35,24 @@ const PaymentComponent = () => {
             try {
 
               const verifyResponse = await axios.post(
-                'http://localhost:5000/verify', // Update with correct endpoint
+                'http://localhost:5000/verify',
                 {
                   razorpay_order_id,
                   razorpay_payment_id,
                   razorpay_signature,
                   amount: amount,
-                  fundId: localStorage.getItem('selectedFundId'), // Replace with actual Fund ID
-                  userId: localStorage.getItem('userId'), // Replace with actual User ID
+                  fundId: localStorage.getItem('selectedFundId'),
+                  userId: localStorage.getItem('userId'),
                 },
                 {
                   headers: {
-                    Authorization: `Bearer ${token}`, // Pass token in Authorization header
+                    Authorization: `Bearer ${token}`,
                   },
                 }
               );
-              // console.log(verifyResponse.data);
               setPaymentStatus(verifyResponse.data.message);
               toast.success("Payment Successfull");
-              // Display success message
+              setIsDoc('');
             } catch (error) {
               toast.error("Transaction failed")
               console.error("Payment verification failed:", error);
@@ -76,7 +70,8 @@ const PaymentComponent = () => {
         };
 
         const rzp = new window.Razorpay(options);
-        rzp.open(); // Open Razorpay checkout modal
+        rzp.open();
+
       }
     } catch (error) {
       toast.error('Transaction Failed')

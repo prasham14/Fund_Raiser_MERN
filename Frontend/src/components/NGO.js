@@ -12,7 +12,7 @@ import im8 from "./images/pratham.jpeg"
 import im9 from "./images/akp.jpeg"
 import im10 from "./images/stc.jpeg"
 
-const NGO = ({ setActivesection }) => {
+const NGO = () => {
   const navigate = useNavigate();
   const handleBack = () => {
     navigate('/');
@@ -80,20 +80,16 @@ const NGO = ({ setActivesection }) => {
       image: im10,
       url: "https://balrakshabharat.org/"
     },
-    // Add more initiatives as needed
   ];
 
 
   return (
     <div className="min-h-screen bg-[#f2f1ed] py-12 px-6 lg:px-16 ">
-      {/* Title */}
       <button onClick={handleBack} className='
       flex items-center text-black  hover:text-[#aa4528] text-xl font-bold transition-transform transform hover:scale-110'><FaArrowLeft /></button>
-      <h1 className="text-center text-4xl font-bold text-black mb-12">
+      <h1 className="text-center sm:text-4xl text-2xl font-bold mt-5 text-black mb-12">
         Here are the Most Popular NGOs and Foundations in India!
       </h1>
-
-      {/* Grid Container */}
       <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 px-4 ">
         {links.map((link) => (
           <div

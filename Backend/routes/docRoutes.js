@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const mongoose = require('mongoose');
 const path = require('path');
+const PdfDetailsSchema = require('../models/doc')
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./files");
@@ -56,6 +57,7 @@ router.get("/get-user-files/:fundId", async (req, res) => {
     const userDocuments = await PdfSchema.find({ fundId }); // Replace `Document` with your model
     res.json({ data: userDocuments });
     console.log(userDocuments);
+    console.log(userDocuments.title);
     // console.log(res);
   } catch (error) {
     res.status(500).json({ error: "Error fetching user documents" });

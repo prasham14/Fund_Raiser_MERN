@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaArrowLeft, FaPlus } from "react-icons/fa";
 import CreateInitiative from './CreateInitiative';
@@ -10,10 +10,10 @@ import im3 from './images/OIP (1).jpeg'
 import im4 from './images/Niti aygo.jpeg'
 import im5 from './images/pmjdyojna.jpeg'
 import im6 from './images/startupindia.jpeg'
+import SeeDetailsInitiative from './SeeDetailsInitiative';
 
 
-const Initiatives = ({ setActivesection }) => {
-  const location = useLocation();
+const Initiatives = () => {
   const [initiatives, setInitiatives] = useState([]);
   const [active, setActive] = useState('');
   const navigate = useNavigate();
@@ -25,12 +25,13 @@ const Initiatives = ({ setActivesection }) => {
   }
 
   const handleBack = () => {
-    navigate(-1); // Navigate back to the previous page
+    navigate('/');
   };
 
   const render = () => {
     switch (active) {
       case 'createInitiative': return (<CreateInitiative setActive={setActive} />);
+      case 'seeDetails': return (<SeeDetailsInitiative initiativeId={initiativeId} setActive={setActive} />)
       case 'join': return <JoinInitiative initiativeId={initiativeId} setActive={setActive} />;
       default: return null;
     }
@@ -39,7 +40,7 @@ const Initiatives = ({ setActivesection }) => {
   useEffect(() => {
     if (!token) {
       console.error('Token not found. User must log in.');
-      navigate('/login'); // Redirect to login if necessary
+      navigate('/login');
       return;
     }
 
@@ -178,7 +179,7 @@ const Initiatives = ({ setActivesection }) => {
 
                 <div className="mb-4">
                   <p className="text-sm font-semibold text-gray-600">Description:</p>
-                  <p className="text-gray-800">{ini.desc.length > 20 ? `${ini.desc.slice(0, 20)}...` : (ini.desc)}</p>
+                  <p className="text-gray-800">{ini.desc.length > 30 ? `${ini.desc.slice(0, 30)}...` : (ini.desc)}</p>
                 </div>
 
                 <h6 className="text-lg font-semibold text-gray-800 mb-3">Contact Details</h6>
@@ -195,11 +196,12 @@ const Initiatives = ({ setActivesection }) => {
                 <button
                   onClick={() => {
                     localStorage.setItem('selectedinitiativeId', ini._id);
-                    setActive('join');
+                    localStorage.setItem('selectedinitiativeEmail', ini.email);
+                    setActive('seeDetails');
                   }}
                   className="bg-black text-white py-2 px-4 rounded-md hover:bg-[#aa4528] transition duration-300 w-full"
                 >
-                  Join
+                  See Details
                 </button>
               </li>
             ))

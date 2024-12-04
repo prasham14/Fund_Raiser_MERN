@@ -8,7 +8,7 @@ async function option1(req, res) {
 
     const fundsWithExpiration = educationFunds.map(fund => ({
       ...fund._doc,
-      isExpired: new Date(fund.date) < currentDate, // Set isExpired if the current date is past the fund's date
+      isExpired: new Date(fund.date) < currentDate,
     }));
 
     res.json(fundsWithExpiration);
@@ -37,7 +37,7 @@ async function option2(req, res) {
 
     const fundsWithExpiration = educationFunds.map(fund => ({
       ...fund._doc,
-      isExpired: new Date(fund.date) < currentDate, // Set isExpired if the current date is past the fund's date
+      isExpired: new Date(fund.date) < currentDate,
     }));
 
     res.json(fundsWithExpiration);
@@ -53,7 +53,7 @@ async function option3(req, res) {
 
     const fundsWithExpiration = educationFunds.map(fund => ({
       ...fund._doc,
-      isExpired: new Date(fund.date) < currentDate, // Set isExpired if the current date is past the fund's date
+      isExpired: new Date(fund.date) < currentDate,
     }));
 
     res.json(fundsWithExpiration);
@@ -69,7 +69,7 @@ async function others(req, res) {
 
     const fundsWithExpiration = educationFunds.map(fund => ({
       ...fund._doc,
-      isExpired: new Date(fund.date) < currentDate, // Set isExpired if the current date is past the fund's date
+      isExpired: new Date(fund.date) < currentDate,
     }));
 
     res.json(fundsWithExpiration);

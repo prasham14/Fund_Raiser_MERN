@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { CiLogout } from "react-icons/ci";
-// import defaultimg from './images/profile.png';
-// import editimg from './images/edit.png'
 import { CiEdit } from "react-icons/ci"
 import SeeDetails from './SeeDetails';
 import { toast } from "react-toastify"
 import { useNavigate } from 'react-router-dom';
-function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
+function Profile({ setIsLoggedIn, setActivesection }) {
   const [username, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [profileImage, setProfileImage] = useState('');
@@ -20,10 +18,8 @@ function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
     email: '',
     image: ''
   });
-  // console.log('profie', isLoggedIn);
   const [isEmailChange, setIsEmailChange] = useState(false);
   const id = localStorage.getItem('email');
-  // console.log(id);
   const handleMyDonations = () => {
     navigate('/myDonations')
   }
@@ -36,7 +32,6 @@ function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
     axios.get(`http://localhost:5000/getUser/${id}`, { withCredentials: true })
       .then((response) => {
         const userData = response.data.response;
-        // console.log(userData);
         if (userData) {
           setName(userData.username);
           setEmail(userData.email);
@@ -60,8 +55,6 @@ function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
 
     try {
       const res = await axios.put(`http://localhost:5000/UpdateName/${userId}`, { username: newData.username }, { withCredentials: true });
-      // console.log(res);
-      // console.log(newData.username);
       setName(newData.username);
       setIsChange(false);
       toast.success("Username Updated")
@@ -72,8 +65,6 @@ function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
       console.error("Error updating name:", error)
     };
   };
-
-
 
   const changeEmailHandler = () => {
     let OTP = Math.floor(1000 + Math.random() * 9000);
@@ -100,7 +91,6 @@ function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
       toast.success("Email Verified Successfully!");
       setIsEmailChange(false);
       axios.patch(`http://localhost:5000/user/editEmail/${email}`, { email: newData.email }, { withCredentials: true }).then(() => {
-        // console.log("Email updated successfully.");
         setEmail(newData.email);
       });
     } else {
@@ -126,7 +116,6 @@ function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
 
   return (
     <div className="w-full p-6 bg-[#f2f1ed] shadow-lg rounded-xl border border-gray-700 relative">
-      {/* Logout Icon */}
       <div className="absolute top-6 left-4 flex items-center space-x-4 text-black ">
         <button
           onClick={handleLogout}
@@ -138,24 +127,6 @@ function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
       <div>
         <h1 className="text-3xl font-semibold text-black text-center items-center">Profile</h1>
       </div>
-
-
-
-      {/* Profile Image and Header */}
-      {/* <div className="text-center mb-8 mt-16">
-        {/* Profile Image Placeholder */}
-      {/* {profileImage ? (
-        <img
-          src={profileImage} // Assuming profileImage is the source
-          alt="Profile"
-          className="w-24 h-24 rounded-full mx-auto object-cover border-4 border-teal-500 shadow-lg"
-        />
-      ) : (
-        <div className="w-24 h-24 rounded-full mx-auto bg-gray-600 animate-pulse"></div>
-      )}
-    </div> * /} */}
-
-      {/* Profile Details */}
       <div className="pt-3 space-y-6 mt-2">
         {/* Name Section */}
         <div>
@@ -282,8 +253,6 @@ function Profile({ isLoggedIn, setIsLoggedIn, setActivesection }) {
         </div>
       </div>
     </div >
-
-
   );
 }
 export default Profile;

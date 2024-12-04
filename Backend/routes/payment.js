@@ -47,32 +47,22 @@ router.post('/verify', async (req, res) => {
     // Create Sign
     const sign = razorpay_order_id + "|" + razorpay_payment_id;
     console.log(sign)
-    // Create ExpectedSign
+
     const expectedSign = crypto.createHmac("sha256", process.env.RAZORPAY_SECRET)
       .update(sign.toString())
       .digest("hex");
     console.log(expectedSign);
     const isAuthentic = expectedSign === razorpay_signature;
 
-    // If signature is authentic, save the payment
     console.log(isAuthentic)
     if (isAuthentic) {
-      // const payment = new Transaction({
-      //   razorpay_order_id,
-      //   razorpay_payment_id,
-      //   razorpay_signature,
-      // });
-      // console.log(payment);
-      // await payment.save();
-
-      // Save transaction details
       const transaction = new Transaction({
         razorpay_order_id,
         razorpay_payment_id,
         razorpay_signature,
         amount: amount,
-        fundId: fundId, // Assuming this is passed from frontend
-        userId: userId  // Assuming this is passed from frontend
+        fundId: fundId,
+        userId: userId
       });
       console.log(transaction);
       await transaction.save();
@@ -94,9 +84,7 @@ router.post('/verify', async (req, res) => {
 router.get('/getDonations/:id', async (req, res) => {
   try {
     const id = req.params.id;
-    const data = await Transaction.find({ userId: id }).lean(); // Convert to plain object
-    // Await the query
-    // console.log(data); // Log the object to inspect it
+    const data = await Transaction.find({ userId: id }).lean();
     res.json(data);
   } catch (err) {
     console.error(err);

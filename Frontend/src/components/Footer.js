@@ -34,19 +34,7 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Quick Links */}
-          {/* <div>
-            <h3 className="text-2xl font-bold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li><a href="/" className="hover:underline text-gray-400">Home</a></li>
-              <li><a href="/dashboard" className="hover:underline text-gray-400">Dashboard</a></li>
-              <li><a href="/fundraiser/start" className="hover:underline text-gray-400">Start a Fundraiser</a></li>
-              <li><a href="/funds" className="hover:underline text-gray-400">View Fundraisers</a></li>
-              <li><a href="/support" className="hover:underline text-gray-400">Help & Support</a></li>
-            </ul>
-          </div> */}
 
-          {/* Contact Us */}
           <div>
             <h3 className="text-2xl font-bold mb-4">Contact Us</h3>
             <p className="text-gray-400">Email: <a href="mailto:jprasham3@gmail.com" className="text-[#aa4528] hover:underline">jprasham3@gmail.com</a></p>
@@ -62,7 +50,7 @@ const Footer = () => {
           <p className="text-gray-400 text-center md:text-left">&copy; 2024 Fundraiser Platform. All Rights Reserved.</p>
 
           {/* Social Media Links */}
-          <div className="flex space-x-6 mt-4 md:mt-0">
+          {/* <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="#" className="text-gray-400 hover:text-white text-2xl transition" aria-label="Facebook">
               <FaFacebook />
             </a>
@@ -78,7 +66,7 @@ const Footer = () => {
             <a href="#" className="text-gray-400 hover:text-white text-2xl transition" aria-label="GitHub">
               <FaGithub />
             </a>
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>

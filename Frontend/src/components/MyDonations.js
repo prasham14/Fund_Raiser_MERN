@@ -1,28 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-// Utility function to safely parse the date
 const parseDate = (date) => {
-  if (!date) return 'Invalid date';  // Handle missing dates
+  if (!date) return 'Invalid date';
 
   const parsedDate = new Date(date);
 
   if (isNaN(parsedDate)) {
-    return 'Invalid date';  // Return 'Invalid date' if it's an invalid date
+    return 'Invalid date';
   }
 
-  return parsedDate.toLocaleDateString();  // Otherwise, format it properly
+  return parsedDate.toLocaleDateString();
 };
 
 const MyDonations = () => {
   const [donationData, setDonationData] = useState(null);
-  const [selectedFund, setSelectedFund] = useState(null); // State to store fund details
+  const [selectedFund, setSelectedFund] = useState(null);
   const [error, setError] = useState(null);
-  const [showModal, setShowModal] = useState(false); // State for modal visibility
+  const [showModal, setShowModal] = useState(false);
   const id = localStorage.getItem('userId');
   const token = localStorage.getItem('token');
 
-  // Function to fetch fund details
   const fetchFundDetails = async (fundId) => {
     try {
       const response = await axios.get(`http://localhost:5000/getFund/${fundId}`, {
@@ -30,8 +28,8 @@ const MyDonations = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setSelectedFund(response.data); // Store fund data in state
-      setShowModal(true); // Show modal after fetching fund details
+      setSelectedFund(response.data);
+      setShowModal(true);
     } catch (err) {
       setError(err.response?.data?.error || err.message || 'An error occurred');
     }
@@ -80,7 +78,6 @@ const MyDonations = () => {
   return (
     <div className="relative max-w-4xl mx-auto my-8 p-6  bg-white">
 
-      {/* Background Blur Overlay for Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50"></div>
       )}
@@ -112,7 +109,7 @@ const MyDonations = () => {
               <div className="flex justify-between items-center mb-4">
                 <span className="text-lg font-semibold text-gray-700">Donated To:</span>
                 <button
-                  onClick={() => fetchFundDetails(donation.fundId)}  // Fetch fund details on click
+                  onClick={() => fetchFundDetails(donation.fundId)}
                   className="text-lg text-black hover:text-[#aa4528] hover:underline"
                 >
                   View Fund Details
@@ -124,7 +121,6 @@ const MyDonations = () => {
         </div>
       )}
 
-      {/* Modal with Fund Details */}
       {showModal && selectedFund && (
         <div className="fixed inset-0 z-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-4xl relative">
@@ -141,10 +137,7 @@ const MyDonations = () => {
               <span className="font-semibold text-gray-700">Fund Name:</span>
               <span className="text-gray-600">{selectedFund.title}</span>
             </div>
-            <div className="mb-4">
-              <span className="font-semibold text-gray-700">Fund Description:</span>
-              <p className="text-gray-600">{selectedFund.details}</p>
-            </div>
+
             <div className="mb-4">
               <span className="font-semibold text-gray-700">Target Amount:</span>
               <span className="text-gray-600"> Rs. {selectedFund.funds}</span>

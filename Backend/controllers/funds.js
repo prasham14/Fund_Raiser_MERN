@@ -109,7 +109,6 @@ async function deleteFund(req, res) {
 
 async function getFundsByFundId(req, res) {
   const fundId = req.params.id;
-  // console.log(`Fetching funds for user ID: ${userId}`);
   console.log(fundId);
   try {
     const funds = await Raise.findById(fundId);

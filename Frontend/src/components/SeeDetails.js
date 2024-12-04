@@ -1,7 +1,5 @@
-// src/UserDetailsForm.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { ImCross } from "react-icons/im";
 import { toast } from "react-toastify";
 const UserDetailsForm = ({ setActivesection }) => {
@@ -16,7 +14,6 @@ const UserDetailsForm = ({ setActivesection }) => {
   const [isEditing, setIsEditing] = useState(false);
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("userId");
-  const navigate = useNavigate();
   useEffect(() => {
     axios
       .get(`http://localhost:5000/user-details/${userId}`, {
@@ -36,6 +33,10 @@ const UserDetailsForm = ({ setActivesection }) => {
   }, [userId]);
 
   const handleChange = (e) => {
+    if (e.target.name == "mobileNo" && e.target.value.length > 10) {
+      toast.error('Enter Valid Phone Number');
+      return;
+    }
     setUserDetails({ ...userDetails, [e.target.name]: e.target.value });
   };
 
@@ -53,13 +54,10 @@ const UserDetailsForm = ({ setActivesection }) => {
         }
       )
       .then((response) => {
-        // alert(response.data.message);
         toast.success('Details Added Successfully')
       })
       .catch((error) => {
         toast.error('Internal error , try again later')
-        // console.error("Error saving user details:", error);
-        // alert("An error occurred while saving data");
       });
     setActivesection('');
   };
@@ -70,7 +68,7 @@ const UserDetailsForm = ({ setActivesection }) => {
   return (
     <div className="w-[50vh] max-h-[500px] p-6 bg-[#f2f1ed] shadow-lg rounded-lg mt-8 overflow-y-auto no-scrollbar border border-gray-200">
       <h2 className="text-2xl font-bold mb-4 text-center text-gray-800 relative">
-        <div className="absolute top-0 left-0">
+        <div className="absolute top-0 right-0">
           <button
             onClick={handleBack}
             className="text-black hover:text-[#aa4528] transition duration-200"
@@ -141,7 +139,7 @@ const UserDetailsForm = ({ setActivesection }) => {
             Mobile Number:
           </label>
           <input
-            type="text"
+            type="number"
             name="mobileNo"
             value={userDetails.mobileNo}
             onChange={handleChange}
@@ -171,8 +169,6 @@ const UserDetailsForm = ({ setActivesection }) => {
         </button>
       </form>
     </div>
-
-
   );
 };
 

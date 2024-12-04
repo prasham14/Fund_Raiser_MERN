@@ -15,7 +15,6 @@ async function createInitiative(req, res) {
     const newIni = new Initiative({
       title, purpose, date, desc, phone, email: emailId
     });
-
     // Saving the new Initiative
     const response = await newIni.save();
     return res.status(201).json(response);
@@ -50,6 +49,23 @@ async function getInitiativesByEmail(req, res) {
     res.status(500).json({ error: "Internal server error" });
   }
 }
+
+async function getInitiativesById(req, res) {
+  const { initiativeId } = req.params;
+
+
+  try {
+    const initiative = await Initiative.findById(initiativeId);
+    if (!initiative) {
+      return res.status(404).json({ error: "Initiative not found" });
+    }
+    return res.json(initiative);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+}
+
 
 
 async function editInitiatives(req, res) {
@@ -102,23 +118,18 @@ async function membersJoin(req, res) {
   }
 
   try {
-    // Find the initiative by ID
     const initiative = await Initiative.findById(initiativeId);
     if (!initiative) {
       return res.status(404).json({ error: 'Initiative not found.' });
     }
 
-    // Check if the user is already a member of this specific initiative
     if (initiative.memberPhone.includes(phone)) {
       return res.status(400).json({ error: 'You are already a member of this initiative.' });
     }
 
-    // Update the initiative: increment members count, add name and phone
     initiative.members += 1;
     initiative.memberNames.push(name);
     initiative.memberPhone.push(phone);
-
-    // Save the updated initiative
     await initiative.save();
 
     res.status(200).json({ message: 'Joined initiative successfully.', initiative });
@@ -128,8 +139,6 @@ async function membersJoin(req, res) {
   }
 }
 
-
-
 module.exports = {
-  createInitiative, getInitiatives, getInitiativesByEmail, editInitiatives, deleteInitiative, membersJoin
+  createInitiative, getInitiatives, getInitiativesByEmail, editInitiatives, deleteInitiative, membersJoin, getInitiativesById
 };

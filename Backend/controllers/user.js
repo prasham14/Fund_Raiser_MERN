@@ -1,22 +1,16 @@
 const User = require('../models/User');
 const nodemailer = require('nodemailer');
 const { generateToken } = require("./../jwt");
-
 async function signup(req, res) {
   try {
     const { username, email, password } = req.body;
-
-    // Check for existing user
     const existingUser = await User.findOne({ $or: [{ username }, { email }] });
     if (existingUser) {
       return res.status(400).json({ error: "User already exists with this username or email" });
     }
-
-    // Create and save the new user
     const newUser = new User({ username, email, password });
     const savedUser = await newUser.save();
 
-    // Generate JWT token
     const payload = { id: savedUser.id };
     const token = generateToken(payload);
 

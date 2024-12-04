@@ -7,42 +7,33 @@ const JoinInitiative = ({ initiativeId, setActive }) => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
   const token = localStorage.getItem('token')
-  // console.log(token)
   const handleJoinInitiative = async () => {
     try {
-      // Validate user input
       if (!name || !phone) {
         setMessage('Name and phone number are required.');
         return;
       }
 
-      // Send POST request to join the initiative
       const response = await axios.post(
         `http://localhost:5000/join/${initiativeId}`,
-        { name, phone }, // Request body (data)
+        { name, phone },
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Fix the Authorization header
+            Authorization: `Bearer ${token}`,
           },
         }
       );
-      // console.log(response);
 
-      // Handle success response
       toast.success('You are now a member of this Initiative')
       setActive('')
       setMessage(response.data.message || 'Successfully joined the initiative!');
     } catch (error) {
-      // Handle error response
       if (error.response) {
-        // Server responded with a status other than 200
         setMessage(error.response.data.error || 'An error occurred.');
         toast.warning('You are already a member');
         setActive('')
       } else {
-        // Network error or other issues
         setMessage('Unable to join initiative. Please try again.');
         toast.error('Something wrong ,Try again Later');
       }
@@ -50,7 +41,6 @@ const JoinInitiative = ({ initiativeId, setActive }) => {
   };
   const handleBack = () => {
     setActive('')
-    // setActivesection('');
   }
 
   return (
@@ -100,13 +90,6 @@ const JoinInitiative = ({ initiativeId, setActive }) => {
       >
         Join
       </button>
-
-      {/* Message Display
-       {message && (
-        <p className="mt-4 text-center text-sm text-black font-medium">
-          {message}
-        </p> 
-      )} */}
     </div>
 
   );

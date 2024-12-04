@@ -20,13 +20,13 @@ const TransactionSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
   fundId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'raise', // Assuming 'Raise' is your fundraiser model
+    ref: 'raise',
     required: true,
     unique: false
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Assuming 'User' is your user model
+    ref: 'User',
     required: true,
     unique: false
   },

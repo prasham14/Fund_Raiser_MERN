@@ -3,23 +3,15 @@ import med from "./images/medicines.jpeg";
 import rf from "./images/relief.png";
 import ed from "./images/education.jpg";
 import others from './images/other.jpeg'
-import { FaArrowLeft, FaCross } from "react-icons/fa";
-import { ImCross } from "react-icons/im";
+
 const ViewFundRaiser = ({ setActivesection }) => {
   const handleCategoryClick = (category) => {
     setActivesection(category);
-  };
-  const handleBack = () => {
-    setActivesection('');
   };
 
   return (
     <div className="donate-container max-w-6xl mx-10  mt-20 p-8 bg-[#f2f1ed] rounded-xl shadow-lg relative 
       h-[500px] overflow-y-auto ">
-
-      {/* <button onClick={handleBack} className="mb-4 p-2 text-blue-600 hover:text-blue-800 transition-all absolute right-6 top-2 ">
-        <ImCross />
-      </button> */}
       <h1 className="donate-title lg:text-4xl md:text-3xl text-2xl mx-auto font-bold text-center mb-4 text-gray-900">
         What type of Funds would you like to donate?
       </h1>
@@ -27,7 +19,6 @@ const ViewFundRaiser = ({ setActivesection }) => {
         We currently have four categories of funds. Choose one to make an impact.
       </p>
 
-      {/* Categories */}
       <ul className="donate-options grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-center">
         <li
           className="donate-option bg-[#faf9f6] shadow-lg rounded-lg transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"

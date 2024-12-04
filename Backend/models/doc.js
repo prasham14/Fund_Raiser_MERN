@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const PdfDetailsSchema = new mongoose.Schema(
   {
     pdf: String,
-    title: String,
+    title: { type: String },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',

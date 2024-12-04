@@ -1,7 +1,6 @@
 const UserDetails = require('../models/userDetails');
 const User = require('../models/User');
 
-// Add or update user details (upsert)
 async function fillDetails(req, res) {
   const { AccountNo, Bank, AdhaarNo, Address, mobileNo, Upi, user_id } = req.body;
 
@@ -22,7 +21,6 @@ async function fillDetails(req, res) {
   }
 }
 
-// Get user details by ID
 async function getUserDetailsById(req, res) {
   const userId = req.params.user_id;
 

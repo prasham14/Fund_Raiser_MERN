@@ -2,18 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
-import UserDocuments from './UserDoc';
 import Withdraw from './Withdraw';
 import { MdDelete } from "react-icons/md";
 import { CiEdit } from "react-icons/ci"
 import { toast } from "react-toastify"
+import DocOfFunds from './DocumentsOfFund';
 const MyFunds = () => {
   const [funds, setFunds] = useState([]);
   const [isdoc, setisdoc] = useState([]);
   const [editInitiativeId, setEditInitiativeId] = useState(null);
-  const [myFundSelected, setMyFundSelected] = useState(null);
-  const [showWithdraw, setShowWithdraw] = useState('');
-  const [isDeleted, setIsdeleted] = useState(false);
   const [editData, setEditData] = useState({
     title: '',
     details: '',
@@ -27,16 +24,16 @@ const MyFunds = () => {
   const handleBack = () => {
     navigate('/')
   }
+  const handleLessWithdraw = () => {
+    toast.error("You can not Withdraw until the raised amount is 20000")
+  }
   const [isUser, setIsUser] = useState(false);
-  const userId = localStorage.getItem('userId'); // Store user_id in localStorage or pass it as a prop
+  const userId = localStorage.getItem('userId');
   const token = localStorage.getItem('token');
 
-  const handleWithdraw = () => {
-    setIsDocument('withdraw');
-  }
   const handleDeleteClick = async (fundId) => {
     if (!window.confirm("Are you sure you want to delete this fund?")) {
-      return; // Abort if the user cancels the action
+      return;
     }
 
     try {
@@ -45,8 +42,6 @@ const MyFunds = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      // Update the local funds list after deletion
       setFunds((prevFunds) => prevFunds.filter((fund) => fund._id !== fundId));
       toast.success("Fund deleted successfully");
     } catch (error) {
@@ -67,7 +62,6 @@ const MyFunds = () => {
         },
       });
 
-      // Update the local funds list after deletion
       setisdoc((prevDocs) => prevDocs.filter((fund) => fund._id !== fundId));
       toast.success("Fund deleted successfully");
       setisdoc(true);
@@ -95,7 +89,7 @@ const MyFunds = () => {
   }, [userId, token]);
 
   const handleEditClick = (fund) => {
-    setEditInitiativeId(fund._id); // Assuming each fund has a unique `_id` field
+    setEditInitiativeId(fund._id);
     setEditData({
       title: fund.title,
       details: fund.details,
@@ -122,9 +116,8 @@ const MyFunds = () => {
           Authorization: `Bearer ${token}`
         }
       });
-      setEditInitiativeId(null); // Close edit form on success
+      setEditInitiativeId(null);
       toast.success("Fund Edited Successfully")
-      // Update local funds list with updated fund data
       setFunds((prevFunds) =>
         prevFunds.map((fund) =>
           fund._id === editInitiativeId ? { ...fund, ...editData } : fund
@@ -132,7 +125,6 @@ const MyFunds = () => {
       );
     } catch (err) {
       console.error(err);
-      // alert('Edit failed, internal server error');
       toast.error("Edit Failed, try again Later");
     }
   };
@@ -142,7 +134,7 @@ const MyFunds = () => {
   const renderDoc = () => {
     switch (isDocument) {
       case 'doc':
-        return <UserDocuments key={docKey} isUser={isUser} />;
+        return <DocOfFunds key={docKey} isUser={isUser} setIsDocument={setIsDocument} />;
       case 'withdraw':
         return (<Withdraw />)
       default:
@@ -150,15 +142,16 @@ const MyFunds = () => {
     }
   };
   return (
-    <div className="min-h-screen py-12 px-6 lg:px-12 overflow-y-auto no-scrollbar bg-[#f2f1ed]">
+    <div className="min-h-screen  overflow-y-auto no-scrollbar bg-[#f2f1ed]">
+      <div >{renderDoc()}</div>
       <button
         onClick={handleBack}
-        className="flex items-center text-black hover:text-[#aa4528] text-xl font-bold transition-transform transform hover:scale-110"
+        className="translate-y-16 translate-x-5 text-black hover:text-[#aa4528] text-xl font-bold transition-transform transform hover:scale-110"
       >
         <FaArrowLeft />
       </button>
       <div className="max-w-7xl mx-auto p-8">
-        <div>{renderDoc()}</div>
+
         <h2 className="text-center text-4xl font-extrabold text-black hover:text-[#aa4528] mb-10">
           Your Raised Funds
         </h2>
@@ -166,11 +159,9 @@ const MyFunds = () => {
           {funds.length > 0 ? (
             funds.map((fund, index) => (
               <div key={index}>
-
                 <li
                   className="bg-white rounded-lg shadow-lg p-6 border border-gray-200 transform transition duration-300 hover:scale-105 hover:shadow-2xl"
                 >
-
                   <h3 className="text-2xl font-semibold text-gray-800 mb-6">
                     {fund.title.length > 20
                       ? `${fund.title.slice(0, 20)}...`
@@ -184,18 +175,6 @@ const MyFunds = () => {
                       <CiEdit fontSize="1.45rem" />
                     </button>
                   </div>
-
-                  <div className="mb-4">
-                    <p className="text-sm font-medium text-gray-500 mb-1">
-                      <strong>Details:</strong>
-                    </p>
-                    <p className="text-gray-700">
-                      {fund.details.length > 30
-                        ? `${fund.details.slice(0, 30)}...`
-                        : fund.details}
-                    </p>
-                  </div>
-
 
                   <div className="mb-4">
                     <p className="text-sm font-medium text-gray-500 mb-1">
@@ -224,9 +203,6 @@ const MyFunds = () => {
                     </p>
                     <p className="text-gray-700">{fund.phone}</p>
                   </div>
-
-
-
                   <div className="flex justify-between items-center space-x-4">
                     {/* Left Group: Docs and Withdraw */}
                     <div className="flex space-x-3">
@@ -235,7 +211,7 @@ const MyFunds = () => {
                           localStorage.setItem("selectedFundId", fund._id);
                           setIsDocument("doc");
                           setIsUser(true);
-                          setDocKey((prevKey) => prevKey + 1); // Increment key to force remount
+                          setDocKey((prevKey) => prevKey + 1);
                         }}
                         className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition duration-300"
                       >
@@ -249,14 +225,15 @@ const MyFunds = () => {
                           <MdDelete />
                         </button>
                       ) : null}
+
+
                       <button
-                        onClick={() => { setIsDocument('withdraw') }}
+                        onClick={fund.raised > 1000 ? (() => { setIsDocument('withdraw') }) : (handleLessWithdraw)}
                         className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300"
                       >
                         Withdraw
                       </button>
                     </div>
-
                     {/* Right Group: Edit and Delete */}
                     <div className="flex space-x-3">
 
@@ -268,10 +245,6 @@ const MyFunds = () => {
                       </button>
                     </div>
                   </div>
-
-                  {/* {showWithdraw && (
-                    <Withdraw onClose={() => setShowWithdraw(false)} />
-                  )} */}
                 </li>
               </div>
             ))
@@ -281,7 +254,6 @@ const MyFunds = () => {
             </p>
           )}
         </ul>
-
         {/* Edit Form */}
         {editInitiativeId && (
           <div className="fixed inset-0 z-10 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center">

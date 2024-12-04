@@ -4,7 +4,6 @@ const RaiseSchema = new mongoose.Schema({
   details: { type: String, required: true },
   funds: { type: Number, required: true },
   raised: { type: Number, default: 0 },
-  // date: { type: Date, default: Date.now },
   type: { type: String, default: 'Medicine' },
   phone: { type: Number, required: true },
   userId: {

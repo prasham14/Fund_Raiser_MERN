@@ -9,7 +9,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url,
 ).toString();
 
-const FormSubmission = ({ activeSection, setActivesection }) => {
+const FormSubmission = ({ setActivesection }) => {
   const [formData, setFormData] = useState({
     title: '',
     details: '',
@@ -38,6 +38,10 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === "phone" && value.length > 10) {
+      toast.error("Phone number cannot exceed 10 digits.");
+      return;
+    }
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -47,17 +51,8 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // const currentDate = new Date();
-    // const selectedDate = new Date(formData.date);
-
-    // if (selectedDate < currentDate) {
-    //   alert("The end date cannot be in the past. Please select a valid future date.");
-    //   return;
-    // }
-
     try {
       const token = localStorage.getItem('token');
-      // Submit fundraiser form data
       const fundResponse = await axios.post('http://localhost:5000/raise', formData, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -67,10 +62,8 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
       const fundId = fundResponse.data._id;
       localStorage.setItem('fundId', fundId);
 
-      // If a document file is selected, upload it
       if (file) {
         const documentData = new FormData();
-        // documentData.append("title", title);
         documentData.append("file", file);
         documentData.append('userId', formData.user_id);
         documentData.append('fundId', fundId);
@@ -88,17 +81,14 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
         );
 
         if (docResponse.data.status === "ok") {
-          // alert("Fundraiser and document uploaded successfully!");
           toast.success("Fund Raised Successfully")
         } else {
-          // alert("Fundraiser created, but document upload failed.");
           toast.error('Document Not Uploaded')
         }
       } else {
-        // alert("Fundraiser created successfully!");
+        toast.error("Try Again Later!")
       }
 
-      // Reset form data
       setFormData({
         title: '',
         details: '',
@@ -110,12 +100,10 @@ const FormSubmission = ({ activeSection, setActivesection }) => {
       });
       setTitle("");
       setFile(null);
-      // alert("Fund Raised Successfully")
       setActivesection('');
     } catch (error) {
       toast.error('Fund Raise Failed , try again later')
-      // console.error('Error during submission:', error);
-      // alert(error.response?.data?.msg || 'Submission failed. Please try again.');
+
     }
   };
 

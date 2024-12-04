@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FaArrowLeft } from "react-icons/fa";
 
-const ShowBankDetails = ({ setActivesection, setIsDoc }) => {
+const ShowBankDetails = ({ setIsDoc }) => {
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [clientSecret, setClientSecret] = useState(null);
-  const [amount, setAmount] = useState("");
+
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("fundUserId");
-  const handleBack = () => {
-    setActivesection('viewFundRaiser');
-  };
+
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
@@ -39,7 +35,6 @@ const ShowBankDetails = ({ setActivesection, setIsDoc }) => {
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 ">
-      {/* <button onClick={handleBack}><FaArrowLeft /></button> */}
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">User Details</h2>
       <div className="space-y-4">
         <div className="flex justify-between items-center">

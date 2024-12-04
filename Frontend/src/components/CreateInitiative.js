@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Navigate, useNavigate } from 'react-router-dom';
 import { ImCross } from "react-icons/im";
 import { toast } from 'react-toastify'
 const FormSubmission = ({ setActive }) => {
@@ -12,10 +11,8 @@ const FormSubmission = ({ setActive }) => {
     phone: '',
     email: ''
   });
-  const navigate = useNavigate();
   const emailId = localStorage.getItem('email');
   useEffect(() => {
-    // const storedUserId = localStorage.getItem('userId');
 
     if (emailId) {
       setFormData((prevData) => ({ ...prevData, email: emailId }));
@@ -26,6 +23,10 @@ const FormSubmission = ({ setActive }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === "phone" && value.length > 10) {
+      toast.error("Phone number cannot exceed 10 digits.");
+      return;
+    }
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -33,22 +34,17 @@ const FormSubmission = ({ setActive }) => {
   };
   const handleBack = () => {
     setActive('')
-    // setActivesection('');
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // console.log(formData);
 
       const token = localStorage.getItem('token');
-      // console.log(token);
       const response = await axios.post(`http://localhost:5000/createInitiative/${emailId}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-      // localStorage.setItem('initiativeId', response._id);
-      // console.log('Data submitted successfully:', response.data);
       toast.success('Initiative Created!')
       setActive('');
       setFormData({
@@ -60,10 +56,9 @@ const FormSubmission = ({ setActive }) => {
         email: localStorage.getItem('email')
       });
 
-      // navigate('/')
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert(error.response?.data?.msg || 'Form submission failed. Please try again.');
+      toast.error('Form submission failed. Please try again.');
     }
   };
 
@@ -99,6 +94,7 @@ const FormSubmission = ({ setActive }) => {
             value={formData.purpose}
             onChange={handleChange}
             required
+            placeholder='less than 50 words....'
             className="form-input w-full p-2 border border-gray-300 rounded-lg "
           />
         </div>

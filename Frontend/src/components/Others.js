@@ -10,7 +10,6 @@ const Option1 = ({ setActivesection }) => {
   const [selectedFund, setSelectedFund] = useState(null);
   const [isDoc, setIsDoc] = useState('');
   const token = localStorage.getItem('token');
-
   useEffect(() => {
     const fetchFunds = async () => {
       try {
@@ -20,7 +19,6 @@ const Option1 = ({ setActivesection }) => {
           },
         });
         setFunds(response.data);
-        // console.log(response);
       } catch (error) {
         console.error('Error fetching education funds', error);
       }
@@ -58,7 +56,7 @@ const Option1 = ({ setActivesection }) => {
       case 'bankdetailsoffund':
         return <ShowBankDetails setIsDoc={setIsDoc} />;
       case 'pay':
-        return <PaymentComponent />
+        return <PaymentComponent setIsDoc={setIsDoc} />
       default:
         return null;
     }
@@ -84,20 +82,17 @@ const Option1 = ({ setActivesection }) => {
   };
 
   return (
-    <div className=" max-w-5xl mx-4 p-6 bg-white rounded-lg shadow-lg mt-20 overflow-y-auto h-fit max-h-[75%] ">
+    <div className=" w-[100vw] p-6 bg-opacity-75 rounded-lg shadow-lg mt-20  h-[100vh] flex justify-center items-center  ">
 
       {selectedFund ? (
-        <div className="mx-4 p-4 ">
-          <h1 className="sm:text-3xl text-2xl font-bold mb-4 text-gray-900 text-center">{selectedFund.title}</h1>
-          <p className="mb-3 text-gray-700"><strong>Purpose:</strong> {selectedFund.details}</p>
-          <div className='flex justify-between items-center mb-8 flex-col lg:flex-row'>
+        <div className="mx-4 p-8 bg-white max-h-[75%] overflow-y-auto no-scrollbar rounded-md ">
+          <h1 className="sm:text-3xl text-xl font-bold mb-4 text-gray-900 text-center">{selectedFund.title}</h1>
+          <div className=' flex justify-between items-center mb-8 flex-col lg:flex-row '>
             <div>
               <p className="mb-3 text-gray-700"><strong>Funds Available:</strong> {selectedFund.funds} INR</p>
               <p className="mb-3 text-gray-700"><strong>Amount Raised:</strong> {selectedFund.raised} INR</p>
               <p className="mb-3 text-gray-700"><strong>Phone Number:</strong> {selectedFund.phone}</p>
             </div>
-
-            {/* <p className="mb-6 text-gray-700"><strong>Needed before:</strong> {new Date(selectedFund.date).toLocaleDateString()}</p> */}
             {localStorage.setItem('selectedFundId', selectedFund._id)}
             {selectedFund.isExpired && (
               <p className="text-red-500 font-bold text-lg">Expired</p>
@@ -105,14 +100,13 @@ const Option1 = ({ setActivesection }) => {
             <div className="chart-container mr-8 w-24 relative">
               <VictoryPie
                 data={getChartData(selectedFund)}
-                innerRadius={100} // Makes it a donut chart
-                colorScale={['rgb(170, 59, 40)', 'rgb(242, 241, 237)']} // Updated colors
-                labels={() => ''} // Hides slice labels
+                innerRadius={100}
+                colorScale={['rgb(170, 59, 40)', 'rgb(242, 241, 237)']}
+                labels={() => ''}
                 style={{
                   labels: { fill: 'gray', fontSize: 20, fontWeight: 'bold' },
                 }}
               />
-              {/* Central label showing percentage */}
               <div
                 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-800  font-bold text-xs"
                 style={{ pointerEvents: 'none' }}
@@ -147,27 +141,24 @@ const Option1 = ({ setActivesection }) => {
           <div>{render()}</div>
         </div>
       ) : (
-        <div className='w-full h-full'>
-
-          <button onClick={handleBack} className=" absolute items-center text-black hover:underline">
-            <FaArrowLeft className="mr-2" />
-          </button>
-          <h1 className="text-4xl font-bold text-center mb-8 text-gray-900">Other Funds</h1>
-
+        <div className='md:w-[55%] max-w-5xl h-fit max-h-[75%] rounded-md no-scrollbar  overflow-y-auto p-6 bg-[#f2f1ed]'>
+          <div onClick={handleBack} className='w-10 h-10 z-30 flex justify-center items-center'>
+            <button className=" text-black cursor-pointer p-5 ">
+              <FaArrowLeft />
+            </button>
+          </div>
+          <h1 className="sm:w-[300px] w-[200px] mx-auto translate-y-[-40px] sm:text-4xl text-2xl  font-bold text-center  text-gray-900">Other Funds</h1>
           <ul className="">
             {funds.length > 0 ? (
               funds.map((fund, index) => (
                 <li
                   key={index}
-                  className="fund-card bg-white  p-6 transition-transform transform hover:-translate-y-2 border border-black m-2 rounded-lg hover:shadow-2xl overflow-hidden "
+                  className="fund-card bg-[#faf9f6]  p-6 transition-transform transform hover:-translate-y-2 border border-black m-2 rounded-lg hover:shadow-2xl overflow-hidden "
                 >
-                  <h2 className="fund-title text-2xl font-semibold mb-3 text-gray-900">{fund.title}</h2>
-                  <p className="mb-2 text-gray-700"><strong>Purpose:</strong> {fund.details}</p>
+                  <h2 className="fund-title sm:text-2xl text-lg sm:font-semibold font-bold mb-3 text-gray-900">{fund.title}</h2>
                   <p className="mb-2 text-gray-700"><strong>Funds Available:</strong> {fund.funds} INR</p>
                   <p className="mb-2 text-gray-700"><strong>Amount Raised:</strong> {fund.raised} INR</p>
-                  {/* <p className="mb-6 text-gray-700"><strong>Needed Before:</strong> {new Date(fund.date).toLocaleDateString()}</p> */}
                   {isFundEndingSoon(fund.date) && (
-                    // <p className="text-yellow-600 font-bold">Fund ending soon!</p>
                     null
                   )}
                   {fund.isExpired ? (
@@ -181,19 +172,16 @@ const Option1 = ({ setActivesection }) => {
                     </button>
                   )}
                 </li>
-              ))
-            ) : (
+              ))) : (
               <p className="text-center text-lg text-gray-700 col-span-full">
-                No funds found
+                No  funds found
               </p>
             )}
           </ul>
         </div>
-
-      )
-      }
+      )}
     </div >
-  );
+  )
 };
 
 export default Option1;

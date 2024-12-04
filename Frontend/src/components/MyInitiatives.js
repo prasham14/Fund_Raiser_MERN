@@ -3,13 +3,22 @@ import axios from 'axios';
 import { FaArrowLeft, FaPlus } from "react-icons/fa";
 import CreateInitiative from './CreateInitiative';
 import { useNavigate } from 'react-router-dom';
-
-const MyInitiatives = ({ setActivesection }) => {
+import { toast } from 'react-toastify';
+import { ImCross } from 'react-icons/im'
+const MyInitiatives = () => {
   const [initiatives, setInitiatives] = useState([]);
   const [editInitiativeId, setEditInitiativeId] = useState(null);
   const [editData, setEditData] = useState({ title: '', purpose: '', desc: '', phone: '' });
   const [active, setActive] = useState('');
-  const [memberDetails, setmemberDetails] = useState(false);
+  const [memberDetails, setMemberDetails] = useState(null);
+  const [showFullPurpose, setShowFullPurpose] = useState(false);
+  const [showFullDescription, setShowFullDescription] = useState(false);
+
+  const truncateText = (text, isExpanded) => {
+    if (isExpanded || text.length <= 30) return text;
+    return text.slice(0, 30) + "...";
+  };
+
   const emailId = localStorage.getItem('email');
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
@@ -44,6 +53,10 @@ const MyInitiatives = ({ setActivesection }) => {
 
   const handleEditChange = (e) => {
     const { name, value } = e.target;
+    if (name == "phone" && value.length > 10) {
+      toast.error("Enter valid Phone Number");
+      return;
+    }
     setEditData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -64,9 +77,10 @@ const MyInitiatives = ({ setActivesection }) => {
           initiative._id === editInitiativeId ? { ...initiative, ...editData } : initiative
         )
       );
+      toast.success("Initiative Edited");
     } catch (err) {
       console.error(err);
-      alert('Edit failed, internal server error');
+      toast.error('Edit failed, Please Enter Valid details');
     }
   };
 
@@ -83,10 +97,9 @@ const MyInitiatives = ({ setActivesection }) => {
       setInitiatives((prevInitiatives) =>
         prevInitiatives.filter((initiative) => initiative._id !== initiativeId)
       );
-      alert('Initiative deleted successfully');
+      toast.success('Initiative deleted successfully');
     } catch (error) {
-      console.error('Error deleting initiative', error);
-      alert('Failed to delete the initiative. Please try again.');
+      toast.error('Failed to delete the initiative. Please try again.');
     }
   };
 
@@ -97,6 +110,14 @@ const MyInitiatives = ({ setActivesection }) => {
       default:
         return null;
     }
+  };
+
+  const handleMemberDetailsClick = (initiative) => {
+    setMemberDetails(initiative);
+  };
+
+  const handleCloseModal = () => {
+    setMemberDetails(null);
   };
 
   return (
@@ -116,10 +137,10 @@ const MyInitiatives = ({ setActivesection }) => {
           <FaPlus />
         </button>
       </div>
-      <h2 className="text-center text-4xl font-extrabold text-[#aa4528] mb-10">
+      <h2 className="text-center text-4xl font-extrabold text-black hover:text-[#aa4528] mb-10">
         Your Initiatives
       </h2>
-      <div className="relative max-w-6xl mx-auto bg-[#faf9f6] p-6 rounded-lg shadow-lg overflow-y-auto no-scrollbar h-[70vh] ">
+      <div >
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {initiatives.length > 0 ? (
             initiatives.map((initiative, index) => (
@@ -131,10 +152,29 @@ const MyInitiatives = ({ setActivesection }) => {
                   {initiative.title}
                 </h3>
                 <p className="text-sm text-gray-600 mb-2">
-                  <strong>Purpose:</strong> {initiative.purpose}
+                  <strong>Purpose:</strong>{" "}
+                  {truncateText(initiative.purpose, showFullPurpose)}
+                  {initiative.purpose.length > 30 && (
+                    <button
+                      className="text-blue-500 ml-2"
+                      onClick={() => setShowFullPurpose(!showFullPurpose)}
+                    >
+                      {showFullPurpose ? "Read Less" : "Read More"}
+                    </button>
+                  )}
                 </p>
+
                 <p className="text-sm text-gray-600 mb-2">
-                  <strong>Description:</strong> {initiative.desc}
+                  <strong>Description:</strong>{" "}
+                  {truncateText(initiative.desc, showFullDescription)}
+                  {initiative.desc.length > 30 && (
+                    <button
+                      className="text-blue-500 ml-2"
+                      onClick={() => setShowFullDescription(!showFullDescription)}
+                    >
+                      {showFullDescription ? "Read Less" : "Read More"}
+                    </button>
+                  )}
                 </p>
                 <p className="text-sm text-gray-600 mb-2">
                   <strong>Phone:</strong> +91 {initiative.phone}
@@ -146,47 +186,11 @@ const MyInitiatives = ({ setActivesection }) => {
                   <strong>Members joined:</strong> {initiative.members}
                 </p>
                 <button
-                  onClick={() => setmemberDetails(true)}
-                  className="text-sm text-teal-600 hover:text-teal-700 mb-4 transition"
+                  onClick={() => handleMemberDetailsClick(initiative)}  // Trigger the member details modal
+                  className="text-sm  hover:text-white mb-4 transition bg-teal-600 text-white px-3 py-2 rounded hover:bg-teal-700  duration-300 "
                 >
                   Members
                 </button>
-                {memberDetails && initiative.memberNames.length > 0 ? (
-                  <div className="mt-4">
-                    <h4 className="text-lg font-bold text-teal-700 mb-2">
-                      Members Details
-                    </h4>
-                    <div className="overflow-auto bg-gray-50 rounded-lg shadow-md p-4 border border-gray-200">
-                      <table className="w-full text-sm text-left text-gray-600">
-                        <thead>
-                          <tr className="bg-teal-600 text-white">
-                            <th scope="col" className="px-4 py-2">#</th>
-                            <th scope="col" className="px-4 py-2">Name</th>
-                            <th scope="col" className="px-4 py-2">Phone Number</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {initiative.memberNames.map((name, index) => (
-                            <tr
-                              key={index}
-                              className="bg-white border-b hover:bg-gray-100"
-                            >
-                              <td className="px-4 py-2 font-medium text-teal-700">
-                                {index + 1}
-                              </td>
-                              <td className="px-4 py-2">{name}</td>
-                              <td className="px-4 py-2">{initiative.memberPhone[index]}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                ) : (
-                  <p className="text-sm text-gray-500 mt-2">
-                    No members have joined yet.
-                  </p>
-                )}
 
                 <div className="mt-4 flex justify-between">
                   <button
@@ -210,8 +214,6 @@ const MyInitiatives = ({ setActivesection }) => {
             </p>
           )}
         </ul>
-
-
       </div>
 
       {editInitiativeId && (
@@ -244,7 +246,7 @@ const MyInitiatives = ({ setActivesection }) => {
               className="block w-full p-3 mb-3 border border-gray-300 rounded-lg focus:ring focus:ring-teal-300"
             />
             <input
-              type="text"
+              type="number"
               name="phone"
               value={editData.phone}
               onChange={handleEditChange}
@@ -269,6 +271,46 @@ const MyInitiatives = ({ setActivesection }) => {
         </div>
       )}
 
+      {/* Members Modal */}
+      {memberDetails && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center backdrop-blur-sm">
+          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+
+            <div className='flex items-center justify-between'>
+              <button
+                onClick={handleCloseModal}
+                className="text-black text-xl"
+              >
+                <ImCross />
+              </button>
+              <h4 className="text-lg font-bold text-teal-700 mb-2 mx-auto">
+                Members Details
+              </h4>
+            </div>
+            <div className="overflow-auto bg-gray-50 rounded-lg shadow-md p-4 border border-gray-200">
+              <table className="w-full text-sm text-left text-gray-600">
+                <thead>
+                  <tr className="bg-teal-600 text-white">
+                    <th scope="col" className="px-4 py-2">#</th>
+                    <th scope="col" className="px-4 py-2">Name</th>
+                    <th scope="col" className="px-4 py-2">Phone Number</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {memberDetails.memberNames.map((name, index) => (
+                    <tr key={index} className="bg-white border-b hover:bg-gray-100">
+                      <td className="px-4 py-2 font-medium text-teal-700">{index + 1}</td>
+                      <td className="px-4 py-2">{name}</td>
+                      <td className="px-4 py-2">{memberDetails.memberPhone[index]}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div
         className={`fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center ${active === "createInitiative" ? "block" : "hidden"
           }`}
@@ -278,7 +320,6 @@ const MyInitiatives = ({ setActivesection }) => {
         </div>
       </div>
     </div>
-
   );
 };
 
